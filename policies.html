@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>政策库 · ICES 镜像站</title>
+<style>
+:root{--paper:#f6f2ea;--paper2:#efe9dd;--ink:#211d18;--ink2:#575046;--line:#d8d0c0;--acc:#DA7756;--acc-d:#b85a3c;--eu:#3d5a99;--cn:#a63d40;--serif:"Songti SC","STSong","Noto Serif SC",serif;--sans:-apple-system,"PingFang SC",sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.topnav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:16px 32px;background:linear-gradient(rgba(246,242,234,.96),rgba(246,242,234,.82));backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{font-family:var(--serif);font-size:19px;font-weight:900;letter-spacing:1px}
+.brand span{color:var(--acc);font-size:12px;margin-left:6px;font-weight:600}
+.topnav .links{display:flex;gap:26px}
+.topnav .links a{font-size:13.5px;color:var(--ink2);letter-spacing:2px;position:relative;padding-bottom:3px;transition:color .2s}
+.topnav .links a:hover{color:var(--ink)}
+.topnav .links a.on{color:var(--acc-d);font-weight:600}
+.topnav .links a.on::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--acc)}
+footer.site{padding:34px 32px;border-top:1px solid var(--line);margin-top:60px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:12px;color:var(--ink2);letter-spacing:.5px}
+
+body{height:100vh;overflow:hidden;display:flex;flex-direction:column;padding-top:57px}
+.toolbar{display:flex;gap:14px;align-items:center;padding:12px 24px;background:var(--paper);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.search{flex:1;min-width:180px;max-width:460px}
+.search input{width:100%;padding:9px 14px;border:1px solid var(--line);border-radius:2px;font-size:13.5px;outline:none;background:#fff;font-family:var(--sans);transition:border-color .2s}
+.search input:focus{border-color:var(--acc)}
+.pills{display:flex;gap:6px}
+.pill{padding:7px 16px;border:1px solid var(--line);border-radius:2px;font-size:12.5px;cursor:pointer;background:var(--paper);color:var(--ink2);letter-spacing:1px;transition:all .2s}
+.pill:hover{border-color:var(--acc)}
+.pill.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.count{font-size:12px;color:var(--ink2);letter-spacing:1px;font-family:ui-monospace,monospace}
+main{flex:1;display:flex;overflow:hidden}
+#list{width:430px;border-right:1px solid var(--line);overflow-y:auto;background:var(--paper)}
+.entry{padding:13px 20px;border-bottom:1px solid var(--line);cursor:pointer;transition:background .15s}
+.entry:hover{background:var(--paper2)}
+.entry.active{background:#f9ece5;border-left:3px solid var(--acc);padding-left:17px}
+.entry .head{display:flex;gap:8px;align-items:baseline}
+.flag{font-size:10.5px;padding:2px 7px;border-radius:2px;font-weight:700;letter-spacing:1px;flex-shrink:0}
+.flag.EU{background:#e3e9f7;color:var(--eu)}.flag.CN{background:#f6e3e3;color:var(--cn)}
+.entry .date{font-size:11px;color:var(--ink2);font-family:ui-monospace,monospace}
+.entry .name{font-size:13.5px;line-height:1.5;margin-top:4px;font-weight:500}
+.entry .ename{font-size:11px;color:var(--ink2);line-height:1.45;margin-top:2px}
+#detail{flex:1;display:flex;flex-direction:column;overflow:hidden;background:#fff}
+#meta{padding:22px 30px;overflow-y:auto;border-bottom:1px solid var(--line);max-height:46%}
+#meta h2{font-family:var(--serif);font-size:19px;margin-bottom:3px;line-height:1.4;font-weight:800}
+.en-name{font-size:12px;color:var(--ink2);line-height:1.5;margin-bottom:14px;font-style:italic}
+.meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;font-size:13px;line-height:1.75}
+.meta-grid b{color:var(--ink2);font-weight:600;display:block;font-size:11px;letter-spacing:2px;margin-bottom:3px}
+.meta-grid .en{display:block;font-size:11.5px;color:#a39a89;margin-top:3px;line-height:1.6}
+.tags{margin-top:12px;display:flex;flex-wrap:wrap;gap:5px}
+.tag{font-size:11px;padding:3px 10px;background:var(--paper2);border-radius:2px;color:var(--ink2);cursor:pointer;border:1px solid transparent;transition:all .2s}
+.tag:hover{background:var(--acc);color:#fff}
+.actions{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap}
+.btn{padding:8px 18px;border-radius:2px;font-size:12.5px;cursor:pointer;border:1px solid var(--line);background:var(--paper);color:var(--ink);letter-spacing:1px;transition:all .2s}
+.btn.primary{background:var(--acc-d);color:#fff;border-color:var(--acc-d)}
+.btn.primary:hover{background:var(--acc)}
+.btn.disabled{opacity:.4;pointer-events:none}
+#viewer{flex:1;position:relative;background:#e9e6df}
+#viewer iframe{width:100%;height:100%;border:0}
+#viewer .placeholder{position:absolute;inset:0;display:flex;flex-direction:column;gap:10px;align-items:center;justify-content:center;color:var(--ink2);font-size:14px;font-family:var(--serif)}
+#viewer .placeholder small{font-size:11.5px;letter-spacing:2px;color:#a39a89}
+.noresult{padding:48px;text-align:center;color:var(--ink2);font-size:13px}
+@media(max-width:860px){#list{width:100%}main{flex-direction:column}body{overflow:auto}#meta{max-height:none}}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <a class="brand" href="index.html">ICES<span>·镜像</span></a>
+  <div class="links">
+    <a href="index.html" data-pg="home">封面</a>
+    <a href="policies.html" data-pg="policies">政策库</a>
+    <a href="stats.html" data-pg="stats">数据总览</a>
+  </div>
+</nav>
+<div class="toolbar">
+  <div class="search"><input id="q" placeholder="搜索政策名 / 背景 / 影响…（按 / 聚焦）"></div>
+  <div class="pills">
+    <span class="pill active" data-side="all">全部</span>
+    <span class="pill" data-side="EU">🇪🇺 欧盟</span>
+    <span class="pill" data-side="CN">🇨🇳 中国</span>
+  </div>
+</div>
+<main>
+  <div id="list"></div>
+  <div id="detail">
+    <div id="meta"><div class="placeholder">← 选择左侧条目查看详情与原文</div></div>
+    <div id="viewer"><div class="placeholder">原文将在此内嵌显示</div></div>
+  </div>
+</main>
+<script src="data.js"></script>
+<script>
+const listEl=document.getElementById('list'),metaEl=document.getElementById('meta'),viewerEl=document.getElementById('viewer');
+let state={q:'',side:'all'};
+const norm=s=>(s||'').toLowerCase();
+function esc(s){return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function render(){
+  const rows=DATA.filter(r=>{
+    if(state.side!=='all'&&r.side!==state.side)return false;
+    if(state.q){const q=norm(state.q);
+      if(!(norm(r.name).includes(q)||norm(r.nameZh).includes(q)||norm(r.background).includes(q)||norm(r.backgroundZh).includes(q)||norm(r.implication).includes(q)||norm(r.implicationZh).includes(q)||norm(r.cnLabel).includes(q)||r.framings.some(t=>norm(t).includes(q))||r.industries.some(t=>norm(t).includes(q))))return false;}
+    return true;
+  });
+    if(!rows.length){listEl.innerHTML='<div class="noresult">无匹配结果</div>';return;}
+  listEl.innerHTML=rows.map(r=>{
+    const hasZh=r.nameZh&&r.nameZh!==r.name;
+    return `<div class="entry" data-id="${r.id}">
+    <div class="head"><span class="flag ${r.side}">${r.side==='EU'?'EU':'CN'}</span><span class="date">${r.date||'—'}</span></div>
+    <div class="name">${esc(hasZh?r.nameZh:r.name)}</div>
+    ${hasZh?`<div class="ename">${esc(r.name)}</div>`:''}</div>`}).join('');
+  listEl.querySelectorAll('.entry').forEach(e=>e.onclick=()=>show(e.dataset.id));
+}
+function show(id){
+  const r=DATA.find(x=>x.id===id);if(!r)return;
+  listEl.querySelectorAll('.entry').forEach(e=>e.classList.toggle('active',e.dataset.id===id));
+  const tags=[...r.framings,...r.industries];
+  metaEl.innerHTML=`<h2>${esc(r.nameZh||r.name)}</h2>
+    <div class="en-name">${esc(r.name)}</div>
+    <div class="meta-grid">
+      <div><b>侧别 · 日期</b>${r.side==='EU'?'🇪🇺 欧盟':'🇨🇳 中国'} · ${r.date||'—'}</div>
+      <div><b>状态</b>${esc(r.statusZh||'')}
+        ${r.status?`<span class="en">${esc(r.status)}</span>`:''}</div>
+      <div style="grid-column:1/-1"><b>背景</b>${esc(r.backgroundZh||'')}
+        ${r.background?`<span class="en">${esc(r.background)}</span>`:''}</div>
+      <div style="grid-column:1/-1"><b>关键影响</b>${esc(r.implicationZh||'')}
+        ${r.implication?`<span class="en">${esc(r.implication)}</span>`:''}</div>
+    </div>
+    ${tags.length?`<div class="tags">${tags.map(t=>`<span class="tag" onclick="tagSearch('${esc(t).replace(/'/g,"\\'")}')">${esc(t)}</span>`).join('')}</div>`:''}
+    <div class="actions">
+      ${r.file?`<a class="btn primary" onclick="view('${esc(r.file)}')">查看原文</a>`:'<a class="btn disabled">本地无原文</a>'}
+      ${r.file?`<a class="btn" href="originals/${encodeURI(r.file)}" target="_blank">新窗口打开</a>`:''}
+      ${r.url?`<a class="btn" href="${esc(r.url)}" target="_blank">官方来源 ↗</a>`:''}
+    </div>`;
+  metaEl.scrollTop=0;
+  if(r.file)view(r.file);
+}
+function view(f){viewerEl.innerHTML=`<iframe src="originals/${encodeURI(f)}"></iframe>`;}
+function tagSearch(t){state.q=t;document.getElementById('q').value=t;render();viewerEl.innerHTML='<div class="placeholder">← 点击条目查看原文</div>';}
+document.getElementById('q').oninput=e=>{state.q=e.target.value;render();};
+document.addEventListener('keydown',e=>{if(e.key==='/'&&document.activeElement.tagName!=='INPUT'){e.preventDefault();document.getElementById('q').focus();}});
+document.querySelectorAll('.pill').forEach(p=>p.onclick=()=>{
+  document.querySelectorAll('.pill').forEach(x=>x.classList.remove('active'));
+  p.classList.add('active');state.side=p.dataset.side;render();
+});
+render();
+</script>
+</body>
+</html>

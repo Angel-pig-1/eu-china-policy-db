@@ -1,0 +1,999 @@
+[
+ {
+  "jurisdiction": "China",
+  "name": "15th Five-Year Plan for Addressing Climate Change",
+  "date": "27/07/2026",
+  "n_impacted": "16",
+  "visible_tags": [
+   "Agriculture",
+   "Oil and gas",
+   "Coal"
+  ],
+  "hidden_tags_n": 13
+ },
+ {
+  "jurisdiction": "China",
+  "name": "15th Five-Year Plan for Economic and Social Development of the People's Republic of China",
+  "date": "13/03/2026",
+  "n_impacted": "25",
+  "visible_tags": [
+   "Biological breeding, intelligent design of seeds",
+   "Advanced polymers, bio-based materials, biochemical engineering, green ammonia/methanol, sustainable aviation fuels",
+   "Biopharmaceuticals, cell/gene therapy drugs, antibody drugs, nucleic acid medicines, radiopharmaceuticals"
+  ],
+  "hidden_tags_n": 22
+ },
+ {
+  "jurisdiction": "China",
+  "name": "15th Five-Year Plan for Modernising the National Emergency Management System (State Council No. 15 of 2026)",
+  "date": "30/05/2025",
+  "n_impacted": "5",
+  "visible_tags": [
+   "Specialised Emergency Compliance, Industrial Enforcement and Municipal Fire Safety Services",
+   "Industrial Chemical Risk Identification, Park Safety Management and Retrofit Engineering",
+   "Deep-Coal Mining Extraction Safety, Hazard Mitigation and Structural Retrofitting Services"
+  ],
+  "hidden_tags_n": 2
+ },
+ {
+  "jurisdiction": "China",
+  "name": "15th Five-Year Plan for Renewable Energy Development (National Development and Reform Commission and National Energy Administration No. 1067 of 2026)",
+  "date": "06/07/2026",
+  "n_impacted": "5",
+  "visible_tags": [
+   "Multi-Energy Integrated Energy Hubs, Deep-Offshore Wind Development and Grid Decarbonization Systems",
+   "Advanced Solar PV, Ultra-Large Wind Turbines, Grid-Forming Inverters and Long-Duration Storage Hardware Manufacturing",
+   "Renewable Hydrogen Production, Green Ammonia and Green Methanol Chemical Synthesis Clusters"
+  ],
+  "hidden_tags_n": 2
+ },
+ {
+  "jurisdiction": "China",
+  "name": "A Temporary Ban on Helium Exports (Ministry of Commerce and and the General Administration of Customs No.29 of 2026)",
+  "date": "10/07/2026",
+  "n_impacted": "3",
+  "visible_tags": [
+   "Cross-border Trading Entities and Supply Chain Intermediaries",
+   "Industrial gas manufacturing",
+   "High-End Manufacturing"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "China",
+  "name": "Action Plan for Stabilising and Optimising the Utilisation of Foreign Investment (Notice No. 97 of 2026 of the Ministry of Commerce, the National Development and Reform Commission, and the Ministry of Finance)",
+  "date": "16/06/2026",
+  "n_impacted": "8",
+  "visible_tags": [
+   "Production of chemical drugs and biological products, market integration of foreign innovative pharmaceuticals",
+   "Digital platform operators, data processing networks",
+   "Cross-border financing quotas, international trade settlements"
+  ],
+  "hidden_tags_n": 5
+ },
+ {
+  "jurisdiction": "China",
+  "name": "Announcement on Further Improving the Handling of Reports of Violations and Non-Compliance in Export Control of Strategic Mineral-Related Dual-Use Items (Ministry of Commerce Notice No. 26 of 2026)",
+  "date": "24/06/2026",
+  "n_impacted": "6",
+  "visible_tags": [
+   "Agencies, trade intermediaries, or consulting firms facilitate, advise on, or assist in bypassing export license scopes or handling unauthorised third-country rerouting",
+   "Loading, unloading and transport agencies; entities that knowingly provide freight forwarding, logistics, or customs declaration services to violators exporting controlled strategic minerals",
+   "Third-party e-commerce trading platforms that facilitate illegal transactions or trade of restricted mineral items"
+  ],
+  "hidden_tags_n": 3
+ },
+ {
+  "jurisdiction": "China",
+  "name": "Announcement on the EU Foreign Subsidies Investigation Constituting Improper Extraterritorial Jurisdiction (Ministry of Justice Notice No. 5 of 2026)",
+  "date": "15/05/2026",
+  "n_impacted": "3",
+  "visible_tags": [
+   "Manufacture of high-tech screening infrastructure",
+   "Banks",
+   "Corporate legal defense practices, auditing firms, and compliance consultancies"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "China",
+  "name": "Announcement on the EU Foreign Subsidies Investigation Constituting Improper Extraterritorial Jurisdiction (Ministry of Justice Notice No.8  of 2026)",
+  "date": "19/08/2026",
+  "n_impacted": "4",
+  "visible_tags": [
+   "Large-scale e-commerce platforms and digital service conglomerates",
+   "Digital logistics infrastructure, cloud services, and enterprise software systems handling cross-border corporate information",
+   "Banks"
+  ],
+  "hidden_tags_n": 1
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-dumping proceeding concerning imports of candles, tapers and the like originating in the People’s Republic of China",
+  "date": "19/12/2024",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of candles, tapers and the like"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-dumping proceeding concerning imports of ceramic tableware and kitchenware originating in the People's Republic of China",
+  "date": "16/02/2012",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of ceramic tableware and kitchenware"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-dumping proceeding concerning imports of certain graphite electrode systems originating in the People's Republic of China",
+  "date": "17/02/2021",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of certain graphite electrode systems"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-dumping proceeding concerning imports of certain organic coated steel products originating in the People's Republic of China",
+  "date": "21/12/2012",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union Industry of certain organic coated steel products"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-Dumping Proceeding Concerning Imports of Certain Pneumatic Tyres, New or Retreaded, of Rubber of a Kind Used for Buses or Lorries with a Load Index Exceeding 121 Originating in the People's Republic of China",
+  "date": "11/08/2017",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of certain pneumatic tyres, new or retreaded, of rubber, of a kind used for buses or lorries, with a load index exceeding 121"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-dumping proceeding concerning imports of choline chloride originating in the People’s Republic of China",
+  "date": "31/10/2024",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of choline chloride"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-dumping proceeding concerning imports of decor paper originating in the People’s Republic of China",
+  "date": "14/06/2024",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of decor paper"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-dumping proceeding concerning imports of epoxy resins originating in the People’s Republic of China",
+  "date": "01/07/2024",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of epoxy resins"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-dumping proceeding concerning imports of erythritol originating in the People’s Republic of China",
+  "date": "21/11/2023",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of erythritol"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-dumping proceeding concerning imports of fused alumina originating in the People’s Republic of China",
+  "date": "21/11/2024",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of fused alumina"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-dumping proceeding concerning imports of glass fibre yarns (‘GFY’) originating in the People’s Republic of China",
+  "date": "16/02/2024",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of glass fibre yarns"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-dumping proceeding concerning imports of glyoxylic acid originating in the People’s Republic of China",
+  "date": "25/07/2024",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of glyoxylic acid"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-Dumping Proceeding Concerning Imports of Hardwood Plywood Originating in the People’s Republic of China",
+  "date": "11/10/2024",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of hardwood plywood"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-Dumping Proceeding Concerning Imports of High-Pressure Seamless Steel Cylinders Originating in the People’s Republic of China",
+  "date": "06/12/2024",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of high-pressure seamless steel cylinders"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-Dumping Proceeding Concerning Imports of Ironing Boards Originating in the People's Republic of China and Ukraine",
+  "date": "04/02/2006",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of ironing boards"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-Dumping Proceeding Concerning Imports of Lever Arch Mechanisms Originating in the People's Republic of China",
+  "date": "28/04/2005",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of lever arch mechanisms"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-Dumping Proceeding Concerning Imports of Melamine Originating in the People's Republic of China",
+  "date": "17/02/2010",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of melamine"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-Dumping Proceeding Concerning Imports of Peroxosulphates (Persulphates) Originating in the People's Republic of China",
+  "date": "17/01/2025",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of peroxosulphates (persulphates)"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-Dumping Proceeding Concerning Imports of Phosphorous Acid Originating in the People’s Republic of China",
+  "date": "19/03/2025",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of phosphorous acid"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-Dumping Proceeding Concerning Imports of Screws without Heads Originating in the People’s Republic of China",
+  "date": "17/10/2024",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of screws without head"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-Dumping Proceeding Concerning Imports of Steel Road Wheels Originating in the People's Republic of China",
+  "date": "15/02/2019",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of steel road wheels"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-Dumping Proceeding Concerning Imports of Steel Track Shoes Originating in the People’s Republic of China",
+  "date": "23/08/2024",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of steel track shoes"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-Dumping Proceeding Concerning Imports of Sweet Corn (Prepared or Preserved in Kernels) Originating in the People's Republic of China",
+  "date": "09/12/2024",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of certain prepared or preserved sweetcorn in kernel"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-Dumping Proceeding Concerning Imports of Threaded Tube or Pipe Cast Fittings, of Malleable Cast Iron Originating in the People's Republic of China, Thailand and Indonesia",
+  "date": "16/02/2012",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of threaded tube or pipe cast fittings, of malleable cast iron and spheroidal graphite cast iron"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-Dumping Proceeding Concerning Imports of Titanium Dioxide Originating in the People's Republic of China",
+  "date": "13/11/2023",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of titanium dioxide"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-Dumping Proceeding Concerning Imports of Trichloroisocyanuric Acid (TCCA) Originating in the People's Republic of China",
+  "date": "10/07/2004",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of trichloroisocyanuric acid"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-Dumping Proceeding Concerning Imports of Valine Originating in the People's Republic of China",
+  "date": "19/12/2024",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of valine"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-Dumping Proceeding Concerning Imports of Vanillin Originating in the People's Republic of China",
+  "date": "24/05/2024",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of vanillin"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-dumping proceeding concerning imports of yarns of polyamide originating in the People’s Republic of China",
+  "date": "29/07/2025",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of yarns of polyamide"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-subsidy proceeding concerning imports of certain organic coated steel products originating in the People's Republic of China",
+  "date": "22/02/2012",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union Industry of certain organic coated steel products"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-Subsidy Proceeding Concerning Imports of Mobile Access Equipment (‘MAE’), Originating in the People’s Republic of China",
+  "date": "27/03/2024",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of mobile access equipment"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-Subsidy Proceeding Concerning Imports of New Battery Electric Vehicles Designed for the Transport of Persons Originating in the People’s Republic of China",
+  "date": "04/10/2023",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of new battery electric vehicles"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Anti-Subsidy Proceeding Concerning Imports of Tyres for Buses or Lorries (New and Retreaded)",
+  "date": "14/10/2017",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Union industry of certain pneumatic tyres, new or retreaded, of rubber, of a kind used for buses or lorries, with a load index exceeding 121"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "China",
+  "name": "China Adds 14 EU Entities to Export Control List (Ministry of Commerce No.30 of 2026)",
+  "date": "24/07/2026",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Dual-use items used by the blacklisted entities"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "China",
+  "name": "China’s Position on the So-called Excess Capacity Issue",
+  "date": "28/07/2026",
+  "n_impacted": "6",
+  "visible_tags": [
+   "Chemical Products",
+   "Textile and industrial manufacturing equipment",
+   "Promoted through tech-driven innovation, \"New Three Items\" market scaling, and equalized consumer-side trade-in subsidies for both domestic and foreign-invested EV brands."
+  ],
+  "hidden_tags_n": 3
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Cloud and AI Development Act",
+  "date": "03/06/2026",
+  "n_impacted": "35",
+  "visible_tags": [
+   "Electricity",
+   "District heating and cooling",
+   "Oil"
+  ],
+  "hidden_tags_n": 32
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Commission Recommendation on Outbound Investment Screening",
+  "date": "24/01/2024",
+  "n_impacted": "3",
+  "visible_tags": [
+   "Advanced semiconductors",
+   "Artificial intelligence",
+   "Quantum technologies"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Council Recommendation on Enhancing Research Security",
+  "date": "24/01/2024",
+  "n_impacted": "2",
+  "visible_tags": [
+   "Research performing organisations",
+   "Research funding organisations"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Critical Entities Resilience Directive",
+  "date": "16/12/2020",
+  "n_impacted": "19",
+  "visible_tags": [
+   "Electricity",
+   "District heating and cooling",
+   "Oil"
+  ],
+  "hidden_tags_n": 16
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Critical Raw Materials Act",
+  "date": "16/03/2023",
+  "n_impacted": "40",
+  "visible_tags": [
+   "Bauxite/alumina/aluminium",
+   "Bismuth",
+   "Boron — metallurgy grade"
+  ],
+  "hidden_tags_n": 37
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Cyber Resilience Act",
+  "date": "15/09/2022",
+  "n_impacted": "26",
+  "visible_tags": [
+   "Identity management systems and privileged access management software and hardware, including authentication and access control readers, including biometric readers",
+   "Standalone and embedded browsers",
+   "Password managers"
+  ],
+  "hidden_tags_n": 23
+ },
+ {
+  "jurisdiction": "China",
+  "name": "Data Security Risk Assessment Rules (Decree No. 24 of the Cyberspace Administration of China, the Ministry of Industry and Information Technology, and the Ministry of Public Security)",
+  "date": "01/06/2026",
+  "n_impacted": "4",
+  "visible_tags": [
+   "Network data handlers and important data handlers operating online platforms",
+   "Network data facilities, systems, and operational log records",
+   "Third-party commercial evaluation agencies"
+  ],
+  "hidden_tags_n": 1
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Elements for a New EU Strategy on China",
+  "date": "22/06/2016",
+  "n_impacted": "17",
+  "visible_tags": [
+   "Steel Production",
+   "Aluminum",
+   "Ceramics"
+  ],
+  "hidden_tags_n": 14
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "EU Industrial Maritime Strategy",
+  "date": "04/03/2026",
+  "n_impacted": "3",
+  "visible_tags": [
+   "Maritime manufacturing and shipbuilding",
+   "Maritime transport",
+   "Defence industry"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "EU Ports Strategy",
+  "date": "04/03/2026",
+  "n_impacted": "3",
+  "visible_tags": [
+   "Port industry",
+   "Inland waterway transport",
+   "Defence industry"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "EU Steel Regulation",
+  "date": "07/10/2025",
+  "n_impacted": "26",
+  "visible_tags": [
+   "Non Alloy and Other Alloy Cold Rolled Sheets",
+   "Non Alloy and Other Alloy Hot Rolled Sheets and Strips",
+   "Electrical Sheets (Other than Grain-Oriented Electrical Steel)"
+  ],
+  "hidden_tags_n": 23
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "EU Strategy on China",
+  "date": "18/07/2016",
+  "n_impacted": "17",
+  "visible_tags": [
+   "Steel Production",
+   "Aluminum",
+   "Ceramics"
+  ],
+  "hidden_tags_n": 14
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "EU-China – A Strategic Outlook",
+  "date": "12/03/2019",
+  "n_impacted": "7",
+  "visible_tags": [
+   "Climate cooperation",
+   "Peace and security",
+   "Connectivity"
+  ],
+  "hidden_tags_n": 4
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "European Chips Act",
+  "date": "08/02/2022",
+  "n_impacted": "13",
+  "visible_tags": [
+   "Energy",
+   "Transport",
+   "Banking"
+  ],
+  "hidden_tags_n": 10
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "European Chips Act 2.0",
+  "date": "03/06/2026",
+  "n_impacted": "22",
+  "visible_tags": [
+   "Energy",
+   "Transport",
+   "Banking"
+  ],
+  "hidden_tags_n": 19
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "European Economic Security Strategy",
+  "date": "20/06/2023",
+  "n_impacted": "7",
+  "visible_tags": [
+   "Mainstream semiconductors",
+   "Automotive",
+   "Defence and space industrial base"
+  ],
+  "hidden_tags_n": 4
+ },
+ {
+  "jurisdiction": "China",
+  "name": "Export Control Measures on Superhard Materials (Ministry of Commerce and and the General Administration of Customs No.55 of 2025)",
+  "date": "09/10/2025",
+  "n_impacted": "5",
+  "visible_tags": [
+   "Non-Retail Dual-Use Superhard Material Export Agency and Compliance Services",
+   "Superhard Synthetic Diamond and Abrasive Tool Manufacturing",
+   "Semiconductor Deposition Equipment Manufacturing &amp; CVD Technology Services"
+  ],
+  "hidden_tags_n": 2
+ },
+ {
+  "jurisdiction": "China",
+  "name": "Export Control on Certain Graphite Materials, Products (Ministry of Commerce and and the General Administration of Customs No.39 of 2023)",
+  "date": "20/10/2023",
+  "n_impacted": "4",
+  "visible_tags": [
+   "Non-Retail Dual-Use Trade and Export Intermediary Services",
+   "Synthetic Graphite Anode and Advanced Carbon Materials Manufacturing",
+   "Natural Graphite Mining, Flaking and Spheronization Processing"
+  ],
+  "hidden_tags_n": 1
+ },
+ {
+  "jurisdiction": "China",
+  "name": "Export Control on Some Medium and Heavy Rare Earth Related Items (Ministry of Commerce and and the General Administration of Customs No.18 of 2025)",
+  "date": "04/04/2025",
+  "n_impacted": "5",
+  "visible_tags": [
+   "Non-Retail Dual-Use Export Agency &amp; Compliance Intermediary Services",
+   "Rare Earth Metals Smelting, Special Alloy &amp; Sputtering Target Manufacturing",
+   "Rare Earth Oxide Refinement &amp; Special Chemical Compound Manufacturing"
+  ],
+  "hidden_tags_n": 2
+ },
+ {
+  "jurisdiction": "China",
+  "name": "Export Controls on Items Related to Certain Medium and Heavy Rare Earths (Ministry of Commerce and and the General Administration of Customs No.57 of 2025)",
+  "date": "09/10/2025",
+  "n_impacted": "5",
+  "visible_tags": [
+   "Rare Earth Advanced Functional Materials and Special Alloy Manufacturing",
+   "Non-Retail Dual-Use Heavy Rare Earth Intermediary and Compliance Services",
+   "Medium and Heavy Rare Earth Compounds and High-Purity Oxides Refining"
+  ],
+  "hidden_tags_n": 2
+ },
+ {
+  "jurisdiction": "China",
+  "name": "Export Controls on Items Related to Certain Rare Earth Equipment, Raw and Auxiliary Materials (Ministry of Commerce and and the General Administration of Customs No.56 of 2025)",
+  "date": "09/10/2025",
+  "n_impacted": "5",
+  "visible_tags": [
+   "Specialised Rare Earth Smelting and Magnetics Processing Equipment Manufacturing",
+   "Non-Retail Dual-Use Processing Equipment and Critical Mineral Trade Compliance Services",
+   "Flotation Reagents and Extractants Manufacturing for Mineral Processing"
+  ],
+  "hidden_tags_n": 2
+ },
+ {
+  "jurisdiction": "China",
+  "name": "Export Controls on Items Related to Lithium Batteries and Artificial Graphite Anode Materials (Ministry of Commerce and and the General Administration of Customs No.58 of 2025)",
+  "date": "09/10/2025",
+  "n_impacted": "4",
+  "visible_tags": [
+   "High-Energy Density Lithium-Ion Battery and Energy Storage Manufacturing",
+   "Battery Cell Assembly Equipment and Manufacturing Automation",
+   "Advanced Cathode Materials and Battery Chemical Precursors Manufacturing"
+  ],
+  "hidden_tags_n": 1
+ },
+ {
+  "jurisdiction": "China",
+  "name": "Export Controls on Rare Earth-Related Technologies (Ministry of Commerce No.62 of 2025)",
+  "date": "09/10/2025",
+  "n_impacted": "5",
+  "visible_tags": [
+   "Technical Intellectual Property Licensing, Data Asset Transfer and Engineering R&amp;D Services",
+   "Specialised Industrial Equipment Field Maintenance, Debugging and Engineering Services",
+   "High-Performance Permanent Magnet Material Manufacturing and Recipe Protection"
+  ],
+  "hidden_tags_n": 2
+ },
+ {
+  "jurisdiction": "China",
+  "name": "Export Controls on Relevant Rare Earth Items of Foreign Origin (Ministry of Commerce No.61 of 2025)",
+  "date": "09/10/2025",
+  "n_impacted": "5",
+  "visible_tags": [
+   "Sub-14nm Logic, ≥256-Layer Memory and Military-Grade AI Hardware Manufacturing",
+   "Specialised Semiconductor Equipment and Rare Earth Processing Capital Goods Manufacturing",
+   "Dual-Use AI Software Architecture, Proprietary Algorithms &amp; Defense Intellectual Property Transfer Services"
+  ],
+  "hidden_tags_n": 2
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Foreign Direct Investment Screening Regulation",
+  "date": "24/01/2024",
+  "n_impacted": "54",
+  "visible_tags": [
+   "Nuclear materials, facilities and equipment",
+   "Special materials and related equipment",
+   "Materials processing"
+  ],
+  "hidden_tags_n": 51
+ },
+ {
+  "jurisdiction": "China",
+  "name": "Guidelines for Fair Overseas Competition and Compliance in Auto Industry (Ministry of Commerce's Department of Outward Investment and Economic Cooperation No. 451 of 2026)",
+  "date": "24/08/2026",
+  "n_impacted": "5",
+  "visible_tags": [
+   "Automobile Manufacturing",
+   "Automotive Merchant Wholesalers and Dealers",
+   "Satellite Telecommunications and Connected Vehicle Data Services"
+  ],
+  "hidden_tags_n": 2
+ },
+ {
+  "jurisdiction": "China",
+  "name": "Implementation Opinions on the Standardised Application and Innovative Development of AI Agents",
+  "date": "08/05/2026",
+  "n_impacted": "10",
+  "visible_tags": [
+   "AI integration into industrial robots and warehousing services",
+   "Integration of AI agents into smart agricultural machinery, and computerized CNC machine tools",
+   "Adaptation of physical chipsets and end-user terminal equipment to native Agent Interconnection Protocols"
+  ],
+  "hidden_tags_n": 7
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Industrial Accelerator Act",
+  "date": "04/03/2026",
+  "n_impacted": "21",
+  "visible_tags": [
+   "Energy-Intensive Industries",
+   "Automotive",
+   "Sustainable alternative fuels technologies"
+  ],
+  "hidden_tags_n": 18
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "International Procurement Instrument measure restricting the access of economic operators and medical devices originating in the People’s Republic of China to the European Union public procurement market for medical devices",
+  "date": "24/04/2024",
+  "n_impacted": "1",
+  "visible_tags": [
+   "Economic operators and medical devices originating in the People’s Republic of China"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "China",
+  "name": "Measures for Supply Chain Security Investigations (Ministry of Commerce Notice No. 24 of 2026)",
+  "date": "22/06/2026",
+  "n_impacted": "7",
+  "visible_tags": [
+   "International trading houses, commodity distributors, and commercial import/export brokers involved in cross-border supply chains",
+   "Freight forwarders, international shipping brokers, customs agents, and logistics coordinators",
+   "Cloud platform networks, international data transfer gateways, and cross-border data storage architectures"
+  ],
+  "hidden_tags_n": 4
+ },
+ {
+  "jurisdiction": "China",
+  "name": "More Just and Equitable Global Governance: China’s Principles, Proposals and Actions",
+  "date": "17/06/2026",
+  "n_impacted": "7",
+  "visible_tags": [
+   "Food security, sustainable agricultural technology",
+   "Public Health",
+   "Space"
+  ],
+  "hidden_tags_n": 4
+ },
+ {
+  "jurisdiction": "China",
+  "name": "National Security Probe into Imported Office Equipment Featuring Foreign Software (Ministry of Commerce No.33 of 2026)",
+  "date": "05/08/2026",
+  "n_impacted": "3",
+  "visible_tags": [
+   "Foreign-designed printing, copying, and multifunctional peripheral hardware manufacturers",
+   "Foreign-developed embedded software, firmware architectures, and device drivers",
+   "Commercial hardware"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "Net-Zero Industry Act",
+  "date": "16/03/2023",
+  "n_impacted": "19",
+  "visible_tags": [
+   "Sustainable alternative fuels technologies",
+   "Renewable fuels of non-biological origin",
+   "Nuclear fission energy technologies, including nuclear fuel cycle technologies"
+  ],
+  "hidden_tags_n": 16
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "NIS 2 Directive",
+  "date": "16/12/2020",
+  "n_impacted": "30",
+  "visible_tags": [
+   "Electricity",
+   "District heating and cooling",
+   "Oil"
+  ],
+  "hidden_tags_n": 27
+ },
+ {
+  "jurisdiction": "China",
+  "name": "Regulation on Outbound Investment (State Council Decree No. 837)",
+  "date": "17/04/2026",
+  "n_impacted": "8",
+  "visible_tags": [
+   "Entities utilising global trade networks to dispatch commodity goods, equipment, or commercial technologies overseas",
+   "Enterprises administering digital networks, outbound corporate server architecture, and cross-border informational transfers",
+   "Banking institutions backing outbound capital allocations and conducting verification of overseas capital registry compliance"
+  ],
+  "hidden_tags_n": 5
+ },
+ {
+  "jurisdiction": "China",
+  "name": "Regulations on Countermeasures against Foreign States' Unlawful Extraterritorial Jurisdiction (State Council Decree No. 835)",
+  "date": "27/03/2026",
+  "n_impacted": "7",
+  "visible_tags": [
+   "Global trading houses, bulk product distribution intermediaries, and commodity brokers",
+   "Digital gateway operators, cross-border network nodes, and database infrastructure providers",
+   "Technical assistance, software licensing compliance, and IT services"
+  ],
+  "hidden_tags_n": 4
+ },
+ {
+  "jurisdiction": "China",
+  "name": "Regulations on Exit and Entry Administration (State Council Decree No. 841)",
+  "date": "31/07/2026",
+  "n_impacted": "3",
+  "visible_tags": [
+   "Cross-border travel agencies, visa brokerages, and immigration consultancies",
+   "Technology",
+   "Research"
+  ],
+  "hidden_tags_n": 0
+ },
+ {
+  "jurisdiction": "China",
+  "name": "Regulations on the Security of Industrial and Supply Chains (State Council Decree No. 834)",
+  "date": "13/03/2026",
+  "n_impacted": "7",
+  "visible_tags": [
+   "Manufacturers of hardware networks have to build localised risk insulation systems",
+   "Critical machinery",
+   "Bulk trade intermediaries, technology distributors, and commercial equipment brokers handling cross-border critical material flows"
+  ],
+  "hidden_tags_n": 4
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "RESourceEU Action Plan",
+  "date": "03/12/2025",
+  "n_impacted": "40",
+  "visible_tags": [
+   "Bauxite/alumina/aluminium",
+   "Bismuth",
+   "Boron — metallurgy grade"
+  ],
+  "hidden_tags_n": 37
+ },
+ {
+  "jurisdiction": "China",
+  "name": "Suspension of Certain of the Export Control Measures (Ministry of Commerce and and the General Administration of Customs No.70 of 2025, temporarily suspending Ministry of Commerce and and the General Administration of Customs Announcements No. 55, 56, 57, and 58 of 2025, as well as Ministry of Commerce Announcements No. 61 and 62 of 2025)",
+  "date": "07/11/2025",
+  "n_impacted": "30",
+  "visible_tags": [
+   "Non-Retail Dual-Use Superhard Material Export Agency and Compliance Services",
+   "Superhard Synthetic Diamond and Abrasive Tool Manufacturing",
+   "Semiconductor Deposition Equipment Manufacturing &amp; CVD Technology Services"
+  ],
+  "hidden_tags_n": 27
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "The Cybersecurity Act 2",
+  "date": "20/01/2026",
+  "n_impacted": "30",
+  "visible_tags": [
+   "Electricity",
+   "District heating and cooling",
+   "Oil"
+  ],
+  "hidden_tags_n": 27
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "The EU Strategy for Cooperation in the Indo-Pacific",
+  "date": "16/09/2021",
+  "n_impacted": "6",
+  "visible_tags": [
+   "Research and innovation",
+   "Pharmaceutical and health-related industrial supply chains",
+   "Green technology"
+  ],
+  "hidden_tags_n": 3
+ },
+ {
+  "jurisdiction": "China",
+  "name": "The National Health Plan for the 15th Five-Year Plan Period",
+  "date": "07/07/2026",
+  "n_impacted": "6",
+  "visible_tags": [
+   "Integrated Tiered Medical Services and Specialised Hospital Networks",
+   "Innovative Biopharmaceuticals and Traditional Chinese Medicine Manufacturing",
+   "High-End Medical Equipment and Brain-Computer Interface Manufacturing"
+  ],
+  "hidden_tags_n": 3
+ },
+ {
+  "jurisdiction": "China",
+  "name": "The Plan on implementing the Employment-first Strategy (The State Council 2026 No.16)",
+  "date": "11/06/2026",
+  "n_impacted": "5",
+  "visible_tags": [
+   "AI Bases, Vocational Placement and Market Integrity",
+   "\"AI+\" Deployment and Algorithmic Transparency",
+   "Vocational training, enterprise-led apprenticeship models, and university curricula alignment of with strategic emerging industries"
+  ],
+  "hidden_tags_n": 2
+ },
+ {
+  "jurisdiction": "EU",
+  "name": "White Paper on Export Controls",
+  "date": "24/01/2024",
+  "n_impacted": "10",
+  "visible_tags": [
+   "Nuclear materials, facilities and equipment",
+   "Special materials and related equipment",
+   "Materials processing"
+  ],
+  "hidden_tags_n": 7
+ }
+]
