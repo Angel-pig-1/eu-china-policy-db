@@ -37,6 +37,7 @@ main{flex:1;display:flex;overflow:hidden}
 .entry .head{display:flex;gap:8px;align-items:baseline}
 .flag{font-size:10.5px;padding:2px 7px;border-radius:2px;font-weight:700;letter-spacing:1px;flex-shrink:0}
 .flag.EU{background:#e3e9f7;color:var(--eu)}.flag.CN{background:#f6e3e3;color:var(--cn)}
+.extag{font-size:10px;padding:2px 6px;border-radius:2px;background:#f3e8d8;color:var(--acc-d);font-weight:700;margin-left:4px}
 .entry .date{font-size:11px;color:var(--ink2);font-family:ui-monospace,monospace}
 .entry .name{font-size:13.5px;line-height:1.5;margin-top:4px;font-weight:500}
 .entry .ename{font-size:11px;color:var(--ink2);line-height:1.45;margin-top:2px}
@@ -69,6 +70,7 @@ main{flex:1;display:flex;overflow:hidden}
   <div class="links">
     <a href="index.html" data-pg="home">封面</a>
     <a href="policies.html" data-pg="policies">政策库</a>
+    <a href="essays.html" data-pg="essays">智库文摘</a>
     <a href="stats.html" data-pg="stats">数据总览</a>
   </div>
 </nav>
@@ -104,7 +106,7 @@ function render(){
   listEl.innerHTML=rows.map(r=>{
     const hasZh=r.nameZh&&r.nameZh!==r.name;
     return `<div class="entry" data-id="${r.id}">
-    <div class="head"><span class="flag ${r.side}">${r.side==='EU'?'EU':'CN'}</span><span class="date">${r.date||'—'}</span></div>
+    <div class="head"><span class="flag ${r.side}">${r.side==='EU'?'EU':'CN'}</span>${r.source==='ext'?'<span class="extag">延伸</span>':''}<span class="date">${r.date||'—'}</span></div>
     <div class="name">${esc(hasZh?r.nameZh:r.name)}</div>
     ${hasZh?`<div class="ename">${esc(r.name)}</div>`:''}</div>`}).join('');
   listEl.querySelectorAll('.entry').forEach(e=>e.onclick=()=>show(e.dataset.id));
@@ -116,7 +118,7 @@ function show(id){
   metaEl.innerHTML=`<h2>${esc(r.nameZh||r.name)}</h2>
     <div class="en-name">${esc(r.name)}</div>
     <div class="meta-grid">
-      <div><b>侧别 · 日期</b>${r.side==='EU'?'🇪🇺 欧盟':'🇨🇳 中国'} · ${r.date||'—'}</div>
+      <div><b>侧别 · 日期</b>${r.side==='EU'?'🇪🇺 欧盟':'🇨🇳 中国'} · ${r.date||'—'}${r.source==='ext'?' · <span style="color:var(--acc-d)">本站延伸收录</span>':''}</div>
       <div><b>状态</b>${esc(r.statusZh||'')}
         ${r.status?`<span class="en">${esc(r.status)}</span>`:''}</div>
       <div style="grid-column:1/-1"><b>背景</b>${esc(r.backgroundZh||'')}

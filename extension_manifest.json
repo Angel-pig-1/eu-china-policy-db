@@ -1,0 +1,171 @@
+[
+ {
+  "id": "ext-01",
+  "side": "CN",
+  "date": "2026-10-03",
+  "name": "Anti-dumping investigation on imports of para-nitrotoluene (PNT) originating in the European Union",
+  "cnLabel": "商务部公告2026年第44号：对原产于欧盟的进口对硝基甲苯发起反倾销立案调查",
+  "url": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_97459d25c9174ec4a9679b689eb495a5.html",
+  "file": "2026-10-03_CN_商务部公告2026年第44号_对欧盟对硝基甲苯反倾销立案.html",
+  "status": "Investigation initiated (MOFCOM Announcement No. 44 of 2026)",
+  "background": "Following petitions by Jiangsu Huaihe Chemical and Hubei Oriental Chemical, MOFCOM initiated an anti-dumping investigation on EU-origin para-nitrotoluene (PNT, HS 2904.2020). Applicants allege dumping with import prices falling nearly 60% between 2022 and 2025 and material injury to domestic producers. The move also responds to the EU's trade remedy activity — per MOFCOM, the EU launched 28 trade remedy investigations against China since 2025.",
+  "implication": "A rare Chinese trade-remedy initiation against the EU (rather than pure defence), marking an expansion of the countermeasure toolkit from export controls towards symmetric trade defence. EU PNT exports to China face uncertain tariff prospects as the probe proceeds.",
+  "framings": [
+   "Trade defence"
+  ],
+  "industries": [
+   "C20 化学品"
+  ],
+  "impacted": 1
+ },
+ {
+  "id": "ext-02",
+  "side": "CN",
+  "date": "2026-10-16",
+  "name": "MOFCOM & MOST Announcement No. 48 of 2026: public consultation on revising the Catalogue of Technologies Prohibited and Restricted from Export, with interim registration management for related technology exports",
+  "cnLabel": "商务部 科技部公告2026年第48号：就修订《中国禁止出口限制出口技术目录》公开征求意见并对相关技术出口实施临时登记管理",
+  "url": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_0a31a3c9ac404f7a9b0e917ce3412997.html",
+  "file": "2026-10-16_CN_商务部科技部公告2026年第48号_禁限出口技术目录修订征求意见.html",
+  "status": "Public consultation + interim registration in force",
+  "background": "MOFCOM and the Ministry of Science and Technology jointly opened public consultation on revising the Catalogue of Technologies Prohibited and Restricted from Export, while imposing interim registration requirements on exports of related technologies (~40 items). A systemic move to refine the export control architecture, mirroring US technology export control adjustments.",
+  "implication": "Technology exports shift from pure licensing towards a dual licensing-plus-registration track; once revised, some technologies may be listed as prohibited or restricted. Compliance costs rise for outbound technology licensing and international R&D collaboration.",
+  "framings": [
+   "Export control"
+  ],
+  "industries": [
+   "L72 信息技术服务"
+  ],
+  "impacted": 1
+ },
+ {
+  "id": "ext-03",
+  "side": "CN",
+  "date": "2026-10-19",
+  "name": "Announcement No. 49 of 2026 (MOFCOM/GACC/CMC Equipment Development Dept): optimized export controls on unmanned aerial vehicle (UAV) items",
+  "cnLabel": "商务部 海关总署 中央军委装备发展部公告2026年第49号：优化调整无人机相关物项出口管制措施",
+  "url": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_f71c27f81b8f4097b876818abbd19851.html",
+  "file": "2026-10-19_CN_公告2026年第49号_无人机物项出口管制优化调整.html",
+  "status": "Adopted 2026-10-19, effective 2026-11-18",
+  "background": "Three agencies jointly published optimized export controls on UAV items, refining the scope into a 13-category parameter-based list. An institutional upgrade of earlier interim controls, addressing international proliferation concerns while accommodating legitimate trade.",
+  "implication": "Licensing controls on high-performance UAVs, with facilitation measures: self-export via registration vouchers, exhibition re-shipment exemptions, and general licences. Compliance paths clarify for dual-use UAV firms and legitimate trade clearance improves.",
+  "framings": [
+   "Export control"
+  ],
+  "industries": [
+   "C30 其他交通设备"
+  ],
+  "impacted": 1
+ },
+ {
+  "id": "ext-04",
+  "side": "CN",
+  "date": "2026-10-19",
+  "name": "Announcement No. 50 of 2026 (MOFCOM/GACC): export controls on tunnel boring machines (TBMs) and related items",
+  "cnLabel": "商务部 海关总署公告2026年第50号：对盾构机等物项实施出口管制",
+  "url": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_9ce34ccf6c040d7a4f7622f89133be5.html",
+  "file": "2026-10-19_CN_公告2026年第50号_盾构机等物项出口管制.html",
+  "status": "Adopted 2026-10-19, effective 2026-11-18; dual-use list updated concurrently",
+  "background": "With State Council approval, MOFCOM and GACC imposed export controls on full-face tunnel boring machines (EPB/slurry TBMs and hard-rock TBMs), walking excavators and plateau wet-spray machines plus components and technology. Exports to sensitive countries/regions in dispute with China require licences; exports elsewhere proceed via registration-based export vouchers.",
+  "implication": "First systemic controls on core global infrastructure equipment, pioneering a tiered model of \"licence for disputing states, registration for others\". Declarations must state dual-use status and parameters; customs can challenge doubtful filings and hold goods during challenge.",
+  "framings": [
+   "Export control"
+  ],
+  "industries": [
+   "C28 机械设备"
+  ],
+  "impacted": 1
+ },
+ {
+  "id": "ext-05",
+  "side": "CN",
+  "date": "2026-10-19",
+  "name": "Announcement No. 51 of 2026 (MOFCOM/GACC): optimized export controls on dredger-related items",
+  "cnLabel": "商务部 海关总署公告2026年第51号：优化调整挖泥船相关物项出口管制措施",
+  "url": "http://www.ce.cn/xwzx/gnsz/gdxw/202610/t20261019_3263990.shtml",
+  "file": "2026-10-19_CN_公告2026年第51号_挖泥船物项出口管制优化调整.html",
+  "status": "Adopted 2026-10-19, effective 2026-11-18",
+  "background": "MOFCOM and GACC published optimized export controls on dredger-related items, forming a same-day \"quartet\" of export control announcements with UAVs (No. 49) and TBMs (No. 50), plus challenge/differentiation procedures (No. 52). Dredgers involve port construction, land reclamation and military engineering capability — typical dual-use infrastructure equipment.",
+  "implication": "The scope and procedures for dredger controls are clarified and optimized; exporters must check items against the new list and fulfil licensing or registration obligations. Together with Nos. 49 and 50, a complete control chain for heavy engineering equipment exports.",
+  "framings": [
+   "Export control"
+  ],
+  "industries": [
+   "C34 船舶制造"
+  ],
+  "impacted": 1
+ },
+ {
+  "id": "ext-06",
+  "side": "CN",
+  "date": "2026-10-19",
+  "name": "Announcement No. 52 of 2026 (MOFCOM/GACC): further optimizing challenge and differentiation procedures for dual-use item export controls",
+  "cnLabel": "商务部 海关总署公告2026年第52号：进一步优化两用物项出口管制质疑和鉴别工作有关事项",
+  "url": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_bd9c3f79b64e4700bede88d06edac2d4.html",
+  "file": "2026-10-19_CN_公告2026年第52号_两用物项质疑鉴别程序优化.html",
+  "status": "In force from publication (2026-10-19); repeals GACC Announcement No. 123 of 2025",
+  "background": "To promote compliant trade and facilitate exports, MOFCOM and GACC systematized customs challenge and differentiation procedures for dual-use items: formal challenge notices, 7 working days for shippers to submit materials, 15 working days for customs determination and 15 for MOFCOM expert differentiation, with standardized document templates.",
+  "implication": "Procedural legalization constrains both customs discretion (time-bound decisions) and shipper obligations (truthful materials, no obstruction). Cross-border e-commerce, passenger baggage, mail and express channels are all covered — the control net spans every exit channel.",
+  "framings": [
+   "Export control"
+  ],
+  "industries": [],
+  "impacted": 0
+ },
+ {
+  "id": "ext-07",
+  "side": "EU",
+  "date": "2026-10-16",
+  "name": "Notice of initiation of an anti-dumping investigation on imports of furfuryl alcohol originating in the People's Republic of China (Case AD763, Notice C/2026/5408)",
+  "cnLabel": "欧盟官方公报 C/2026/5408：对华糠醇反倾销立案调查（案号AD763）",
+  "url": "http://data.europa.eu/eli/C/2026/5408/oj",
+  "file": "2026-10-16_EU_糠醇反倾销立案AD763_C-2026-5408.pdf",
+  "status": "Investigation initiated 2026-10-16; sampling responses due 7 days from publication",
+  "background": "Acting on a complaint by TransFurans Chemicals BV and International Furan Chemicals BV (filed 2 September 2026), the Commission initiated an anti-dumping investigation on furfuryl alcohol from China (CAS 98-00-0, CN ex 2932 13 00). The investigation period for dumping and injury is 1 July 2025 – 30 June 2026, with injury trends examined from 1 January 2023. The notice envisages early import registration.",
+  "implication": "Furfuryl alcohol is a key feedstock for furan resins. Sampling responses are due within 7 days of publication (late filing treated as non-cooperation) and product-scope comments within 10 days — tight deadlines for Chinese exporters. Both complainants are Belgian; the case is small but continues the EU's enforcement density on Chinese chemicals.",
+  "framings": [
+   "Trade defence"
+  ],
+  "industries": [
+   "C20 化学品"
+  ],
+  "impacted": 1
+ },
+ {
+  "id": "ext-08",
+  "side": "EU",
+  "date": "2026-10-19",
+  "name": "Commission Implementing Regulation (EU) 2026/2314 repealing the definitive anti-dumping duty on solar glass from China following an expiry review",
+  "cnLabel": "实施条例(EU) 2026/2314：期满复审后废止对华太阳能玻璃反倾销税",
+  "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=OJ:L_202602314",
+  "file": "2026-10-19_EU_太阳能玻璃反倾销税废止_条例2026-2314.pdf",
+  "status": "Regulation of 19 Oct 2026, published 21 Oct, in force 22 Oct 2026",
+  "background": "The Commission repealed the anti-dumping duty on Chinese solar glass following an expiry review initiated on 22 July 2025. The measures dated from 2014 (Implementing Regulation 470/2014) and were extended in 2020 (1080/2020), with rates of 17.5%–75.4% and 67.1% for all other companies. Adopted and effective the same day as the countervailing-duty repeal (Regulation 2310).",
+  "implication": "The twin trade-defence walls on Chinese solar glass fall together, ending 12 years of tariffs. Solar glass accounts for 12–18% of module production costs, benefiting downstream makers; duties paid on goods cleared since the review initiation (22 July 2025) are repayable on request.",
+  "framings": [
+   "Trade defence"
+  ],
+  "industries": [
+   "C23 非金属矿物"
+  ],
+  "impacted": 1
+ },
+ {
+  "id": "ext-09",
+  "side": "EU",
+  "date": "2026-10-19",
+  "name": "Commission Implementing Regulation (EU) 2026/2310 repealing the definitive countervailing duty on solar glass from China — Union production at zero",
+  "cnLabel": "实施条例(EU) 2026/2310：期满复审后废止对华太阳能玻璃反补贴税（欧盟产业已归零）",
+  "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=OJ:L_202602310",
+  "file": "2026-10-19_EU_太阳能玻璃反补贴税废止_条例2026-2310.pdf",
+  "status": "Regulation of 19 Oct 2026, published 21 Oct, in force 22 Oct 2026",
+  "background": "In its expiry review the Commission found that Union solar glass production had ceased entirely during the review period with no verifiable prospect of restart — no \"Union industry\" existed in the regulation's sense, so the duties no longer had anything to protect. Subsidization and dumping persisted, but user industries (module makers) unanimously opposed continuation, arguing the duties \"act de facto as a tax\" absent domestic production. Rates had been 3.2%–17.1%.",
+  "implication": "A textbook case: the industry the duties protected disappeared, leaving the measures as pure cost pass-through. The Commission followed the Union-interest test rather than protectionist inertia — a reverse sample for the \"instrumentalization of normative power\" argument: when the nominal object of protection no longer exists, the EU still chooses repeal.",
+  "framings": [
+   "Trade defence"
+  ],
+  "industries": [
+   "C23 非金属矿物"
+  ],
+  "impacted": 1
+ }
+]
