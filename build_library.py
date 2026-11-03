@@ -11,7 +11,7 @@ build_library.py — 把欧洲研究资料库 01/02/03 的文献资料按「政�
   5. 按资料类型与精简主题分类生成 library_data.js，合并已核验的文献元数据
   6. 全站导航: 「智库文摘」→「文献库」; 删除 essays.html
 """
-import os, re, sys, json, hashlib, shutil, subprocess, html as htmllib
+import os, re, sys, json, hashlib, shutil, subprocess, unicodedata, html as htmllib
 
 ROOT = os.path.expanduser("~/Desktop/欧洲研究资料库")
 REPO = os.path.join(ROOT, "04_中欧经贸交锋追踪/ICES政策数据库")
@@ -272,6 +272,7 @@ def md_to_html(src, dst, title):
 def main():
     entries, skipped, comp_log, removed = [], [], [], []
     seen_hashes = {}
+    seen_titles = {}
     meta_path = os.path.join(REPO, "library_metadata.json")
     metadata = json.load(open(meta_path, encoding="utf-8")) if os.path.exists(meta_path) else {}
     for dirname, cid, cname in COLLS:
@@ -367,6 +368,19 @@ def main():
                     entries.remove(previous)
                     removed.append(previous["src"])
                 seen_hashes[digest] = e
+                normalized_title = re.sub(r"[\W_]+", "", unicodedata.normalize("NFKC", e["title"]).lower())
+                title_key = (normalized_title, e["year"], e.get("authors", ""))
+                if len(normalized_title) >= 12 and normalized_title not in {"index", "readme"} and title_key in seen_titles:
+                    previous = seen_titles[title_key]
+                    if source_priority(e["src"]) <= source_priority(previous["src"]):
+                        os.remove(tgt)
+                        removed.append(e["src"])
+                        continue
+                    old_tgt = os.path.join(REPO, previous["file"])
+                    if os.path.exists(old_tgt): os.remove(old_tgt)
+                    entries.remove(previous)
+                    removed.append(previous["src"])
+                seen_titles[title_key] = e
                 entries.append(e)
     entries.sort(key=lambda x: (x["coll"], x["date"] or "9999", x["title"]))
     # 写数据
