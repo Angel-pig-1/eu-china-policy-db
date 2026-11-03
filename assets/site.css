@@ -130,18 +130,19 @@ html.dark :focus-visible { outline-color: var(--accent); }
   gap: 12px;
   flex-shrink: 0;
 }
-.brand-mark { width: 44px; height: 44px; flex-shrink: 0; object-fit: contain; border-radius: 50%; }
+.brand-mark { width: 52px; height: 52px; flex-shrink: 0; object-fit: contain; border-radius: 50%; }
+html.dark .brand-mark { filter: invert(1); }
 .brand-text { display: flex; flex-direction: column; line-height: 1.1; }
 .brand-name {
   font-family: var(--serif);
   font-weight: 700;
-  font-size: 19px;
+  font-size: 22px;
   letter-spacing: 0.06em;
 }
 .brand-sub {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--faint);
-  letter-spacing: 0.18em;
+  letter-spacing: 0.14em;
   font-family: var(--mono);
 }
 .main-nav { margin-left: auto; }

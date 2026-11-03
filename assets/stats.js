@@ -58,7 +58,7 @@
   });
 
   /* ---------- 指标 ---------- */
-  document.getElementById('stats-asof').textContent = '数据截至 ' + latest.date + ' · 所有数字由数据文件运行时计算';
+  document.getElementById('stats-asof').textContent = '数据截至 ' + latest.date;
   document.getElementById('stats-grid').innerHTML = [
     { num: nPol, lbl: '政策总数' },
     { num: nEU, lbl: 'EU 政策' },
