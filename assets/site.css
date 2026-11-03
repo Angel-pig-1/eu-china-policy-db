@@ -944,9 +944,9 @@ html.dark .coll-cell .coll-no { color: var(--accent); }
 .diverging-row .y-label { font-family: var(--mono); font-size: 11.5px; color: var(--muted); text-align: center; }
 .dv-track { position: relative; height: 13px; }
 .dv-track.cn { direction: rtl; }
-.dv-bar { height: 100%; background: var(--eu); min-width: 2px; transition: opacity 160ms var(--ease); }
+.dv-bar { display: block; height: 100%; background: var(--eu); min-width: 2px; transition: opacity 160ms var(--ease); }
 .dv-bar.cn { background: var(--cn); }
-.dv-link { display: block; }
+.dv-link { display: block; height: 100%; }
 .dv-link:hover .dv-bar { opacity: 0.72; }
 .dv-count { font-family: var(--mono); font-size: 11px; color: var(--faint); }
 .diverging-axis {
@@ -977,7 +977,7 @@ html.dark .coll-cell .coll-no { color: var(--accent); }
   white-space: nowrap;
 }
 .rank-row .rank-bar-track { height: 12px; background: var(--surface-2); position: relative; }
-.rank-row .rank-bar { height: 100%; background: var(--eu); min-width: 2px; transition: opacity 160ms var(--ease); }
+.rank-row .rank-bar { display: block; height: 100%; background: var(--eu); min-width: 2px; transition: opacity 160ms var(--ease); }
 .rank-row.cn .rank-bar { background: var(--cn); }
 .rank-row.neutral .rank-bar { background: var(--accent); }
 .rank-row:hover .rank-bar { opacity: 0.72; }
@@ -987,7 +987,7 @@ html.dark .coll-cell .coll-no { color: var(--accent); }
 .donut-wrap { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
 .donut-svg { width: 168px; height: 168px; flex-shrink: 0; }
 .donut-legend { display: flex; flex-direction: column; gap: 10px; }
-.donut-legend a { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+.donut-legend a { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink); }
 .donut-legend .dot { width: 10px; height: 10px; border-radius: 50%; }
 .donut-legend .dot.eu { background: var(--eu); }
 .donut-legend .dot.cn { background: var(--cn); }
@@ -1003,7 +1003,7 @@ html.dark .coll-cell .coll-no { color: var(--accent); }
   border-bottom: 1px solid var(--line);
 }
 .compact-item .ci-date { font-family: var(--mono); font-size: 11.5px; color: var(--faint); white-space: nowrap; }
-.compact-item .ci-title { font-size: 13.5px; font-family: var(--serif); font-weight: 700; }
+.compact-item .ci-title { font-size: 13.5px; font-family: var(--serif); font-weight: 700; color: var(--ink); }
 
 /* ==========================================================================
    响应式
