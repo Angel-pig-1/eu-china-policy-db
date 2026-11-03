@@ -24,8 +24,8 @@
 | 7 | 🇨🇳 | 2026-06-24 | Announcement on Further Improving the Handling of Reports of Violations and | 2026-06-24_CN_商务部公告2026年第26号_公布关于进一步完善战略矿产两用物项出口管制违法违规行为举报处理工作有关事项.htm |
 | 8 | 🇨🇳 | 2026-05-15 | Announcement on the EU Foreign Subsidies Investigation Constituting Imprope | 2026-05-15_CN_司法部发布关于欧盟外国补贴调查相关做法构成不当域外管辖的公告.html |
 | 9 | 🇨🇳 | 2026-08-19 | Announcement on the EU Foreign Subsidies Investigation Constituting Imprope | 2026-08-19_CN_司法部发布关于欧盟外国补贴调查相关做法构成不当域外管辖的公告.html |
-| 10 | 🇪🇺 | 2024-12-19 | Anti-dumping proceeding concerning imports of candles, tapers and the like  | 2024-12-19_EU_Anti-Dumping_Proceeding_Concerning_Imports_of_Valine_Or. |
-| 11 | 🇪🇺 | 2012-02-16 | Anti-dumping proceeding concerning imports of ceramic tableware and kitchen | 2012-02-16_EU_Anti-Dumping_Proceeding_Concerning_Imports_of_Threaded_. |
+| 10 | 🇪🇺 | 2024-12-19 | Anti-dumping proceeding concerning imports of candles, tapers and the like  | 2024-12-19_EU_Anti-dumping_proceeding_concerning_imports_of_candles_t.pdf |
+| 11 | 🇪🇺 | 2012-02-16 | Anti-dumping proceeding concerning imports of ceramic tableware and kitchen | 2012-02-16_EU_Anti-dumping_proceeding_concerning_imports_of_ceramic_t.pdf |
 | 12 | 🇪🇺 | 2021-02-17 | Anti-dumping proceeding concerning imports of certain graphite electrode sy | 2021-02-17_EU_Anti-dumping_proceeding_concerning_imports_of_certain_g. |
 | 13 | 🇪🇺 | 2012-12-21 | Anti-dumping proceeding concerning imports of certain organic coated steel  | 2012-12-21_EU_Anti-dumping_proceeding_concerning_imports_of_certain_o. |
 | 14 | 🇪🇺 | 2017-08-11 | Anti-Dumping Proceeding Concerning Imports of Certain Pneumatic Tyres, New  | 2017-08-11_EU_Anti-Dumping_Proceeding_Concerning_Imports_of_Certain_P. |
@@ -61,48 +61,48 @@
 | 44 | 🇨🇳 | 2026-07-28 | China’s Position on the So-called Excess Capacity Issue | 2026-07-28_CN_关于所谓“产能过剩”问题的中方立场.html |
 | 45 | 🇪🇺 | 2026-06-03 | Cloud and AI Development Act | 2026-06-03_EU_Cloud_and_AI_Development_Act.html |
 | 46 | 🇪🇺 | 2024-01-24 | Commission Recommendation on Outbound Investment Screening | 2024-01-24_EU_Commission_Recommendation_on_Outbound_Investment_Screen. |
-| 47 | 🇪🇺 | 2024-01-24 | Council Recommendation on Enhancing Research Security | 2024-01-24_EU_Commission_Recommendation_on_Outbound_Investment_Screen. |
+| 47 | 🇪🇺 | 2024-01-24 | Council Recommendation on Enhancing Research Security | 2024-01-24_EU_Council_Recommendation_on_Enhancing_Research_Security.pdf |
 | 48 | 🇪🇺 | 2020-12-16 | Critical Entities Resilience Directive | 2020-12-16_EU_Critical_Entities_Resilience_Directive.pdf |
 | 49 | 🇪🇺 | 2023-03-16 | Critical Raw Materials Act | 2023-03-16_EU_Critical_Raw_Materials_Act.pdf |
 | 50 | 🇪🇺 | 2022-09-15 | Cyber Resilience Act | 2022-09-15_EU_Cyber_Resilience_Act.pdf |
 | 51 | 🇨🇳 | 2026-06-01 | Data Security Risk Assessment Rules (Decree No. 24 of the Cyberspace Admini | 2026-06-01_CN_网络数据安全风险评估办法.html |
 | 52 | 🇪🇺 | 2016-06-22 | Elements for a New EU Strategy on China | 2016-06-22_EU_Elements_for_a_New_EU_Strategy_on_China.pdf |
 | 53 | 🇪🇺 | 2026-03-04 | EU Industrial Maritime Strategy | 2026-03-04_EU_EU_Industrial_Maritime_Strategy.pdf |
-| 54 | 🇪🇺 | 2026-03-04 | EU Ports Strategy | 2026-03-04_EU_EU_Industrial_Maritime_Strategy.pdf |
+| 54 | 🇪🇺 | 2026-03-04 | EU Ports Strategy | 2026-03-04_EU_EU_Ports_Strategy.pdf |
 | 55 | 🇪🇺 | 2025-10-07 | EU Steel Regulation | 2025-10-07_EU_EU_Steel_Regulation.pdf |
 | 56 | 🇪🇺 | 2016-07-18 | EU Strategy on China | 2016-07-18_EU_EU_Strategy_on_China.pdf |
 | 57 | 🇪🇺 | 2019-03-12 | EU-China – A Strategic Outlook | 2019-03-12_EU_EU-China_A_Strategic_Outlook.pdf |
 | 58 | 🇪🇺 | 2022-02-08 | European Chips Act | 2022-02-08_EU_European_Chips_Act.pdf |
-| 59 | 🇪🇺 | 2026-06-03 | European Chips Act 2.0 | 2026-06-03_EU_Cloud_and_AI_Development_Act.html |
+| 59 | 🇪🇺 | 2026-06-03 | European Chips Act 2.0 | 2026-06-03_EU_European_Chips_Act_2.0.html |
 | 60 | 🇪🇺 | 2023-06-20 | European Economic Security Strategy | 2023-06-20_EU_European_Economic_Security_Strategy.pdf |
 | 61 | 🇨🇳 | 2025-10-09 | Export Control Measures on Superhard Materials (Ministry of Commerce and an | 2025-10-09_CN_商务部_海关总署公告2025年第55号_公布对超硬材料相关物项实施出口管制的决定.html |
 | 62 | 🇨🇳 | 2023-10-20 | Export Control on Certain Graphite Materials, Products (Ministry of Commerc | 2023-10-20_CN_商务部_海关总署公告2023年第39号_关于优化调整石墨物项临时出口管制措施的公告.html |
 | 63 | 🇨🇳 | 2025-04-04 | Export Control on Some Medium and Heavy Rare Earth Related Items (Ministry  | 2025-04-04_CN_Announcement_No.18_of_2025_of_The_Ministry_of_Commerce_a |
-| 64 | 🇨🇳 | 2025-10-09 | Export Controls on Items Related to Certain Medium and Heavy Rare Earths (M | 2025-10-09_CN_商务部_海关总署公告2025年第55号_公布对超硬材料相关物项实施出口管制的决定.html |
-| 65 | 🇨🇳 | 2025-10-09 | Export Controls on Items Related to Certain Rare Earth Equipment, Raw and A | 2025-10-09_CN_商务部_海关总署公告2025年第55号_公布对超硬材料相关物项实施出口管制的决定.html |
-| 66 | 🇨🇳 | 2025-10-09 | Export Controls on Items Related to Lithium Batteries and Artificial Graphi | 2025-10-09_CN_商务部_海关总署公告2025年第55号_公布对超硬材料相关物项实施出口管制的决定.html |
-| 67 | 🇨🇳 | 2025-10-09 | Export Controls on Rare Earth-Related Technologies (Ministry of Commerce No | 2025-10-09_CN_商务部_海关总署公告2025年第55号_公布对超硬材料相关物项实施出口管制的决定.html |
-| 68 | 🇨🇳 | 2025-10-09 | Export Controls on Relevant Rare Earth Items of Foreign Origin (Ministry of | 2025-10-09_CN_商务部_海关总署公告2025年第55号_公布对超硬材料相关物项实施出口管制的决定.html |
-| 69 | 🇪🇺 | 2024-01-24 | Foreign Direct Investment Screening Regulation | 2024-01-24_EU_Commission_Recommendation_on_Outbound_Investment_Screen. |
+| 64 | 🇨🇳 | 2025-10-09 | Export Controls on Items Related to Certain Medium and Heavy Rare Earths (M | 2025-10-09_CN_商务部_海关总署公告2025年第57号_公布对部分中重稀土相关物项实施出口管制的决定.html |
+| 65 | 🇨🇳 | 2025-10-09 | Export Controls on Items Related to Certain Rare Earth Equipment, Raw and A | 2025-10-09_CN_商务部_海关总署公告2025年第56号_公布对部分稀土设备和原辅料相关物项实施出口管制的决定.html |
+| 66 | 🇨🇳 | 2025-10-09 | Export Controls on Items Related to Lithium Batteries and Artificial Graphi | 2025-10-09_CN_商务部_海关总署公告2025年第58号_公布对锂电池和人造石墨负极材料相关物项实施出口管制的决定.html |
+| 67 | 🇨🇳 | 2025-10-09 | Export Controls on Rare Earth-Related Technologies (Ministry of Commerce No | 2025-10-09_CN_商务部公告2025第62号_公布对稀土相关技术实施出口管制的决定.html |
+| 68 | 🇨🇳 | 2025-10-09 | Export Controls on Relevant Rare Earth Items of Foreign Origin (Ministry of | 2025-10-09_CN_商务部公告2025第61号_公布对境外相关稀土物项实施出口管制的决定.html |
+| 69 | 🇪🇺 | 2024-01-24 | Foreign Direct Investment Screening Regulation | 2024-01-24_EU_Foreign_Direct_Investment_Screening_Regulation.pdf |
 | 70 | 🇨🇳 | 2026-08-24 | Guidelines for Fair Overseas Competition and Compliance in Auto Industry (M | 2026-08-24_CN_商务部_工业和信息化部_市场监管总局关于印发《汽车行业境外竞争行为与合规建设指引》的通知.html |
 | 71 | 🇨🇳 | 2026-05-08 | Implementation Opinions on the Standardised Application and Innovative Deve | 2026-05-08_CN_智能体规范应用与创新发展实施意见.html |
-| 72 | 🇪🇺 | 2026-03-04 | Industrial Accelerator Act | 2026-03-04_EU_EU_Industrial_Maritime_Strategy.pdf |
+| 72 | 🇪🇺 | 2026-03-04 | Industrial Accelerator Act | 2026-03-04_EU_Industrial_Accelerator_Act.html |
 | 73 | 🇪🇺 | 2024-04-24 | International Procurement Instrument measure restricting the access of econ | 2024-04-24_EU_International_Procurement_Instrument_medical_devices.pdf |
 | 74 | 🇨🇳 | 2026-06-22 | Measures for Supply Chain Security Investigations (Ministry of Commerce Not | 2026-06-22_CN_商务部公告2026年第24号_公布《产业链供应链安全调查工作办法》.html |
 | 75 | 🇨🇳 | 2026-06-17 | More Just and Equitable Global Governance: China’s Principles, Proposals an | 2026-06-17_CN_More_Just_and_Equitable_Global_Governance_China’s_Princi |
 | 76 | 🇨🇳 | 2026-08-05 | National Security Probe into Imported Office Equipment Featuring Foreign So | 2026-08-05_CN_公布对相关进口打印复印办公设备发起对外贸易国家安全立案调查.html |
-| 77 | 🇪🇺 | 2023-03-16 | Net-Zero Industry Act | 2023-03-16_EU_Critical_Raw_Materials_Act.pdf |
-| 78 | 🇪🇺 | 2020-12-16 | NIS 2 Directive | 2020-12-16_EU_Critical_Entities_Resilience_Directive.pdf |
+| 77 | 🇪🇺 | 2023-03-16 | Net-Zero Industry Act | 2023-03-16_EU_Net-Zero_Industry_Act.pdf |
+| 78 | 🇪🇺 | 2020-12-16 | NIS 2 Directive | 2020-12-16_EU_NIS_2_Directive.pdf |
 | 79 | 🇨🇳 | 2026-04-17 | Regulation on Outbound Investment (State Council Decree No. 837) | 2026-04-17_CN_国务院关于对外投资的规定（中华人民共和国国务院令_第837号）.html |
 | 80 | 🇨🇳 | 2026-03-27 | Regulations on Countermeasures against Foreign States' Unlawful Extraterrit | 2026-03-27_CN_中华人民共和国反外国不当域外管辖条例（中华人民共和国国务院令第835号）.html |
 | 81 | 🇨🇳 | 2026-07-31 | Regulations on Exit and Entry Administration (State Council Decree No. 841) | 2026-07-31_CN_国务院关于出境入境管理的规定.html |
-| 82 | 🇨🇳 | 2026-03-13 | Regulations on the Security of Industrial and Supply Chains (State Council  | 2026-03-13_CN_中华人民共和国国民经济和社会发展第十五个五年规划纲要.html |
+| 82 | 🇨🇳 | 2026-03-13 | Regulations on the Security of Industrial and Supply Chains (State Council  | 2026-03-13_CN_国务院关于产业链供应链安全的规定（中华人民共和国国务院令第834号）.html |
 | 83 | 🇪🇺 | 2025-12-03 | RESourceEU Action Plan | 2025-12-03_EU_RESourceEU_Action_Plan.pdf |
 | 84 | 🇨🇳 | 2025-11-07 | Suspension of Certain of the Export Control Measures (Ministry of Commerce  | 2025-11-07_CN_商务部、海关总署公告2025年第70号_公布暂停实施商务部、海关总署公告2025年第55号、56号、57号、58 |
 | 85 | 🇪🇺 | 2026-01-20 | The Cybersecurity Act 2 | 2026-01-20_EU_The_Cybersecurity_Act_2.html |
 | 86 | 🇪🇺 | 2021-09-16 | The EU Strategy for Cooperation in the Indo-Pacific | 2021-09-16_EU_The_EU_Strategy_for_Cooperation_in_the_Indo-Pacific.pdf |
 | 87 | 🇨🇳 | 2026-07-07 | The National Health Plan for the 15th Five-Year Plan Period | 2026-07-07_CN_国务院关于印发《国民健康“十五五”规划》的通知.html |
 | 88 | 🇨🇳 | 2026-06-11 | The Plan on implementing the Employment-first Strategy (The State Council 2 | 2026-06-11_CN_国务院关于印发《实施就业优先战略“十五五”规划》的通知.html |
-| 89 | 🇪🇺 | 2024-01-24 | White Paper on Export Controls | 2024-01-24_EU_Commission_Recommendation_on_Outbound_Investment_Screen. |
+| 89 | 🇪🇺 | 2024-01-24 | White Paper on Export Controls | 2024-01-24_EU_White_Paper_on_Export_Controls.pdf |
 
 *未匹配: 0*

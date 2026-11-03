@@ -182,16 +182,8 @@
     { href: 'policies.html', label: '政策搜索', key: 'policy-search' }
   ];
 
-  function brandMarkSVG() {
-    return '<svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">' +
-      '<circle cx="20" cy="20" r="17.5" fill="none" stroke="currentColor" stroke-width="1.4"/>' +
-      '<ellipse cx="20" cy="20" rx="17.5" ry="7.5" fill="none" stroke="currentColor" stroke-width="1"/>' +
-      '<ellipse cx="20" cy="20" rx="7.5" ry="17.5" fill="none" stroke="currentColor" stroke-width="1"/>' +
-      '<line x1="20" y1="2.5" x2="20" y2="37.5" stroke="currentColor" stroke-width="0.8"/>' +
-      '<line x1="2.5" y1="20" x2="37.5" y2="20" stroke="currentColor" stroke-width="0.8"/>' +
-      '<circle cx="27.5" cy="13" r="3.2" class="brand-dot"/>' +
-      '<circle cx="11.5" cy="26.5" r="3.2" class="brand-dot"/>' +
-      '</svg>';
+  function brandMark() {
+    return '<img class="brand-mark" src="assets/brand-relief.png" alt="" width="44" height="44" loading="eager" decoding="async">';
   }
 
   function initHeader(activeKey) {
@@ -207,7 +199,7 @@
     mount.innerHTML =
       '<div class="header-inner">' +
         '<a class="brand" href="index.html" aria-label="ICES 中欧政策档案，返回首页">' +
-          brandMarkSVG() +
+          brandMark() +
           '<span class="brand-text"><span class="brand-name">ICES</span>' +
           '<span class="brand-sub">中欧政策档案</span></span>' +
         '</a>' +
@@ -271,7 +263,7 @@
     mount.innerHTML =
       '<div class="footer-inner">' +
         '<div class="footer-brand">' +
-          '<a class="brand" href="index.html">' + brandMarkSVG() +
+          '<a class="brand" href="index.html">' + brandMark() +
             '<span class="brand-text"><span class="brand-name">ICES</span>' +
             '<span class="brand-sub">中欧政策档案</span></span></a>' +
           '<p class="footer-meta">' + escapeHTML(stats) + (year ? ' · 数据截至 ' + escapeHTML(year) : '') + '</p>' +
