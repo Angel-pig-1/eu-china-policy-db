@@ -169,12 +169,4 @@
 <li>16项中：<strong>14项✅获取</strong>（全部含带规范头的Markdown全文，13项含官方PDF/网页副本），<strong>2项❌不存在官方文本</strong>（西非EPA、中部非洲EPA区域级，均已附事实核查）</li>
 <li>全部✅项均超过20KB门槛（最小：约旦58KB）</li>
 <li>语料总量：约18MB英文全文</li>
-</ul>
-<h2>给后续轮次的备忘（关键教训）</h2>
-<ol>
-<li><strong>EUR-Lex <code>/legal-content/</code> 全端点现被AWS WAF挑战</strong>（curl/kimi_fetch返回202空）。 Cellar对象存储 <code>publications.europa.eu/resource/cellar/...</code> 与OP SPARQL端点 <code>publications.europa.eu/webapi/rdf/sparql</code> <strong>无WAF</strong>，可直接curl。</li>
-<li>SPARQL查询CELEX时<strong>必须用 <code>FILTER(STR(?cx)="...")</code></strong>，字面量直配会因语言标签失败；带括号的旧编号如"22000A0318(01)"在库里确实存在，但2010年代后的协定（如22024A01648）<strong>无括号</strong>。</li>
-<li>同一OJ期可含多个A类文件：埃及=(03)、南非主协定=(02)——<strong>必须用题名SPARQL验证</strong>再抓。</li>
-<li>OJ L 304 (2004-09-30) 同时含欧印、欧美、埃及、Eurocontrol四个协定，顺序与常识无关。</li>
-<li>Cellar PDF偶发502，html/xhtml兜底稳定（ Tunisia/Morocco/Jordan 即xhtml源，质量可用但带少量页面噪音）。</li>
-</ol></body></html>
+</ul></body></html>

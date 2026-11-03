@@ -23,6 +23,57 @@ COLLS = [
 ]
 SKIP_DIR_PAT = re.compile(r"(99_临时|04_论文稿|抓取日志|\.git)")
 SKIP_FILE_PAT = re.compile(r"(初步分析|方法可行性|论文稿|^\.|~\$)")
+
+# —— 私货清洗: 文摘是给老板私人研究用的, 上站前剥掉私人段落 ——
+PRIVATE_HEAD = re.compile(r"(老板|论文|待补|备忘|使用指引)")
+PRIVATE_LINE = re.compile(r"老板|小天天|舒天|邓舒天|崔老师|崔洪建|咱们|爪爪|待补")
+
+def sanitize_md(text):
+    """删除含私人标记的章节(从该标题到下一个同级或更高级标题), 并逐行过滤残余。"""
+    out, drop, base = [], False, 0
+    for ln in text.split("\n"):
+        hm = re.match(r"^(#{1,6})\s*(.*)", ln)
+        if hm:
+            lv = len(hm.group(1))
+            if drop and lv <= base:
+                drop = False
+            if PRIVATE_HEAD.search(hm.group(2)):
+                drop, base = True, lv
+                continue
+        if not drop and not PRIVATE_LINE.search(ln):
+            out.append(ln)
+    return "\n".join(out)
+
+# —— 原件优先: 02 收藏夹里, 有官方 PDF 原件的转写 MD 不上站 ——
+OFFICIAL_MD = re.compile(r"(正文|全文|_L1|_L2|协定|公约|议定书)", re.I)
+def _norm_stem(s):
+    s = s.lower()
+    s = re.sub(r"^\d+[a-z]?_", "", s)
+    s = re.sub(r"(正文全文|正文|全文|agreement|协定文本)", "", s, flags=re.I)
+    return re.sub(r"[_\-\s()（）]", "", s)
+def _digits(s):
+    """数字串: 去前导零, 只留 ≥2 位的(滤掉 01_/L1/L2 等序号污染)"""
+    out = []
+    for d in re.findall(r"\d+", s):
+        d = d.lstrip("0") or "0"
+        if len(d) >= 2:
+            out.append(d)
+    return out
+def find_pdf_twin(dirpath, stem):
+    """同目录下存在对应官方 PDF(名称归一化包含 或 ≥2个数字串互含)则返回 True。
+    单一年份不算数——防止 1999 年协议被 2002 年决定误伤。"""
+    pdfs = [os.path.splitext(f)[0] for f in os.listdir(dirpath) if f.lower().endswith(".pdf")]
+    a = _norm_stem(stem)
+    da = _digits(stem)
+    for p in pdfs:
+        b = _norm_stem(p)
+        if a and b and min(len(a), len(b)) >= 4 and (a in b or b in a):
+            return True
+        db = _digits(p)
+        matched = sum(1 for x in da if any(x in y or y in x for y in db))
+        if matched >= 2:
+            return True
+    return False
 GS = "/usr/local/bin/gs"
 COMPRESS_THRESHOLD = 3 * 1024 * 1024  # 3MB
 
@@ -125,12 +176,13 @@ MD_CSS = ("body{font-family:-apple-system,'PingFang SC',serif;max-width:820px;ma
 def md_to_html(src, dst, title):
     import markdown
     with open(src, encoding="utf-8") as f: text = f.read()
+    text = sanitize_md(text)  # 私人段落剥离
     body = markdown.markdown(text, extensions=["tables", "fenced_code", "nl2br"])
     doc = f'<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><title>{htmllib.escape(title)}</title><style>{MD_CSS}</style></head><body>{body}</body></html>'
     with open(dst, "w", encoding="utf-8") as f: f.write(doc)
 
 def main():
-    entries, skipped, comp_log = [], [], []
+    entries, skipped, comp_log, removed = [], [], [], []
     for dirname, cid, cname in COLLS:
         base = os.path.join(ROOT, dirname)
         for dirpath, dirnames, filenames in os.walk(base):
@@ -155,7 +207,14 @@ def main():
                 tgt_name = fn if ext == ".pdf" else stem + ".html"
                 tgt = os.path.join(tgt_dir, tgt_name)
                 mode = "raw"; so = sd = size
-                if os.path.exists(tgt) and os.path.getmtime(tgt) >= os.path.getmtime(src):
+                # 原件优先: 02 收藏夹的官方文本 MD, 若同目录有对应官方 PDF 则弃用 MD
+                if ext == ".md" and cid == "02" and OFFICIAL_MD.search(fn) and find_pdf_twin(dirpath, stem):
+                    if os.path.exists(tgt): os.remove(tgt)
+                    removed.append(rel.replace(os.sep, "/") + "/" + fn)
+                    continue
+                if ext == ".md":
+                    md_to_html(src, tgt, title)  # MD 一律重生成(轻量+应用最新清洗规则)
+                elif os.path.exists(tgt) and os.path.getmtime(tgt) >= os.path.getmtime(src):
                     mode = "cached"  # 上次已生成,跳过拷贝/压缩
                 elif ext == ".pdf":
                     if size > COMPRESS_THRESHOLD:
@@ -163,8 +222,6 @@ def main():
                         comp_log.append((fn, sd, so, mode))
                     else:
                         shutil.copy2(src, tgt)
-                else:
-                    md_to_html(src, tgt, title)
                 web_path = "library/" + cid + cname + ("/" + sub.replace(os.sep, "/") if sub != "." else "") + "/" + tgt_name
                 e = {
                     "id": md5(dirname + "/" + (rel_dir if rel_dir != "." else "") + "/" + fn),
@@ -206,8 +263,12 @@ def main():
         "by_fmt": {"pdf": sum(1 for e in entries if e["fmt"] == "pdf"), "html": sum(1 for e in entries if e["fmt"] == "html")},
         "gs_compressed": sum(1 for c in comp_log if c[3] == "gs"),
         "library_MB": round(lib_size / 1024 / 1024, 1),
+        "removed_md": len(removed),
         "skipped": skipped,
     }, ensure_ascii=False, indent=1))
+    if removed:
+        print("--- 原件优先弃用的 MD ---")
+        for r in removed: print("  -", r)
     if comp_log:
         print("--- gs 压缩明细(前20) ---")
         for fn, sd, so, m in comp_log[:20]:
