@@ -144,6 +144,10 @@ def classify(coll, rel, name):
     if re.search(r"MASTER_INDEX|文件清单|INDEX\.md", name):
         return "清单索引", "清单索引"
     if coll == "01":
+        if "中国官方文件" in segs:
+            i = segs.index("中国官方文件")
+            topic = segs[i + 1] if i + 1 < len(segs) else "综合政策"
+            return "中方官方 / " + topic, "官方文件"
         if "智库报告" in segs:
             i = segs.index("智库报告")
             topic = segs[i + 1] if i + 1 < len(segs) else "综合研究"
