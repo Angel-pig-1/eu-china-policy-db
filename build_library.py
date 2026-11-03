@@ -7,8 +7,8 @@ build_library.py — 把欧洲研究资料库 01/02/03 的文献资料按「政�
   1. 遍历 01_中欧关系与对华政策 / 02_欧盟贸易协定全集 / 03_欧盟航天法研究文献
   2. 跳过: 99_临时文件 / 04_论文稿 / 私人笔记(初步分析、方法可行性) / .git / .DS_Store / 抓取日志
   3. PDF ≤3MB 直拷; >3MB 用 ghostscript /ebook 压缩(取较小者)
-  4. .md 转为带统一样式的 .html(python-markdown)
-  5. 生成 library_data.js + library.html(与政策库同一设计语言: 列表+详情+原文内嵌)
+  4. .md 转为带统一样式的 .html(python-markdown)，排除重复快照和无正文占位页
+  5. 按资料类型与精简主题分类生成 library_data.js，合并已核验的文献元数据
   6. 全站导航: 「智库文摘」→「文献库」; 删除 essays.html
 """
 import os, re, sys, json, hashlib, shutil, subprocess, html as htmllib
@@ -82,10 +82,11 @@ def _digits(s):
         if len(d) >= 2:
             out.append(d)
     return out
-def find_pdf_twin(dirpath, stem):
-    """同目录下存在对应官方 PDF(名称归一化包含 或 ≥2个数字串互含)则返回 True。
+def find_pdf_twin(dirpath, stem, include_html=True):
+    """同目录下存在对应官方原件(名称归一化包含 或 ≥2个数字串互含)则返回 True。
     单一年份不算数——防止 1999 年协议被 2002 年决定误伤。"""
-    pdfs = [os.path.splitext(f)[0] for f in os.listdir(dirpath) if f.lower().endswith((".pdf", ".html"))]
+    exts = (".pdf", ".html") if include_html else (".pdf",)
+    pdfs = [os.path.splitext(f)[0] for f in os.listdir(dirpath) if f.lower().endswith(exts)]
     a = _norm_stem(stem)
     da = _digits(stem)
     for p in pdfs:
@@ -119,7 +120,7 @@ def md5(s): return hashlib.md5(s.encode()).hexdigest()[:8]
 def clean_seg(seg):
     """去掉目录名前缀编号: 01_战略与政策文件 -> 战略与政策文件 ; 03b_新加坡投资保护协定 -> 新加坡投资保护协定"""
     s = re.sub(r"^\d+[a-z]?_", "", seg)
-    s = re.sub(r"（[^）]*\d{4}[^）]*）$", "", s)  # 去掉尾部年份括注
+    s = re.sub(r"（[^）]*\d{4}[^）]*）$", "", s)
     s = re.sub(r"\s*-\s*$", "", s)
     return s.strip()
 
@@ -134,15 +135,55 @@ def guess_side(coll, rel, name):
     if coll == "03": return "INTL"
     if re.search(r"中国|中方|国新办|商务部|新华社|中国威胁论|中国冲击|香港|澳门|台湾", p): return "CN"
     if re.search(r"欧洲|欧盟|EU|欧委会|欧洲议会|欧理会|EUCO|EUR-Lex|欧盟委员会|理事会结论|战略展望", p): return "EU"
-    if coll == "02": return "EU"  # 欧盟对外协定
+    if coll == "02": return "EU"
     return "INTL"
 
-def guess_type(coll, rel, name):
+def classify(coll, rel, name):
     p = rel + "/" + name
-    if "智库研究精选" in p: return "智库报告"
-    if re.search(r"MASTER_INDEX|文件清单|INDEX\.md", name): return "清单索引"
-    if coll == "02" and re.search(r"L1|L2|正文全文|全文|Agreement|_raw_|EPA|FTA|协定", p): return "协定文本"
-    return "官方文件"
+    segs = [clean_seg(s) for s in rel.split("/")[1:] if clean_seg(s)]
+    if re.search(r"MASTER_INDEX|文件清单|INDEX\.md", name):
+        return "清单索引", "清单索引"
+    if coll == "01":
+        if "学术研究" in segs:
+            i = segs.index("学术研究")
+            topic = segs[i + 1] if i + 1 < len(segs) else "综合研究"
+            return "学术研究 / " + topic, "学术论文"
+        if segs and segs[0] == "中国威胁论与中国冲击2.0":
+            topic = segs[-1] if len(segs) > 1 else "综合研究"
+            return "国际研究与舆论 / " + topic, "研究报告"
+        topic = segs[-1] if len(segs) > 1 else "综合政策"
+        return "欧盟对华政策 / " + topic, "官方文件"
+    if coll == "02":
+        for root, label, doctype in (("智库研究精选", "智库研究", "智库报告"), ("学术研究精选", "学术研究", "学术论文")):
+            if root in segs:
+                i = segs.index(root)
+                topic = segs[i + 1] if i + 1 < len(segs) else "综合研究"
+                topic = {"加拿大CETA": "CETA", "中国CAI": "中欧CAI", "UK_TCA": "英国脱欧"}.get(topic, topic)
+                return label + " / " + topic.replace("_", " "), doctype
+        if "党团与机构立场文件" in segs:
+            return "党团与机构立场", "立场文件"
+        if segs and segs[0] == "L4扩展包":
+            return "扩展协定 / " + (segs[1].replace("_", " ") if len(segs) > 1 else "综合"), "协定文本"
+        if segs:
+            topic = segs[1].replace("_", " ") if len(segs) > 1 else "综合"
+            doctype = "官方文件" if re.search(r"(?:^|_)L2|Council|理事会.*决定|批准决定|缔结决定", name, re.I) else "协定文本"
+            return segs[0] + " / " + topic, doctype
+        return "贸易协定", "协定文本"
+    if coll == "03":
+        if "学术文献" in segs:
+            return "学术研究 / " + ("中文研究" if "中文文献" in segs else "外文研究"), "学术论文"
+        if "智库报告" in segs:
+            return "智库研究", "智库报告"
+        if "官方文件" in segs:
+            topic = {"欧盟官方文件": "欧盟机构", "联合国空间法条约": "联合国条约", "第三国与中国官方文件": "第三国与中国"}.get(segs[-1], "综合")
+            return "官方文件 / " + topic, "官方文件"
+    return "其他", "研究报告"
+
+def is_placeholder_html(src):
+    text = open(src, encoding="utf-8", errors="ignore").read()
+    text = re.sub(r"(?is)<(script|style).*?>.*?</\1>", "", text)
+    text = re.sub(r"(?s)<[^>]+>", "", text)
+    return len(htmllib.unescape(text).strip()) < 800
 
 def guess_inst(name):
     m = re.match(r"([A-Za-z][A-Za-z&-]*?)_(\d{4})_", name)
@@ -216,6 +257,8 @@ def md_to_html(src, dst, title):
 
 def main():
     entries, skipped, comp_log, removed = [], [], [], []
+    meta_path = os.path.join(REPO, "library_metadata.json")
+    metadata = json.load(open(meta_path, encoding="utf-8")) if os.path.exists(meta_path) else {}
     for dirname, cid, cname in COLLS:
         base = os.path.join(ROOT, dirname)
         for dirpath, dirnames, filenames in os.walk(base):
@@ -247,8 +290,7 @@ def main():
                 if real_ext == ".html" and ext == ".pdf" and os.path.exists(os.path.join(tgt_dir, fn)):
                     os.remove(os.path.join(tgt_dir, fn))  # 清理旧伪PDF残留
                 mode = "raw"; so = sd = size
-                # 网页快照: 同目录已有同名 PDF 渲染件则弃快照留 PDF
-                if ext == ".html" and any(f.lower() == (stem.lower() + ".pdf") for f in os.listdir(dirpath)):
+                if ext == ".html" and (find_pdf_twin(dirpath, stem, include_html=False) or is_placeholder_html(src)):
                     if os.path.exists(tgt): os.remove(tgt)
                     removed.append(rel.replace(os.sep, "/") + "/" + fn)
                     continue
@@ -260,32 +302,44 @@ def main():
                     removed.append(rel.replace(os.sep, "/") + "/" + fn)
                     continue
                 if ext == ".md":
-                    md_to_html(src, tgt, title)  # MD 一律重生成(轻量+应用最新清洗规则)
+                    md_to_html(src, tgt, title)
                 elif real_ext == ".html":
-                    sanitize_html_snapshot(src, tgt)  # 网页快照一律重生成(去脚本)
+                    sanitize_html_snapshot(src, tgt)
                 elif os.path.exists(tgt) and os.path.getmtime(tgt) >= os.path.getmtime(src):
-                    mode = "cached"  # 上次已生成,跳过拷贝/压缩
+                    mode = "cached"
                 elif real_ext == ".pdf":
                     if size > COMPRESS_THRESHOLD:
                         mode, so, sd = compress_pdf(src, tgt)
                         comp_log.append((fn, sd, so, mode))
                     else:
                         shutil.copy2(src, tgt)
+                if fmt == "html" and is_placeholder_html(tgt):
+                    os.remove(tgt)
+                    removed.append(rel.replace(os.sep, "/") + "/" + fn)
+                    continue
                 web_path = "library/" + cid + cname + ("/" + sub.replace(os.sep, "/") if sub != "." else "") + "/" + tgt_name
+                category, doctype = classify(cid, rel, fn)
                 e = {
                     "id": md5(dirname + "/" + (rel_dir if rel_dir != "." else "") + "/" + fn),
                     "title": title or stem, "date": date,
                     "year": date[:4] if date else "",
                     "side": guess_side(cid, rel, fn),
                     "coll": cid, "collName": cname,
-                    "cat": " / ".join(clean_seg(s) for s in rel.split("/")[1:] if clean_seg(s)) if "/" in rel else "",
-                    "type": guess_type(cid, rel, fn),
+                    "cat": category,
+                    "type": doctype,
                     "inst": guess_inst(fn),
                     "tags": build_tags(cid, cname, rel if "/" in rel else "/" + fn, fn),
                     "file": web_path.replace(os.sep, "/"),
                     "fmt": fmt, "sizeKB": round(os.path.getsize(tgt) / 1024),
                     "src": (dirname + ("/" + rel_dir if rel_dir != "." else "") + "/" + fn).replace(os.sep, "/"),
                 }
+                meta = metadata.get(fn)
+                if meta:
+                    e["title"] = meta["title"]
+                    e["authors"] = meta.get("author", "")
+                    e["inst"] = meta.get("institution") or meta.get("journal") or e["inst"]
+                    e["year"] = meta.get("year", e["year"])
+                    e["date"] = meta.get("year", e["date"])
                 entries.append(e)
     entries.sort(key=lambda x: (x["coll"], x["date"] or "9999", x["title"]))
     # 写数据
@@ -312,11 +366,11 @@ def main():
         "by_fmt": {"pdf": sum(1 for e in entries if e["fmt"] == "pdf"), "html": sum(1 for e in entries if e["fmt"] == "html")},
         "gs_compressed": sum(1 for c in comp_log if c[3] == "gs"),
         "library_MB": round(lib_size / 1024 / 1024, 1),
-        "removed_md": len(removed),
+        "removed_duplicates_and_placeholders": len(removed),
         "skipped": skipped,
     }, ensure_ascii=False, indent=1))
     if removed:
-        print("--- 原件优先弃用的 MD ---")
+        print("--- 跳过的重复或占位条目 ---")
         for r in removed: print("  -", r)
     if comp_log:
         print("--- gs 压缩明细(前20) ---")

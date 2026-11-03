@@ -24,12 +24,17 @@
     LIB_ALL.forEach(function (d) { if (d.year) s[String(d.year)] = 1; });
     return Object.keys(s).sort();
   })();
+  var TYPES = (function () {
+    var s = {};
+    LIB_ALL.forEach(function (d) { if (d.type) s[d.type] = 1; });
+    return Object.keys(s).sort(function (a, b) { return a.localeCompare(b, 'zh-CN'); });
+  })();
 
   function displayTitle(t) { return String(t || '').replace(/_/g, ' '); }
   function fmtSize(kb) { return kb >= 1024 ? (kb / 1024).toFixed(1) + ' MB' : kb + ' KB'; }
 
   /* ---------- 状态 ---------- */
-  var state = { q: '', side: 'all', coll: 'all', year: 'all', sort: 'desc', selectedId: null, rows: [] };
+  var state = { q: '', side: 'all', coll: 'all', type: 'all', year: 'all', sort: 'desc', selectedId: null, rows: [] };
   var validSides = { all: 1, EU: 1, CN: 1, INTL: 1 };
   var validColls = { all: 1, '01': 1, '02': 1, '03': 1 };
   var validSorts = { desc: 1, asc: 1, title: 1 };
@@ -38,6 +43,7 @@
   var elQ = document.getElementById('f-q');
   var elSide = document.getElementById('f-side');
   var elColl = document.getElementById('f-coll');
+  var elType = document.getElementById('f-type');
   var elYear = document.getElementById('f-year');
   var elSort = document.getElementById('f-sort');
   var elCount = document.getElementById('result-count');
@@ -59,6 +65,7 @@
       return { v: c, t: c + ' ' + COLL_DEFS[c].name + '（' + COLL_DEFS[c].count + '）' };
     })
   ), 'all');
+  fillSelect(elType, [{ v: 'all', t: '全部类型' }].concat(TYPES.map(function (t) { return { v: t, t: t }; })), 'all');
   fillSelect(elYear, [{ v: 'all', t: '全部年份' }].concat(YEARS.map(function (y) { return { v: y, t: y + ' 年' }; })), 'all');
   fillSelect(elSort, [
     { v: 'desc', t: '日期 ↓ 新→旧' },
@@ -78,6 +85,7 @@
     if (p.has('q')) state.q = p.get('q').slice(0, 200);
     if (p.has('side') && validSides[p.get('side')]) state.side = p.get('side');
     if (p.has('coll') && validColls[p.get('coll')]) state.coll = p.get('coll');
+    if (p.has('type') && (p.get('type') === 'all' || TYPES.indexOf(p.get('type')) !== -1)) state.type = p.get('type');
     if (p.has('year')) {
       var y = p.get('year');
       if (y === 'all' || YEARS.indexOf(y) !== -1) state.year = y;
@@ -94,6 +102,7 @@
     if (state.q) p.set('q', state.q);
     if (state.side !== 'all') p.set('side', state.side);
     if (state.coll !== 'all') p.set('coll', state.coll);
+    if (state.type !== 'all') p.set('type', state.type);
     if (state.year !== 'all') p.set('year', state.year);
     if (state.sort !== 'desc') p.set('sort', state.sort);
     if (state.selectedId) p.set('id', state.selectedId);
@@ -103,7 +112,7 @@
 
   /* ---------- 检索 ---------- */
   function haystack(d) {
-    var parts = [d.title, d.inst, d.cat, d.type, d.collName];
+    var parts = [d.title, d.authors, d.inst, d.cat, d.type, d.collName];
     if (d.tags) parts = parts.concat(d.tags);
     return Site.norm(parts.filter(Boolean).join(' '));
   }
@@ -115,6 +124,7 @@
     var rows = LIB_ALL.filter(function (d) {
       if (state.side !== 'all' && d.side !== state.side) return false;
       if (state.coll !== 'all' && d.coll !== state.coll) return false;
+      if (state.type !== 'all' && d.type !== state.type) return false;
       if (state.year !== 'all' && String(d.year) !== state.year) return false;
       if (q && HAY[d.id].indexOf(q) === -1) return false;
       return true;
@@ -147,6 +157,7 @@
     { key: 'q', label: function () { return '检索：“' + state.q + '”'; } },
     { key: 'side', label: function () { return '侧别：' + state.side; } },
     { key: 'coll', label: function () { return '专题：' + state.coll + ' ' + (COLL_DEFS[state.coll] ? COLL_DEFS[state.coll].name : ''); } },
+    { key: 'type', label: function () { return '类型：' + state.type; } },
     { key: 'year', label: function () { return '年份：' + state.year; } }
   ];
 
@@ -200,6 +211,7 @@
       b.setAttribute('aria-pressed', b.dataset.val === state.side ? 'true' : 'false');
     });
     elColl.value = state.coll;
+    elType.value = state.type;
     elYear.value = state.year;
     elSort.value = state.sort;
   }
@@ -244,10 +256,9 @@
           '<div class="detail-meta-cell"><dt>日期</dt><dd>' + esc(Site.formatDate(d.date)) + '</dd></div>' +
           '<div class="detail-meta-cell"><dt>类型</dt><dd>' + esc(d.type || '—') + '</dd></div>' +
           '<div class="detail-meta-cell"><dt>格式 / 大小</dt><dd>' + esc(d.fmt.toUpperCase()) + ' · ' + esc(fmtSize(d.sizeKB)) + '</dd></div>' +
-          (d.inst ? '<div class="detail-meta-cell"><dt>机构</dt><dd>' + esc(d.inst) + '</dd></div>' : '') +
+          (d.authors ? '<div class="detail-meta-cell"><dt>作者</dt><dd>' + esc(d.authors) + '</dd></div>' : '') +
+          (d.inst ? '<div class="detail-meta-cell"><dt>机构 / 来源</dt><dd>' + esc(d.inst) + '</dd></div>' : '') +
           (d.cat ? '<div class="detail-meta-cell"><dt>类目</dt><dd>' + esc(d.cat) + '</dd></div>' : '') +
-          '<div class="detail-meta-cell"><dt>文件路径</dt><dd>' + esc(d.file) + '</dd></div>' +
-          (d.src ? '<div class="detail-meta-cell"><dt>源路径</dt><dd>' + esc(d.src) + '</dd></div>' : '') +
         '</dl>' +
         (tags ? '<div class="detail-section"><div class="detail-tags-block"><div class="detail-tags-row"><span class="detail-tags-label">标签</span>' + tags + '</div></div></div>' : '') +
       '</div>' +
@@ -395,6 +406,7 @@
     applyFilters();
   });
   elColl.addEventListener('change', function () { state.coll = elColl.value; applyFilters(); });
+  elType.addEventListener('change', function () { state.type = elType.value; applyFilters(); });
   elYear.addEventListener('change', function () { state.year = elYear.value; applyFilters(); });
   elSort.addEventListener('change', function () { state.sort = elSort.value; applyFilters(); });
 
@@ -408,7 +420,7 @@
   });
 
   function resetFilters() {
-    state.q = ''; state.side = 'all'; state.coll = 'all'; state.year = 'all'; state.sort = 'desc';
+    state.q = ''; state.side = 'all'; state.coll = 'all'; state.type = 'all'; state.year = 'all'; state.sort = 'desc';
     applyFilters();
   }
   btnReset.addEventListener('click', resetFilters);

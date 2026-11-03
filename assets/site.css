@@ -371,6 +371,9 @@ html.dark a.tag-chip:hover, html.dark button.tag-chip:hover { color: var(--accen
   gap: 10px;
   align-items: center;
 }
+.filter-bar-library {
+  grid-template-columns: minmax(160px, 1fr) auto repeat(4, auto);
+}
 .filter-bar-inner {
   max-width: var(--content-max);
   margin: 0 auto;
