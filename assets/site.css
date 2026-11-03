@@ -4,23 +4,23 @@
    ========================================================================== */
 
 :root {
-  --paper: oklch(0.97 0.005 245);
-  --paper-rgb: 245, 246, 248;
+  --paper: oklch(1 0 0);
+  --paper-rgb: 255, 255, 255;
   --surface: oklch(1 0 0);
-  --surface-2: oklch(0.942 0.009 246);
-  --ink: oklch(0.30 0.05 262);
-  --ink-rgb: 15, 33, 58;
-  --muted: oklch(0.50 0.03 258);
-  --faint: oklch(0.61 0.025 258);
-  --line: oklch(0.885 0.008 245);
-  --line-strong: oklch(0.76 0.015 250);
+  --surface-2: oklch(0.956 0.006 246);
+  --ink: oklch(0.285 0.008 260);
+  --ink-rgb: 39, 41, 46;
+  --muted: oklch(0.52 0.015 258);
+  --faint: oklch(0.62 0.012 258);
+  --line: oklch(0.90 0.006 245);
+  --line-strong: oklch(0.78 0.01 250);
   --accent: oklch(0.60 0.13 252);
   --accent-strong: oklch(0.46 0.15 257);
-  --accent-soft: oklch(0.93 0.025 252);
+  --accent-soft: oklch(0.94 0.02 252);
   --eu: oklch(0.55 0.115 252);
-  --eu-soft: oklch(0.925 0.03 252);
-  --cn: oklch(0.38 0.09 262);
-  --cn-soft: oklch(0.90 0.025 262);
+  --eu-soft: oklch(0.93 0.025 252);
+  --cn: oklch(0.44 0.018 262);
+  --cn-soft: oklch(0.93 0.008 262);
   --header-h: 72px;
   --ease: cubic-bezier(.23, .34, .18, 1);
 
