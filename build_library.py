@@ -341,7 +341,7 @@ def main():
                     "fmt": fmt, "sizeKB": round(os.path.getsize(tgt) / 1024),
                     "src": (dirname + ("/" + rel_dir if rel_dir != "." else "") + "/" + fn).replace(os.sep, "/"),
                 }
-                meta = metadata.get(fn)
+                meta = metadata.get(fn) or metadata.get(tgt_name)
                 if meta:
                     e["title"] = meta["title"]
                     e["authors"] = meta.get("author", "")
