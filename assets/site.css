@@ -34,23 +34,23 @@
 }
 
 html.dark {
-  --paper: oklch(0.235 0.02 262);
-  --paper-rgb: 25, 29, 39;
-  --surface: oklch(0.27 0.02 262);
-  --surface-2: oklch(0.32 0.022 262);
-  --ink: oklch(0.94 0.008 250);
-  --ink-rgb: 238, 240, 244;
-  --muted: oklch(0.75 0.02 258);
-  --faint: oklch(0.60 0.02 258);
-  --line: oklch(0.38 0.02 262);
-  --line-strong: oklch(0.48 0.02 262);
+  --paper: oklch(0.235 0.008 260);
+  --paper-rgb: 40, 42, 47;
+  --surface: oklch(0.26 0.008 260);
+  --surface-2: oklch(0.31 0.01 260);
+  --ink: oklch(0.95 0.005 250);
+  --ink-rgb: 242, 243, 245;
+  --muted: oklch(0.76 0.012 258);
+  --faint: oklch(0.60 0.012 258);
+  --line: oklch(0.38 0.01 260);
+  --line-strong: oklch(0.48 0.012 260);
   --accent: oklch(0.74 0.12 252);
   --accent-strong: oklch(0.80 0.11 252);
-  --accent-soft: oklch(0.36 0.05 258);
+  --accent-soft: oklch(0.36 0.04 258);
   --eu: oklch(0.72 0.12 252);
   --eu-soft: oklch(0.36 0.05 255);
-  --cn: oklch(0.83 0.055 250);
-  --cn-soft: oklch(0.36 0.05 260);
+  --cn: oklch(0.80 0.012 260);
+  --cn-soft: oklch(0.36 0.03 260);
 }
 
 /* ---------- Reset ---------- */
