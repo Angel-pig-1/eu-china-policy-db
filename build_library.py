@@ -193,6 +193,12 @@ def is_placeholder_html(src):
     text = re.sub(r"(?s)<[^>]+>", "", text)
     return len(htmllib.unescape(text).strip()) < 800
 
+def source_priority(src):
+    if re.search(r"欧盟对华政策文件|中国官方文件|官方文件", src): return 50
+    if re.search(r"智库报告|智库研究精选|学术研究|学术研究精选|学术文献", src): return 40
+    if "中国威胁论与中国冲击2.0" in src: return 10
+    return 20
+
 def guess_inst(name):
     m = re.match(r"([A-Za-z][A-Za-z&-]*?)_(\d{4})_", name)
     if m:
@@ -265,6 +271,7 @@ def md_to_html(src, dst, title):
 
 def main():
     entries, skipped, comp_log, removed = [], [], [], []
+    seen_hashes = {}
     meta_path = os.path.join(REPO, "library_metadata.json")
     metadata = json.load(open(meta_path, encoding="utf-8")) if os.path.exists(meta_path) else {}
     for dirname, cid, cname in COLLS:
@@ -348,6 +355,18 @@ def main():
                     e["inst"] = meta.get("institution") or meta.get("journal") or e["inst"]
                     e["year"] = meta.get("year", e["year"])
                     e["date"] = meta.get("year", e["date"])
+                digest = hashlib.sha256(open(tgt, "rb").read()).hexdigest()
+                if digest in seen_hashes:
+                    previous = seen_hashes[digest]
+                    if source_priority(e["src"]) <= source_priority(previous["src"]):
+                        os.remove(tgt)
+                        removed.append(e["src"])
+                        continue
+                    old_tgt = os.path.join(REPO, previous["file"])
+                    if os.path.exists(old_tgt): os.remove(old_tgt)
+                    entries.remove(previous)
+                    removed.append(previous["src"])
+                seen_hashes[digest] = e
                 entries.append(e)
     entries.sort(key=lambda x: (x["coll"], x["date"] or "9999", x["title"]))
     # 写数据
