@@ -183,7 +183,7 @@
   ];
 
   function brandMark() {
-    return '<img class="brand-mark" src="assets/brand-relief.png" alt="" width="44" height="44" loading="eager" decoding="async">';
+    return '<img class="brand-mark" src="assets/brand-line.png" alt="" width="44" height="44" loading="eager" decoding="async">';
   }
 
   function initHeader(activeKey) {

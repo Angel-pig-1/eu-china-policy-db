@@ -130,7 +130,7 @@ html.dark :focus-visible { outline-color: var(--accent); }
   gap: 12px;
   flex-shrink: 0;
 }
-.brand-mark { width: 44px; height: 44px; flex-shrink: 0; object-fit: contain; }
+.brand-mark { width: 44px; height: 44px; flex-shrink: 0; object-fit: contain; border-radius: 50%; }
 .brand-text { display: flex; flex-direction: column; line-height: 1.1; }
 .brand-name {
   font-family: var(--serif);
