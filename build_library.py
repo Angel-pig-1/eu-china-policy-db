@@ -44,6 +44,29 @@ def sanitize_md(text):
             out.append(ln)
     return "\n".join(out)
 
+# —— 抓取工作流元数据剥离: 只留文件本体信息, 去掉抓取过程记录 ——
+WORKFLOW_ANY = re.compile(r"抓取日期|抓取时间|抓取方式|获取状态|kimi_fetch|kimi-|scrape|一次成功")
+WORKFLOW_CELL = re.compile(r"[✅❌⚠️✔✓☑⏳]|已获取|未获取|待抓|抓取成功|抓取失败|HTTP\s?码?[:：]?\s?\d{3}|状态.*获取")
+
+def strip_crawl_meta(text):
+    """非表格行整行剥离; 表格行剥到单元格级(保文件名与链接, 去状态列)。"""
+    out = []
+    for ln in text.split("\n"):
+        s = ln.strip()
+        if s.startswith("|") and "|" in s[1:]:
+            cells = [c for c in ln.split("|") if not (WORKFLOW_ANY.search(c) or WORKFLOW_CELL.search(c))]
+            ln2 = "|".join(cells)
+            if ln2.strip().strip("|").strip():
+                out.append(ln2)
+            continue
+        if WORKFLOW_ANY.search(ln):
+            continue
+        if ("状态" in ln or "获取" in ln) and WORKFLOW_CELL.search(ln):
+            continue
+        ln = re.sub(r"（[^）]*(?:kimi_fetch|抓取|一次成功)[^）]*）", "", ln)
+        out.append(ln)
+    return "\n".join(out)
+
 # —— 原件优先: 02 收藏夹里, 有官方 PDF 原件的转写 MD 不上站 ——
 OFFICIAL_MD = re.compile(r"(正文|全文|_L1|_L2|协定|公约|议定书)", re.I)
 def _norm_stem(s):
@@ -62,7 +85,7 @@ def _digits(s):
 def find_pdf_twin(dirpath, stem):
     """同目录下存在对应官方 PDF(名称归一化包含 或 ≥2个数字串互含)则返回 True。
     单一年份不算数——防止 1999 年协议被 2002 年决定误伤。"""
-    pdfs = [os.path.splitext(f)[0] for f in os.listdir(dirpath) if f.lower().endswith(".pdf")]
+    pdfs = [os.path.splitext(f)[0] for f in os.listdir(dirpath) if f.lower().endswith((".pdf", ".html"))]
     a = _norm_stem(stem)
     da = _digits(stem)
     for p in pdfs:
@@ -173,10 +196,20 @@ MD_CSS = ("body{font-family:-apple-system,'PingFang SC',serif;max-width:820px;ma
           "blockquote{border-left:3px solid #DA7756;margin-left:0;padding-left:14px;color:#575046}"
           "a{color:#b85a3c}hr{border:none;border-top:1px solid #d8d0c0;margin:28px 0}")
 
+# —— 官方网页快照: 剥 script/iframe(第三方JS常带 API key/secret, GitHub secret-scanning 会拒收) ——
+def sanitize_html_snapshot(src, tgt):
+    html = open(src, encoding="utf-8", errors="ignore").read()
+    html = re.sub(r"(?is)<script.*?>.*?</script>", "", html)
+    html = re.sub(r"(?is)<noscript.*?>.*?</noscript>", "", html)
+    html = re.sub(r"(?is)<iframe.*?>.*?</iframe>", "", html)
+    with open(tgt, "w", encoding="utf-8") as f:
+        f.write(html)
+
 def md_to_html(src, dst, title):
     import markdown
     with open(src, encoding="utf-8") as f: text = f.read()
-    text = sanitize_md(text)  # 私人段落剥离
+    text = sanitize_md(text)      # 私人段落剥离
+    text = strip_crawl_meta(text) # 抓取工作流元数据剥离
     body = markdown.markdown(text, extensions=["tables", "fenced_code", "nl2br"])
     doc = f'<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><title>{htmllib.escape(title)}</title><style>{MD_CSS}</style></head><body>{body}</body></html>'
     with open(dst, "w", encoding="utf-8") as f: f.write(doc)
@@ -191,7 +224,7 @@ def main():
             for fn in sorted(filenames):
                 if SKIP_FILE_PAT.search(fn) or fn == ".DS_Store": continue
                 ext = os.path.splitext(fn)[1].lower()
-                if ext not in (".pdf", ".md"): continue
+                if ext not in (".pdf", ".md", ".html"): continue
                 src = os.path.join(dirpath, fn)
                 rel = os.path.join(dirname, rel_dir) if rel_dir != "." else dirname
                 stem = os.path.splitext(fn)[0]
@@ -203,20 +236,36 @@ def main():
                 sub = os.path.relpath(dirpath, base)
                 tgt_dir = os.path.join(LIBDIR, cid + cname, sub) if sub != "." else os.path.join(LIBDIR, cid + cname)
                 os.makedirs(tgt_dir, exist_ok=True)
-                fmt = "pdf" if ext == ".pdf" else "html"
-                tgt_name = fn if ext == ".pdf" else stem + ".html"
+                # 伪PDF检测: 内容实为网页快照的 .pdf 改按 HTML 收录
+                real_ext = ext
+                if ext == ".pdf":
+                    with open(src, "rb") as fh:
+                        if fh.read(5) != b"%PDF-": real_ext = ".html"
+                fmt = "pdf" if real_ext == ".pdf" else "html"
+                tgt_name = fn if real_ext == ".pdf" else stem + ".html"
                 tgt = os.path.join(tgt_dir, tgt_name)
+                if real_ext == ".html" and ext == ".pdf" and os.path.exists(os.path.join(tgt_dir, fn)):
+                    os.remove(os.path.join(tgt_dir, fn))  # 清理旧伪PDF残留
                 mode = "raw"; so = sd = size
-                # 原件优先: 02 收藏夹的官方文本 MD, 若同目录有对应官方 PDF 则弃用 MD
-                if ext == ".md" and cid == "02" and OFFICIAL_MD.search(fn) and find_pdf_twin(dirpath, stem):
+                # 网页快照: 同目录已有同名 PDF 渲染件则弃快照留 PDF
+                if ext == ".html" and any(f.lower() == (stem.lower() + ".pdf") for f in os.listdir(dirpath)):
                     if os.path.exists(tgt): os.remove(tgt)
+                    removed.append(rel.replace(os.sep, "/") + "/" + fn)
+                    continue
+                # 原件优先: 02 收藏夹的官方文本 MD, 若同目录有对应官方原件(PDF/快照)则弃用 MD
+                if ext == ".md" and cid == "02" and OFFICIAL_MD.search(fn) and find_pdf_twin(dirpath, stem):
+                    # 勿删同名网页快照: 快照与 MD 的生成目标路径相同, 快照是真原件要留
+                    if os.path.exists(tgt) and not any(f == stem + ".html" for f in os.listdir(dirpath)):
+                        os.remove(tgt)
                     removed.append(rel.replace(os.sep, "/") + "/" + fn)
                     continue
                 if ext == ".md":
                     md_to_html(src, tgt, title)  # MD 一律重生成(轻量+应用最新清洗规则)
+                elif real_ext == ".html":
+                    sanitize_html_snapshot(src, tgt)  # 网页快照一律重生成(去脚本)
                 elif os.path.exists(tgt) and os.path.getmtime(tgt) >= os.path.getmtime(src):
                     mode = "cached"  # 上次已生成,跳过拷贝/压缩
-                elif ext == ".pdf":
+                elif real_ext == ".pdf":
                     if size > COMPRESS_THRESHOLD:
                         mode, so, sd = compress_pdf(src, tgt)
                         comp_log.append((fn, sd, so, mode))
