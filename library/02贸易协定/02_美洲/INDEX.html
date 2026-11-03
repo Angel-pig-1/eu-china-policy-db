@@ -1,0 +1,152 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><title>INDEX</title><style>body{font-family:-apple-system,'PingFang SC',serif;max-width:820px;margin:40px auto;padding:0 24px;color:#211d18;line-height:1.9;font-size:15px}h1,h2,h3{font-family:'Songti SC',STSong,serif}h1{font-size:26px;border-bottom:2px solid #DA7756;padding-bottom:10px}h2{font-size:20px;margin-top:32px}h3{font-size:17px;margin-top:24px}table{border-collapse:collapse;width:100%;font-size:13px;margin:16px 0}th,td{border:1px solid #d8d0c0;padding:7px 10px;text-align:left}th{background:#efe9dd}code{background:#efe9dd;padding:1px 5px;border-radius:2px;font-size:13px}blockquote{border-left:3px solid #DA7756;margin-left:0;padding-left:14px;color:#575046}a{color:#b85a3c}hr{border:none;border-top:1px solid #d8d0c0;margin:28px 0}</style></head><body><h1>集群02：美洲贸易协定语料库 INDEX</h1>
+<ul>
+<li>建设轮次：第二轮夜间收割（子agent，2026-10-23 18:56–19:00）</li>
+<li>抓取管道：OP Cellar SPARQL（CELEX→work→英文expression→manifestation）→ Cellar对象存储直取（无WAF）→ pdftotext / pandoc</li>
+<li>语言：全部为英文官方文本</li>
+<li>诚实声明：本轮10项目标全部获取成功；任务书4个CELEX有误已更正（见文末备忘）</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>协定</th>
+<th>CELEX</th>
+<th>L1状态</th>
+<th>文件</th>
+<th>大小</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>CETA加拿大</td>
+<td>22016A1018(01)等</td>
+<td>✅(首轮)</td>
+<td>01_CETA加拿大/(3文件)</td>
+<td>2.2MB正文</td>
+<td>2017-10-05临时适用</td>
+</tr>
+<tr>
+<td>2</td>
+<td>CARIFORUM EPA加勒比论坛</td>
+<td>22008A1025(01)等</td>
+<td>✅(首轮)</td>
+<td>02_CARIFORUM_EPA加勒比论坛/(2文件)</td>
+<td>4.6MB正文</td>
+<td>OJ L 289, 30.10.2008</td>
+</tr>
+<tr>
+<td>3</td>
+<td>智利联系协定</td>
+<td><strong>22002A1230(01)</strong></td>
+<td>✅</td>
+<td>03_智利联系协定/01_欧盟智利联系协定_2002.md</td>
+<td>5.8MB</td>
+<td>OJ L 352, 30.12.2002。任务书22002A1024(01)有误。<strong>已被2024现代化协定(22024A01759)取代</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td>智利签署决定</td>
+<td>32002D0979</td>
+<td>✅</td>
+<td>03_智利联系协定/02_理事会决定2002-979-EC_签署智利协定.md</td>
+<td>6KB</td>
+<td>OJ L 352, 30.12.2002</td>
+</tr>
+<tr>
+<td>5</td>
+<td>哥伦比亚-秘鲁FTA</td>
+<td><strong>22012A1221(01)</strong></td>
+<td>✅</td>
+<td>04_哥伦比亚秘鲁厄瓜多尔FTA/01_欧盟哥伦比亚秘鲁贸易协定_2012.md</td>
+<td>9.2MB</td>
+<td>OJ L 354, 21.12.2012, pp.3-2607。任务书22012A1026(01)有误。2012-735/EU签署，2013-08-01临时适用</td>
+</tr>
+<tr>
+<td>6</td>
+<td>厄瓜多尔加入议定书</td>
+<td><strong>22016A1224(01)</strong></td>
+<td>✅</td>
+<td>04_.../02_厄瓜多尔加入议定书_2016.md</td>
+<td>4.2MB</td>
+<td>OJ L 356, 24.12.2016；2016-11-11签署(决定2016/2369)</td>
+</tr>
+<tr>
+<td>7</td>
+<td>哥/秘FTA签署决定</td>
+<td>32012D0735</td>
+<td>✅(增补)</td>
+<td>04_.../03_理事会决定2012-735-EU_签署FTA.md</td>
+<td>9KB</td>
+<td>OJ L 354, 21.12.2012</td>
+</tr>
+<tr>
+<td>8</td>
+<td>墨西哥全球协定</td>
+<td><strong>22000A1028(01)</strong></td>
+<td>✅</td>
+<td>05_墨西哥全球协定/01_欧盟墨西哥全球协定_2000.md</td>
+<td>68KB</td>
+<td>OJ L 276, 28.10.2000, pp.45-79。<strong>现代化协定(GA+iTA)已于2026-05-22签署，尚未编入OJ</strong></td>
+</tr>
+<tr>
+<td>9</td>
+<td>墨西哥缔结决定</td>
+<td>32000D0658</td>
+<td>✅</td>
+<td>05_.../02_理事会决定2000-658-EC_缔结墨西哥协定.md</td>
+<td>4KB</td>
+<td>OJ L 276, 28.10.2000</td>
+</tr>
+<tr>
+<td>10</td>
+<td>中美洲联系协定</td>
+<td><strong>22012A1215(01)</strong></td>
+<td>✅</td>
+<td>06_中美洲联系协定/01_欧盟中美洲联系协定_2012.md</td>
+<td>9.1MB</td>
+<td>OJ L 346, 15.12.2012, pp.3-2621。任务书22012A1129(01)有误。贸易部分2013-08-01临时适用</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Mercosur伙伴关系协定(EMPA)</td>
+<td><strong>22026A00186</strong></td>
+<td>✅</td>
+<td>07_Mercosur/01_欧盟Mercosur伙伴关系协定EMPA_2026.md</td>
+<td>14.7MB</td>
+<td><strong>OJ L 2026/186, 27.2.2026</strong>——已签署入OJ，非仅谈判文本</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Mercosur临时贸易协定(ITA)</td>
+<td><strong>22026A00184</strong></td>
+<td>✅</td>
+<td>07_Mercosur/02_欧盟Mercosur临时贸易协定ITA_2026.md</td>
+<td>14.2MB</td>
+<td>OJ L 2026/184, 27.2.2026</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Mercosur签署决定</td>
+<td>32026D0185</td>
+<td>✅(L4-waveB升级)</td>
+<td>07_Mercosur/03_理事会决定2026-185-EU_签署Mercosur.md + _raw_32026D0185.pdf</td>
+<td>881KB</td>
+<td>OJ L 2026/185, 27.2.2026；理事会2026-01-09决定签署并临时适用。<strong>L4-waveB经Cellar .0006.01管道取得pdfa2a PDF，XHTML-only问题已解决</strong></td>
+</tr>
+</tbody>
+</table>
+<h2>统计</h2>
+<ul>
+<li>本轮10项任务全部✅（另增补2项理事会决定）；含首轮共16文件</li>
+<li>语料总量：约82MB全文（本轮新增约77MB）</li>
+</ul>
+<h2>备忘（本轮教训与发现）</h2>
+<ol>
+<li><strong>EU-Mercosur协定已正式签署并公布OJ</strong>（2026/184 ITA + 2026/186 EMPA + 2026/185决定，2026-02-27公布）——状态远超任务书预期"只收agreed text"</li>
+<li><strong>任务书CELEX勘误</strong>：智利22002A1024(01)→22002A1230(01)；哥秘22012A1026(01)→22012A1221(01)；中美洲22012A1129(01)→22012A1215(01)</li>
+<li>manifest类型的pdfa1b必须纳入PDF分支判断，否则PDF会被当HTML转换产生二进制垃圾（本轮雅温得/洛美II曾中招，已修复）</li>
+<li>cellar HTML版小于20KB是正常的（短法规），下载阈值不宜设太高（3917/92仅17KB，GSP完整文本）</li>
+<li>墨西哥现代化协定2026-05-22签署，待生效后OJ将公布，后续轮次可追抓</li>
+</ol></body></html>
