@@ -349,7 +349,7 @@
         var link = location.pathname + '?id=' + encodeURIComponent(d.id);
         Site.copyText(location.origin === 'null' ? link : location.origin + link, '记录链接已复制');
       } else if (a === 'copycite') {
-        var cite = (d.nameZh || d.name) + '（' + d.name + '）. ' + d.date + '. ICES 中欧政策档案. ' + (d.url || (location.origin === 'null' ? '' : location.origin) + location.pathname + '?id=' + d.id);
+        var cite = (d.nameZh || d.name) + '（' + d.name + '）. ' + d.date + '. CEA 中欧档案. ' + (d.url || (location.origin === 'null' ? '' : location.origin) + location.pathname + '?id=' + d.id);
         Site.copyText(cite, '引文信息已复制');
       } else if (a === 'print') window.print();
       else if (a === 'close') closeDetail();
@@ -450,7 +450,7 @@
         d.backgroundZh || '', d.background || '', d.implicationZh || '', d.implication || '',
         (d.framings || []).join('；'), (d.industries || []).join('；'), d.url || '', d.file || ''];
     });
-    Site.downloadCSV('ices-policies-' + Site.todayStamp() + '.csv', headers, rows);
+    Site.downloadCSV('cea-policies-' + Site.todayStamp() + '.csv', headers, rows);
     Site.toast('已导出 ' + rows.length + ' 条记录');
   });
 

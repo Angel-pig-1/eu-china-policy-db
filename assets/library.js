@@ -421,7 +421,7 @@
       return [d.id, d.side, d.date, d.title, d.coll, d.collName, d.cat || '', d.type || '', d.inst || '',
         (d.tags || []).join('；'), d.fmt, String(d.sizeKB), d.file, d.src || ''];
     });
-    Site.downloadCSV('ices-library-' + Site.todayStamp() + '.csv', headers, rows);
+    Site.downloadCSV('cea-library-' + Site.todayStamp() + '.csv', headers, rows);
     Site.toast('已导出 ' + rows.length + ' 条记录');
   });
 

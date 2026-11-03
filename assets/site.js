@@ -1,5 +1,5 @@
 /* ==========================================================================
-   ICES 中欧政策档案 — 共享脚本
+   CEA 中欧档案 — 共享脚本
    工具函数 / 页头页脚 / 主题切换 / CSV / Toast
    依赖：无（data.js / library_data.js 由各页面自行加载）
    ========================================================================== */
@@ -198,10 +198,10 @@
     mount.className = 'site-header';
     mount.innerHTML =
       '<div class="header-inner">' +
-        '<a class="brand" href="index.html" aria-label="ICES 中欧政策档案，返回首页">' +
+        '<a class="brand" href="index.html" aria-label="CEA 中欧档案，返回首页">' +
           brandMark() +
-          '<span class="brand-text"><span class="brand-name">ICES</span>' +
-          '<span class="brand-sub">中欧政策档案</span></span>' +
+          '<span class="brand-text"><span class="brand-name">CEA</span>' +
+          '<span class="brand-sub">中欧档案</span></span>' +
         '</a>' +
         '<nav class="main-nav" aria-label="主导航"><ul>' + navHTML + '</ul></nav>' +
         '<div class="header-actions">' +
@@ -211,7 +211,7 @@
       '</div>' +
       '<div class="mobile-menu" id="mobile-menu" aria-hidden="true" inert>' +
         '<ul>' + navHTML + '</ul>' +
-        '<p class="mobile-menu-foot">ICES · 中欧政策档案</p>' +
+        '<p class="mobile-menu-foot">CEA · 中欧档案</p>' +
       '</div>';
 
     // 主题按钮初始状态
@@ -264,8 +264,8 @@
       '<div class="footer-inner">' +
         '<div class="footer-brand">' +
           '<a class="brand" href="index.html">' + brandMark() +
-            '<span class="brand-text"><span class="brand-name">ICES</span>' +
-            '<span class="brand-sub">中欧政策档案</span></span></a>' +
+            '<span class="brand-text"><span class="brand-name">CEA</span>' +
+            '<span class="brand-sub">中欧档案</span></span></a>' +
           '<p class="footer-meta">' + escapeHTML(stats) + (year ? ' · 数据截至 ' + escapeHTML(year) : '') + '</p>' +
         '</div>' +
         '<nav class="footer-nav" aria-label="页脚导航">' +
