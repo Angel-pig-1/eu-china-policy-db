@@ -194,10 +194,11 @@ def is_placeholder_html(src):
     return len(htmllib.unescape(text).strip()) < 800
 
 def source_priority(src):
-    if re.search(r"欧盟对华政策文件|中国官方文件|官方文件", src): return 50
-    if re.search(r"智库报告|智库研究精选|学术研究|学术研究精选|学术文献", src): return 40
-    if "中国威胁论与中国冲击2.0" in src: return 10
-    return 20
+    if re.search(r"欧盟对华政策文件|中国官方文件|官方文件", src): score = 50
+    elif re.search(r"智库报告|智库研究精选|学术研究|学术研究精选|学术文献", src): score = 40
+    elif "中国威胁论与中国冲击2.0" in src: score = 10
+    else: score = 20
+    return score + (2 if src.lower().endswith(".pdf") else 0)
 
 def guess_inst(name):
     m = re.match(r"([A-Za-z][A-Za-z&-]*?)_(\d{4})_", name)
