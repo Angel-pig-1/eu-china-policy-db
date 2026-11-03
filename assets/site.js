@@ -274,7 +274,6 @@
           '<a class="brand" href="index.html">' + brandMarkSVG() +
             '<span class="brand-text"><span class="brand-name">ICES</span>' +
             '<span class="brand-sub">中欧政策档案</span></span></a>' +
-          '<p class="footer-note">面向中欧经贸与政策研究的公共档案索引：政策原文镜像、文献专题与可继续检索的数据总览。站内所有数量与图表均由数据文件在运行时计算。</p>' +
           '<p class="footer-meta">' + escapeHTML(stats) + (year ? ' · 数据截至 ' + escapeHTML(year) : '') + '</p>' +
         '</div>' +
         '<nav class="footer-nav" aria-label="页脚导航">' +

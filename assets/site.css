@@ -4,23 +4,23 @@
    ========================================================================== */
 
 :root {
-  --paper: oklch(0.955 0.008 85);
-  --paper-rgb: 242, 242, 239;
-  --surface: oklch(0.982 0.004 85);
-  --surface-2: oklch(0.925 0.01 85);
-  --ink: oklch(0.31 0.075 252);
-  --ink-rgb: 8, 45, 79;
-  --muted: oklch(0.46 0.035 252);
-  --faint: oklch(0.57 0.025 252);
-  --line: oklch(0.85 0.015 85);
-  --line-strong: oklch(0.72 0.025 85);
-  --accent: oklch(0.76 0.105 35);
-  --accent-strong: oklch(0.5 0.115 30);
-  --accent-soft: oklch(0.91 0.035 35);
-  --eu: oklch(0.47 0.1 255);
-  --eu-soft: oklch(0.91 0.035 255);
-  --cn: oklch(0.5 0.12 28);
-  --cn-soft: oklch(0.91 0.035 28);
+  --paper: oklch(0.97 0.005 245);
+  --paper-rgb: 245, 246, 248;
+  --surface: oklch(1 0 0);
+  --surface-2: oklch(0.942 0.009 246);
+  --ink: oklch(0.30 0.05 262);
+  --ink-rgb: 15, 33, 58;
+  --muted: oklch(0.50 0.03 258);
+  --faint: oklch(0.61 0.025 258);
+  --line: oklch(0.885 0.008 245);
+  --line-strong: oklch(0.76 0.015 250);
+  --accent: oklch(0.60 0.13 252);
+  --accent-strong: oklch(0.46 0.15 257);
+  --accent-soft: oklch(0.93 0.025 252);
+  --eu: oklch(0.55 0.115 252);
+  --eu-soft: oklch(0.925 0.03 252);
+  --cn: oklch(0.38 0.09 262);
+  --cn-soft: oklch(0.90 0.025 262);
   --header-h: 72px;
   --ease: cubic-bezier(.23, .34, .18, 1);
 
@@ -34,23 +34,23 @@
 }
 
 html.dark {
-  --paper: oklch(0.225 0.014 80);
-  --paper-rgb: 34, 32, 29;
-  --surface: oklch(0.26 0.014 80);
-  --surface-2: oklch(0.31 0.016 80);
-  --ink: oklch(0.93 0.012 85);
-  --ink-rgb: 238, 234, 226;
-  --muted: oklch(0.74 0.025 252);
-  --faint: oklch(0.6 0.025 252);
-  --line: oklch(0.38 0.018 80);
-  --line-strong: oklch(0.48 0.02 80);
-  --accent: oklch(0.8 0.11 35);
-  --accent-strong: oklch(0.72 0.12 35);
-  --accent-soft: oklch(0.35 0.05 35);
-  --eu: oklch(0.72 0.12 255);
-  --eu-soft: oklch(0.34 0.05 255);
-  --cn: oklch(0.72 0.13 28);
-  --cn-soft: oklch(0.35 0.05 28);
+  --paper: oklch(0.235 0.02 262);
+  --paper-rgb: 25, 29, 39;
+  --surface: oklch(0.27 0.02 262);
+  --surface-2: oklch(0.32 0.022 262);
+  --ink: oklch(0.94 0.008 250);
+  --ink-rgb: 238, 240, 244;
+  --muted: oklch(0.75 0.02 258);
+  --faint: oklch(0.60 0.02 258);
+  --line: oklch(0.38 0.02 262);
+  --line-strong: oklch(0.48 0.02 262);
+  --accent: oklch(0.74 0.12 252);
+  --accent-strong: oklch(0.80 0.11 252);
+  --accent-soft: oklch(0.36 0.05 258);
+  --eu: oklch(0.72 0.12 252);
+  --eu-soft: oklch(0.36 0.05 255);
+  --cn: oklch(0.83 0.055 250);
+  --cn-soft: oklch(0.36 0.05 260);
 }
 
 /* ---------- Reset ---------- */
