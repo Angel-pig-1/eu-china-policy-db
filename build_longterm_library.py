@@ -220,7 +220,15 @@ def main():
         ids.add(entry['id'])
         unique.append(entry)
     entries = sorted(unique, key=lambda x: (x['coll'], x['cat'], x['title'].lower(), x['id']))
-    OUT.write_text('const LONGTERM=' + json.dumps(entries, ensure_ascii=False) + ';\n', encoding='utf-8')
+    payload = json.dumps(entries, ensure_ascii=False)
+    OUT.write_text('const LONGTERM=' + payload + ';\n', encoding='utf-8')
+    version = hashlib.sha256(payload.encode()).hexdigest()[:10]
+    for html_name in ['index.html', 'library.html', 'stats.html']:
+        html_path = REPO / html_name
+        html = html_path.read_text(encoding='utf-8')
+        updated = re.sub(r'longterm_data\.js\?v=[^"\']+', 'longterm_data.js?v=' + version, html)
+        if updated != html:
+            html_path.write_text(updated, encoding='utf-8')
     for filename, rows in [('入库清单.csv', inventory), ('未入库清单.csv', unavailable)]:
         path = ROOT / filename
         fields = list(rows[0]) if rows else (['ID', '资料线', '标题'] if filename == '入库清单.csv' else ['资料线', '标题', '来源', '原因'])
