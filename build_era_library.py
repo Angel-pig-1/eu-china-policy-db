@@ -16,9 +16,9 @@ RELEASE = os.environ.get('ERA_RELEASE') == '1'
 
 def release_url(row):
     tag = 'era-' + row['category'].split('_')[0]
-    name = re.sub(r"['‘’\"“”]", '.', Path(row['file']).name)
+    name = re.sub(r"['‘’\"“„”]", '.', Path(row['file']).name)
     name = unicodedata.normalize('NFKD', name).encode('ascii', 'ignore').decode()
-    name = re.sub(r'[^A-Za-z0-9._-]+', '.', name)
+    name = re.sub(r'[^A-Za-z0-9._+-]+', '.', name)
     name = re.sub(r'\.+', '.', name)
     return f'https://github.com/Angel-pig-1/eu-china-policy-db/releases/download/{tag}/{quote(name)}'
 GENERIC_TITLE = re.compile(r'^(?:background documentation|documentation|trainers? manual|programme|speakers[’\' ]contributions|[\d_ ]+)(?:\s+(?:en|en_?online))?$', re.I)
