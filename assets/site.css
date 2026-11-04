@@ -1362,7 +1362,7 @@ html.dark .hero-index { box-shadow: 0 16px 48px rgb(0 0 0 / 0.20); }
 .latest-item { padding: 15px 10px; border-radius: 12px; }
 .latest-item:last-child { border-bottom-color: transparent; }
 .latest-item .li-title { font-family: var(--sans); letter-spacing: -0.015em; }
-.coll-grid { grid-template-columns: repeat(4, 1fr); gap: 14px; border: none; background: transparent; }
+.coll-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; border: none; background: transparent; }
 .coll-cell {
   border: 1px solid var(--line);
   border-radius: 20px;

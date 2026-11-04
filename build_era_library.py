@@ -186,7 +186,7 @@ def main():
         category = re.sub(r'^\d+_', '', row['category'])
         entries.append({
             'id': row['id'], 'title': display_title(row), 'date': year, 'year': year,
-            'side': 'EU', 'coll': '04', 'collName': '欧洲法律', 'cat': category,
+            'side': 'EU', 'coll': '05', 'collName': 'ERA 法律培训', 'cat': category,
             'type': resource_type(row), 'inst': '欧洲法律学院（ERA）',
             'tags': [category, row['subcategory']], 'file': file_value,
             'fmt': kind if downloaded else 'online',

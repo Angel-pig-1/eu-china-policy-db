@@ -13,7 +13,7 @@
   var NUM = {};
   LIB_ALL.forEach(function (d, i) { NUM[d.id] = String(i + 1).padStart(3, '0'); });
 
-  var COLL_ORDER = ['01', '02', '03', '04'];
+  var COLL_ORDER = ['01', '02', '03', '04', '05'];
   var COLL_DEFS = {};
   LIB_ALL.forEach(function (d) {
     if (!COLL_DEFS[d.coll]) COLL_DEFS[d.coll] = { no: d.coll, name: d.collName, count: 0 };
@@ -36,13 +36,43 @@
     return Object.keys(s).sort(function (a, b) { return a.localeCompare(b, 'zh-CN'); });
   })();
 
-  function displayTitle(t) { return String(t || '').replace(/_/g, ' '); }
+  function displayTitle(t, d) {
+    var s = String(t || '')
+      .replace(/\.(?:pdf|html?|docx?|pptx?|xlsx?)$/i, '')
+      .replace(/_/g, ' ')
+      .replace(/([a-z])([A-Z])/g, '$1 $2')
+      .replace(/([A-Za-z])(\d{4})/g, '$1 $2')
+      .replace(/(\d{4})(?=[A-Z][a-z])/g, '$1 ')
+      .replace(/\s+/g, ' ')
+      .replace(/\s+([)\].,;:])/g, '$1')
+      .trim();
+    if (!s) return '未命名文献';
+    if (/^(?:INDEX|文件清单|文献清单|可视化报告)$/i.test(s) && d) {
+      var label = s.toUpperCase() === 'INDEX' ? '文献索引' : s;
+      var scope = d.cat || d.collName || '当前专题';
+      if (d.file) {
+        var parts = String(d.file).split('/');
+        var parent = parts.length > 1 ? parts[parts.length - 2].replace(/^\d+_/, '') : '';
+        if (parent && parent !== 'library') scope = parent;
+      }
+      return scope + ' · ' + label;
+    }
+    if (d && TITLE_COUNTS[s.toLowerCase()] > 1 && d.year && s.indexOf(String(d.year)) === -1) {
+      s += '（' + d.year + '）';
+    }
+    return s;
+  }
+  var TITLE_COUNTS = {};
+  LIB_ALL.forEach(function (d) {
+    var key = displayTitle(d.title).toLowerCase();
+    TITLE_COUNTS[key] = (TITLE_COUNTS[key] || 0) + 1;
+  });
   function fmtSize(kb) { return kb >= 1024 ? (kb / 1024).toFixed(1) + ' MB' : kb + ' KB'; }
 
   /* ---------- 状态 ---------- */
   var state = { q: '', side: 'all', coll: 'all', cat: 'all', type: 'all', year: 'all', sort: 'topic', selectedId: null, rows: [] };
   var validSides = { all: 1, EU: 1, CN: 1, INTL: 1 };
-  var validColls = { all: 1, '01': 1, '02': 1, '03': 1, '04': 1 };
+  var validColls = { all: 1, '01': 1, '02': 1, '03': 1, '04': 1, '05': 1 };
   var validSorts = { topic: 1, desc: 1, asc: 1, title: 1 };
 
   /* ---------- DOM ---------- */
@@ -239,7 +269,7 @@
             '<span class="badge badge-fmt">' + esc(d.fmt.toUpperCase()) + '</span>' +
             '<span class="row-date">' + esc(Site.formatDate(d.date)) + '</span>' +
           '</span>' +
-          '<span class="row-title-zh">' + esc(displayTitle(d.title)) + '</span>' +
+          '<span class="row-title-zh">' + esc(displayTitle(d.title, d)) + '</span>' +
           (inst ? '<span class="row-title-en">' + esc(inst) + (d.type ? ' · ' + esc(d.type) : '') + '</span>' : '') +
         '</span>' +
       '</div>';
@@ -284,7 +314,7 @@
         '<span class="row-date">' + esc(Site.formatDate(d.date)) + '</span>' +
         '<span class="row-date">№ ' + NUM[d.id] + '</span>' +
       '</div>' +
-      '<h2 class="detail-title-zh">' + esc(displayTitle(d.title)) + '</h2>' +
+      '<h2 class="detail-title-zh">' + esc(displayTitle(d.title, d)) + '</h2>' +
       '<p class="detail-title-en" style="font-style:normal;font-family:var(--mono);font-size:12px">' + esc(d.title) + '</p>' +
       '<div class="detail-actions">' + actions + '</div>' +
       '<div class="tablist" role="tablist" aria-label="文献内容">' +
@@ -348,7 +378,7 @@
           var f = document.createElement('iframe');
           f.loading = 'lazy';
           f.src = Site.fileUrl(tabRefs.d.file);
-          f.title = '原始文献：' + displayTitle(tabRefs.d.title);
+          f.title = '原始文献：' + displayTitle(tabRefs.d.title, tabRefs.d);
           mount.appendChild(f);
         }
         originalLoaded = true;
