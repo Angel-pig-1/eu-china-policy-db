@@ -13,15 +13,19 @@
     { keys: ['贸易', '关税', '倾销', '出口', '进口', 'trade', 'tariff', 'dumping', 'export', 'import'], terms: ['贸易', '关税', '倾销', '反补贴', '出口', '进口', '供应链', 'trade', 'tariff', 'dumping', 'countervailing', 'export', 'import', 'supply chain'] },
     { keys: ['知识产权', '版权', '商业秘密', '外观设计', 'intellectual property', 'copyright', 'trade secret', 'design'], terms: ['知识产权', '版权', '商业秘密', '外观设计', 'intellectual property', 'copyright', 'trade secret', 'design protection', 'designs'] },
     { keys: ['国家安全', '投资审查', '外商投资', 'national security', 'investment screening', 'foreign investment'], terms: ['国家安全', '投资审查', '外商投资', 'national security', 'investment screening', 'foreign investment', 'foreign direct investment'] },
-    { keys: ['欧盟委员会', '欧洲议会', '欧盟理事会', '欧洲联盟', '欧盟', 'european commission', 'european parliament', 'european union', 'council of the eu'], terms: ['欧盟', '欧洲联盟', '欧盟委员会', '欧洲议会', '欧盟理事会', 'eu', 'european commission', 'european parliament', 'european union', 'council of the eu', 'european'] }
+    { keys: ['数字平台', '数字服务', '数字市场', '平台监管', 'online platform', 'digital service', 'digital market', 'digital platform'], terms: ['数字平台', '数字服务', '数字市场', '平台监管', 'online platform', 'digital service', 'digital market', 'digital platform', 'gatekeeper', 'platform governance'] },
+    { keys: ['供应链尽责', '可持续发展尽职', '尽职调查', '尽责', 'csddd', 'csrd', 'corporate sustainability', 'due diligence'], terms: ['供应链', '尽职调查', '尽责', '可持续发展', '人权', '环境', 'csddd', 'csrd', 'corporate sustainability', 'due diligence', 'supply chain', 'human rights'] },
+    { keys: ['国家援助', '竞争法', '反垄断', 'state aid', 'competition law', 'antitrust'], terms: ['国家援助', '竞争法', '反垄断', '竞争', 'state aid', 'competition', 'antitrust', 'digital markets'] },
+    { keys: ['中国', '中方', '对华', '涉华', 'china', 'chinese', 'prc'], terms: ['中国', '中方', '对华', '涉华', 'china', 'chinese', 'prc', 'people’s republic of china', 'people\'s republic of china'] },
+    { keys: ['欧盟委员会', '欧洲议会', '欧盟理事会', '欧洲联盟', '欧洲', '欧盟', 'european commission', 'european parliament', 'european union', 'council of the eu'], terms: ['欧洲', '欧盟', '欧洲联盟', '欧盟委员会', '欧洲议会', '欧盟理事会', 'eu', 'european commission', 'european parliament', 'european union', 'council of the eu', 'european'], broad: true }
   ];
-  var STOP = /关于|有关|相关|文件|文献|资料|政策|法规|法律|法案|查找|搜索|我想找|我想|我要|需要|帮我|一下|全部|所有|有哪些|哪些|的|和|与|及|或|是|找|要|能|可以/g;
+  var STOP = /关于|有关|相关|文件|文献|资料|政策|法规|法律|法案|查找|搜索|我想找|我想|我要|需要|帮我|一下|全部|所有|有哪些|哪些|的|和|与|及|或|是|找|要|能|可以|怎么|如何|怎样|怎么样|监管|规制|介绍|了解|学习|有没有|是什么|哪一些|告诉我|给我|看看|看一下|请问|下载|获取|整理/g;
 
   function norm(value) {
     return String(value == null ? '' : value).normalize('NFKC').toLowerCase();
   }
 
-  function score(haystack, title, query) {
+  function score(haystack, title, query, allowAny) {
     var q = norm(query).trim();
     if (!q) return 0;
     var hay = norm(haystack);
@@ -31,13 +35,18 @@
 
     CONCEPTS.forEach(function (concept) {
       var keys = concept.keys.slice().sort(function (a, b) { return b.length - a.length; });
+      var found = false;
       for (var i = 0; i < keys.length; i++) {
         var key = norm(keys[i]);
-        if (remaining.indexOf(key) !== -1) {
-          groups.push(concept.terms);
+        while (remaining.indexOf(key) !== -1) {
           remaining = remaining.replace(key, ' ');
-          break;
+          found = true;
         }
+      }
+      if (found) {
+        var group = concept.terms.slice();
+        group.broad = concept.broad === true;
+        groups.push(group);
       }
     });
 
@@ -47,7 +56,9 @@
     if (!groups.length) groups.push([q]);
 
     var total = 0;
+    var matched = 0;
     for (var i = 0; i < groups.length; i++) {
+      if (allowAny && groups.length > 1 && groups[i].broad) continue;
       var best = -1;
       groups[i].forEach(function (term) {
         var t = norm(term);
@@ -57,9 +68,13 @@
           if (value > best) best = value;
         }
       });
-      if (best < 0) return -1;
-      total += best;
+      if (best < 0 && !allowAny) return -1;
+      if (best >= 0) {
+        total += best;
+        matched++;
+      }
     }
+    if (!matched) return -1;
     if (name.indexOf(q) !== -1) total += 30;
     return total;
   }

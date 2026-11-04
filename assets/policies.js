@@ -119,6 +119,15 @@
       }
       return true;
     });
+    if (q && !rows.length) {
+      rows = DATA_ALL.filter(function (d) {
+        if (state.side !== 'all' && d.side !== state.side) return false;
+        if (state.year !== 'all' && d.date.slice(0, 4) !== state.year) return false;
+        if (state.source !== 'all' && d.source !== state.source) return false;
+        scores[d.id] = SemanticSearch.score(HAY[d.id], (d.nameZh || '') + ' ' + d.name, q, true);
+        return scores[d.id] >= 0;
+      });
+    }
     if (q) rows.sort(function (a, b) { return scores[b.id] - scores[a.id]; });
     else if (state.sort === 'desc') rows.sort(function (a, b) { return b.date.localeCompare(a.date); });
     else if (state.sort === 'asc') rows.sort(function (a, b) { return a.date.localeCompare(b.date); });

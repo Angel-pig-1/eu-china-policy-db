@@ -76,5 +76,17 @@ const LEGAL = [
     "status": "Official continuously updated text from the German federal legal information service.", "background": "Germany's Supply Chain Due Diligence Act establishes obligations for companies to prevent human rights violations and certain environmental harms in supply chains.", "implication": "It requires risk management, policy statements, preventive and remedial measures, complaints procedures and duties concerning direct and indirect suppliers.", "impacted": 4,
     "framings": ["Human rights in supply chains", "Corporate due diligence", "Complaints and remediation", "Supplier risk management"], "industries": ["G46", "C24", "C26", "M73"],
     "url": "https://www.gesetze-im-internet.de/lksg/", "file": "2021-07-16_DE_德国供应链尽职调查法.pdf", "nameZh": "德国《供应链企业尽职调查义务法》（LkSG）", "backgroundZh": "德国建立企业预防供应链人权侵害及特定环境损害的尽职调查义务。", "implicationZh": "要求风险管理、政策声明、预防与补救措施、申诉机制以及直接和间接供应商相关义务。", "statusZh": "德国官方法规库持续更新文本。", "source": "ext"
+  },
+  {
+    "id": "legal-14", "side": "EU", "name": "Regulation (EU) 2016/679 — General Data Protection Regulation", "cnLabel": "Regulation (EU) 2016/679", "date": "2016-04-27",
+    "status": "Official Journal text; applicable since 25 May 2018.", "background": "The General Data Protection Regulation establishes EU rules for processing and free movement of personal data, protecting natural persons and fundamental rights.", "implication": "It governs lawful processing, data subject rights, controllers and processors, automated decisions, international transfers, enforcement and penalties.", "impacted": 4,
+    "framings": ["Personal data protection", "Privacy and fundamental rights", "Automated decision-making", "International data transfers"], "industries": ["I64", "I65", "J66", "P84"],
+    "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng", "file": "2016-04-27_EU_通用数据保护条例_GDPR.pdf", "nameZh": "欧盟《通用数据保护条例》（GDPR）", "backgroundZh": "欧盟确立个人数据处理与自由流动的统一规则，保护自然人的基本权利。", "implicationZh": "涵盖合法处理、数据主体权利、控制者与处理者、自动化决策、跨境传输、执法与处罚。", "statusZh": "2016年刊宪，2018年5月25日起适用。", "source": "ext"
+  },
+  {
+    "id": "legal-15", "side": "EU", "name": "Regulation (EU) No 1257/2012 implementing enhanced cooperation in the creation of unitary patent protection", "cnLabel": "Regulation (EU) No 1257/2012", "date": "2012-12-17",
+    "status": "Official Journal text of the unitary patent protection regulation.", "background": "The regulation implements enhanced cooperation to create unitary patent protection in participating EU Member States.", "implication": "It establishes the legal basis for a European patent to have unitary effect across participating states, with rules on protection, licensing, transfers and translation.", "impacted": 4,
+    "framings": ["Unitary patent protection", "European patents", "Intellectual property", "Enhanced cooperation"], "industries": ["C39", "C35", "M73", "P84"],
+    "url": "https://eur-lex.europa.eu/eli/reg/2012/1257/oj/eng", "file": "2012-12-17_EU_单一专利保护条例_2012-1257.pdf", "nameZh": "欧盟《单一专利保护条例》（2012/1257）", "backgroundZh": "欧盟通过加强合作建立参与国单一专利保护制度。", "implicationZh": "规定欧洲专利在参与国的单一效力，以及保护、许可、转让和翻译等规则。", "statusZh": "欧盟官方公报原始文本。", "source": "ext"
   }
 ];

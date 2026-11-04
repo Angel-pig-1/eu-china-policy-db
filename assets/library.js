@@ -154,6 +154,17 @@
       }
       return true;
     });
+    if (q && !rows.length) {
+      rows = LIB_ALL.filter(function (d) {
+        if (state.side !== 'all' && d.side !== state.side) return false;
+        if (state.coll !== 'all' && d.coll !== state.coll) return false;
+        if (state.cat !== 'all' && d.cat !== state.cat) return false;
+        if (state.type !== 'all' && d.type !== state.type) return false;
+        if (state.year !== 'all' && String(d.year) !== state.year) return false;
+        scores[d.id] = SemanticSearch.score(HAY[d.id], d.title, q, true);
+        return scores[d.id] >= 0;
+      });
+    }
     if (q) rows.sort(function (a, b) { return scores[b.id] - scores[a.id]; });
     else if (state.sort === 'topic') rows.sort(function (a, b) {
       return String(a.coll).localeCompare(String(b.coll)) || String(a.cat || '').localeCompare(String(b.cat || ''), 'zh-CN') || String(a.title).localeCompare(String(b.title));
