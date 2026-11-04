@@ -17,6 +17,7 @@ RELEASE = os.environ.get('ERA_RELEASE') == '1'
 def release_url(row):
     tag = 'era-' + row['category'].split('_')[0]
     name = re.sub(r"['‘’\"“„”]", '.', Path(row['file']).name)
+    name = name.replace('ł', 'l').replace('Ł', 'L').replace('ț', '.').replace('Ț', '.')
     name = unicodedata.normalize('NFKD', name).encode('ascii', 'ignore').decode()
     name = re.sub(r'[^A-Za-z0-9._+-]+', '.', name)
     name = re.sub(r'\.+', '.', name)
