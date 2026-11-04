@@ -191,7 +191,7 @@
   ];
 
   function brandMark() {
-    return '<img class="brand-mark" src="assets/brand-gold.png" alt="" width="60" height="60" loading="eager" decoding="async">';
+    return '<img class="brand-mark" src="assets/brand-gold.webp" alt="" width="60" height="60" loading="eager" decoding="async">';
   }
 
   function initHeader(activeKey) {
@@ -218,6 +218,7 @@
         '</div>' +
       '</div>' +
       '<div class="mobile-menu" id="mobile-menu" aria-hidden="true" inert>' +
+        '<button type="button" class="icon-btn mobile-menu-close" data-menu-close aria-label="关闭菜单">' + icon('close') + '</button>' +
         '<ul>' + navHTML + '</ul>' +
         '<p class="mobile-menu-foot">CEA · 中欧档案</p>' +
       '</div>';
@@ -247,6 +248,7 @@
       }
     }
     menuBtn.addEventListener('click', function () { setMenu(!menuOpen); });
+    menu.querySelector('[data-menu-close]').addEventListener('click', function () { setMenu(false); });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && menuOpen) setMenu(false);
     });
@@ -263,6 +265,36 @@
         filterToggle.textContent = open ? '收起筛选' : '筛选';
         filters.classList.toggle('is-open', open);
       });
+    }
+
+    var filterBar = document.querySelector('.filter-bar');
+    if (filterBar) {
+      var mobileQuery = window.matchMedia('(max-width: 900px)');
+      var lastScrollY = window.scrollY;
+      var scrollQueued = false;
+      function revealFilters() {
+        filterBar.classList.remove('is-collapsed');
+      }
+      function updateFilterVisibility() {
+        scrollQueued = false;
+        var y = window.scrollY;
+        var delta = y - lastScrollY;
+        lastScrollY = y;
+        if (!mobileQuery.matches || menuOpen || filterBar.contains(document.activeElement) || y < 100 || delta < -4) {
+          revealFilters();
+        } else if (delta > 6 && y > 140) {
+          filterBar.classList.add('is-collapsed');
+        }
+      }
+      window.addEventListener('scroll', function () {
+        if (!scrollQueued) {
+          scrollQueued = true;
+          requestAnimationFrame(updateFilterVisibility);
+        }
+      }, { passive: true });
+      filterBar.addEventListener('focusin', revealFilters);
+      if (mobileQuery.addEventListener) mobileQuery.addEventListener('change', revealFilters);
+      else mobileQuery.addListener(revealFilters);
     }
   }
 

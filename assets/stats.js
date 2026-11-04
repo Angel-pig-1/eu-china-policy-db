@@ -93,9 +93,9 @@
     var euLen = CIRC * euFrac;
     document.getElementById('donut').innerHTML =
       '<svg class="donut-svg" viewBox="0 0 168 168" role="img" aria-label="EU 与 CN 政策占比环图">' +
-        '<circle cx="84" cy="84" r="' + R + '" fill="none" stroke="var(--eu)" stroke-width="20" ' +
+        '<circle cx="84" cy="84" r="' + R + '" fill="none" stroke="var(--stats-eu)" stroke-width="20" ' +
           'stroke-dasharray="' + euLen.toFixed(1) + ' ' + (CIRC - euLen).toFixed(1) + '" stroke-dashoffset="' + (CIRC / 4).toFixed(1) + '" transform="rotate(-90 84 84)"/>' +
-        '<circle cx="84" cy="84" r="' + R + '" fill="none" stroke="var(--cn)" stroke-width="20" ' +
+        '<circle cx="84" cy="84" r="' + R + '" fill="none" stroke="var(--stats-cn)" stroke-width="20" ' +
           'stroke-dasharray="' + (CIRC - euLen).toFixed(1) + ' ' + euLen.toFixed(1) + '" stroke-dashoffset="' + (CIRC / 4 - euLen).toFixed(1) + '" transform="rotate(-90 84 84)"/>' +
         '<text x="84" y="80" text-anchor="middle" font-size="22" font-weight="700" fill="var(--ink)" font-family="var(--serif)">' + nPol + '</text>' +
         '<text x="84" y="100" text-anchor="middle" font-size="10" fill="var(--faint)" font-family="var(--mono)">POLICIES</text>' +

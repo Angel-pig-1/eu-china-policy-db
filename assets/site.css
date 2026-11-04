@@ -1563,6 +1563,44 @@ html.dark {
 .detail-actions .btn { font-size: 14px; }
 .hero-cta .btn { font-size: 15px; }
 
+:root {
+  --stats-eu: #16834b;
+  --stats-cn: #c43c35;
+}
+html.dark {
+  --stats-eu: #30d158;
+  --stats-cn: #ff453a;
+}
+.legend-swatch.eu, .yearly-bar:not(.cn), .dv-bar:not(.cn), .donut-legend .dot.eu { background: var(--stats-eu); }
+.legend-swatch.cn, .yearly-bar.cn, .dv-bar.cn, .donut-legend .dot.cn { background: var(--stats-cn); }
+.rank-row.neutral .rank-bar { background: var(--stats-eu); }
+.rank-row.cn .rank-bar { background: var(--stats-cn); }
+@media (max-width: 900px) {
+  .filter-bar {
+    transition: transform 220ms var(--ease), opacity 180ms var(--ease);
+  }
+  .filter-bar.is-collapsed {
+    transform: translateY(calc(-100% - 16px));
+    opacity: 0;
+    pointer-events: none;
+  }
+  .mobile-menu { transform: translateX(28px); }
+  .mobile-menu.open { transform: translateX(0); }
+  body.menu-open .menu-btn { visibility: hidden; pointer-events: none; }
+  .mobile-menu-close {
+    display: inline-flex;
+    position: fixed;
+    top: calc(14px + env(safe-area-inset-top, 0px));
+    right: calc(16px + env(safe-area-inset-right, 0px));
+    z-index: 100;
+  }
+  .detail-close {
+    position: fixed;
+    top: calc(12px + env(safe-area-inset-top, 0px));
+    right: calc(12px + env(safe-area-inset-right, 0px));
+  }
+}
+
 @media (prefers-reduced-transparency: reduce) {
   .site-header, .mobile-menu, .filter-bar, .toast, .detail-backdrop,
   .btn, .icon-btn, .tag-chip, .filter-chip, .index-actions a, .section-head .more,
