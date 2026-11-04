@@ -48,81 +48,14 @@
     { num: nPol + nLib, lbl: '档案总条目', cls: '' },
     { num: nPol, lbl: '政策记录', cls: '' },
     { num: nLib, lbl: '文献条目', cls: '' },
-    { num: nEU, lbl: 'EU 政策', cls: 'eu' },
-    { num: nCN, lbl: 'CN 政策', cls: 'cn' },
-    { num: YEARS.length, lbl: '覆盖年份 ' + minYear + '—' + maxYear, cls: '' },
-    { num: maxYear, lbl: '最新收录年份', cls: '' },
     { num: latest.date.slice(5).replace('-', '.'), lbl: '最近收录 ' + latest.date.slice(0, 4), cls: '' }
   ];
   document.getElementById('index-stats').innerHTML = indexStats.map(function (s) {
     return '<div class="index-stat"><div class="num ' + s.cls + '">' + esc(String(s.num)) + '</div><div class="lbl">' + esc(s.lbl) + '</div></div>';
   }).join('');
 
-  /* ---------- EU/CN 双折线（内联 SVG，无图表库） ---------- */
-  function lineChart(years, eu, cn) {
-    var W = 560, H = 210, PL = 34, PR = 12, PT = 14, PB = 30;
-    var maxV = Math.max(1, Math.max.apply(null, eu.concat(cn)));
-    function x(i) { return PL + (years.length === 1 ? 0 : i * (W - PL - PR) / (years.length - 1)); }
-    function y(v) { return PT + (1 - v / maxV) * (H - PT - PB); }
-    function path(vals) {
-      return vals.map(function (v, i) { return (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1); }).join(' ');
-    }
-    var grid = '';
-    var steps = Math.min(4, maxV);
-    for (var g = 0; g <= steps; g++) {
-      var gv = Math.round(maxV * g / steps);
-      var gy = y(gv);
-      grid += '<line x1="' + PL + '" y1="' + gy.toFixed(1) + '" x2="' + (W - PR) + '" y2="' + gy.toFixed(1) + '" stroke="var(--line)" stroke-width="1"/>' +
-        '<text x="' + (PL - 6) + '" y="' + (gy + 3).toFixed(1) + '" text-anchor="end" font-size="9" fill="var(--faint)" font-family="var(--mono)">' + gv + '</text>';
-    }
-    var ticks = '';
-    years.forEach(function (yr, i) {
-      if (years.length <= 8 || i % 2 === 0) {
-        ticks += '<text x="' + x(i).toFixed(1) + '" y="' + (H - 8) + '" text-anchor="middle" font-size="9" fill="var(--faint)" font-family="var(--mono)">' + esc(yr.slice(2)) + '</text>';
-      }
-    });
-    var euPts = '', cnPts = '';
-    eu.forEach(function (v, i) { euPts += '<circle cx="' + x(i).toFixed(1) + '" cy="' + y(v).toFixed(1) + '" r="2.2" fill="var(--eu)"/>'; });
-    cn.forEach(function (v, i) { if (v > 0) cnPts += '<circle cx="' + x(i).toFixed(1) + '" cy="' + y(v).toFixed(1) + '" r="2.2" fill="var(--cn)"/>'; });
-    return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="EU 与 CN 年度收录折线图" style="width:100%;height:auto">' +
-      grid + ticks +
-      '<path d="' + path(cn) + '" fill="none" stroke="var(--cn)" stroke-width="2" stroke-linejoin="round"/>' +
-      '<path d="' + path(eu) + '" fill="none" stroke="var(--eu)" stroke-width="2" stroke-linejoin="round"/>' +
-      euPts + cnPts + '</svg>';
-  }
-
   var euSeries = YEARS.map(function (y) { return yearCount(y, 'EU'); });
   var cnSeries = YEARS.map(function (y) { return yearCount(y, 'CN'); });
-  document.getElementById('hero-chart').innerHTML = lineChart(YEARS, euSeries, cnSeries);
-
-  /* 滚动轻微位移（≤18px），prefers-reduced-motion 关闭 */
-  if (!Site.reduceMotion) {
-    var chartEl = document.getElementById('hero-chart');
-    var ticking = false;
-    function parallax() {
-      ticking = false;
-      var r = chartEl.getBoundingClientRect();
-      var vh = window.innerHeight || 1;
-      var delta = (vh * 0.5 - (r.top + r.height * 0.5)) * 0.05;
-      delta = Math.max(-18, Math.min(18, delta));
-      chartEl.style.transform = 'translateY(' + delta.toFixed(1) + 'px)';
-    }
-    window.addEventListener('scroll', function () {
-      if (!ticking) { ticking = true; requestAnimationFrame(parallax); }
-    }, { passive: true });
-    parallax();
-  }
-
-  /* ---------- 指标带 ---------- */
-  var band = [
-    { num: nPol, lbl: '政策记录' },
-    { num: nLib, lbl: '文献条目' },
-    { num: YEARS.length, lbl: '覆盖年份（' + minYear + '—' + maxYear + '）' },
-    { num: maxYear, lbl: '最新收录年份' }
-  ];
-  document.getElementById('metric-band').innerHTML = band.map(function (s) {
-    return '<div class="metric-cell"><div class="num">' + esc(String(s.num)) + '</div><div class="lbl">' + esc(s.lbl) + '</div></div>';
-  }).join('');
 
   /* ---------- 年度图表（柱，点击进筛选） ---------- */
   var maxCount = Math.max(1, Math.max.apply(null, euSeries.concat(cnSeries)));

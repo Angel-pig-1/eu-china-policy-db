@@ -349,10 +349,23 @@
 
   function placeholderHTML() {
     return '<div class="empty-state" style="padding-top:96px"><p style="font-family:var(--serif);font-size:19px;font-weight:700;color:var(--muted)">选择左侧文献开始阅读</p>' +
-      '<p style="font-size:13px">点击列表中的任意文献，查看专题信息与原始文献。</p></div>';
+      '<p style="font-size:13px">点击列表中的任意文献，查看专题信息与原始文献。</p>' +
+      '<div class="detail-quick-links" aria-label="快捷检索">' +
+        '<button type="button" class="tag-chip" data-search="中欧关系">中欧关系</button>' +
+        '<button type="button" class="tag-chip" data-search="贸易协定">贸易协定</button>' +
+        '<button type="button" class="tag-chip" data-search="航天法">航天法</button>' +
+      '</div></div>';
   }
 
   elDetailInner.addEventListener('click', function (ev) {
+    var chip = ev.target.closest('[data-search]');
+    if (chip) {
+      state.q = chip.dataset.search;
+      closeDetail(true);
+      applyFilters();
+      elQ.focus();
+      return;
+    }
     if (!currentItem) return;
     var d = currentItem;
     var act = ev.target.closest('[data-act]');
@@ -367,14 +380,6 @@
         Site.copyText(cite, '文献信息已复制');
       } else if (a === 'print') window.print();
       else if (a === 'close') closeDetail();
-      return;
-    }
-    var chip = ev.target.closest('[data-search]');
-    if (chip) {
-      state.q = chip.dataset.search;
-      closeDetail(true);
-      applyFilters();
-      elQ.focus();
     }
   });
 

@@ -168,6 +168,14 @@
       btn.setAttribute('aria-label', mode === 'dark' ? '切换到浅色模式' : '切换到深色模式');
       btn.innerHTML = icon(mode === 'dark' ? 'sun' : 'moon');
     }
+    var themeMeta = document.querySelector('meta[name="theme-color"][data-current-theme]');
+    if (!themeMeta) {
+      themeMeta = document.createElement('meta');
+      themeMeta.setAttribute('name', 'theme-color');
+      themeMeta.setAttribute('data-current-theme', '');
+      document.head.appendChild(themeMeta);
+    }
+    themeMeta.setAttribute('content', mode === 'dark' ? '#2a2b2f' : '#ffffff');
   }
   function toggleTheme() {
     applyTheme(currentTheme() === 'dark' ? 'light' : 'dark', true);
@@ -183,7 +191,7 @@
   ];
 
   function brandMark() {
-    return '<img class="brand-mark" src="assets/brand-line.png" alt="" width="52" height="52" loading="eager" decoding="async">';
+    return '<img class="brand-mark" src="assets/brand-color.png" alt="" width="52" height="52" loading="eager" decoding="async">';
   }
 
   function initHeader(activeKey) {
