@@ -6,7 +6,9 @@
 
   var esc = Site.escapeHTML;
   var DATA_ALL = (typeof DATA !== 'undefined') ? DATA : [];
+  if (typeof LEGAL !== 'undefined') DATA_ALL = DATA_ALL.concat(LEGAL);
   var LIB_ALL = (typeof LIB !== 'undefined') ? LIB : [];
+  if (typeof ERA !== 'undefined') LIB_ALL = LIB_ALL.concat(ERA);
 
   /* ---------- 基础统计 ---------- */
   function sideCount(side) { return DATA_ALL.filter(function (d) { return d.side === side; }).length; }

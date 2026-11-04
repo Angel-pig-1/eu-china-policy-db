@@ -7,12 +7,13 @@
 
   var esc = Site.escapeHTML;
   var LIB_ALL = (typeof LIB !== 'undefined') ? LIB : [];
+  if (typeof ERA !== 'undefined') LIB_ALL = LIB_ALL.concat(ERA);
 
   /* ---------- 派生数据（全部运行时计算） ---------- */
   var NUM = {};
   LIB_ALL.forEach(function (d, i) { NUM[d.id] = String(i + 1).padStart(3, '0'); });
 
-  var COLL_ORDER = ['01', '02', '03'];
+  var COLL_ORDER = ['01', '02', '03', '04'];
   var COLL_DEFS = {};
   LIB_ALL.forEach(function (d) {
     if (!COLL_DEFS[d.coll]) COLL_DEFS[d.coll] = { no: d.coll, name: d.collName, count: 0 };
@@ -29,20 +30,26 @@
     LIB_ALL.forEach(function (d) { if (d.type) s[d.type] = 1; });
     return Object.keys(s).sort(function (a, b) { return a.localeCompare(b, 'zh-CN'); });
   })();
+  var CATS = (function () {
+    var s = {};
+    LIB_ALL.forEach(function (d) { if (d.cat) s[d.cat] = 1; });
+    return Object.keys(s).sort(function (a, b) { return a.localeCompare(b, 'zh-CN'); });
+  })();
 
   function displayTitle(t) { return String(t || '').replace(/_/g, ' '); }
   function fmtSize(kb) { return kb >= 1024 ? (kb / 1024).toFixed(1) + ' MB' : kb + ' KB'; }
 
   /* ---------- 状态 ---------- */
-  var state = { q: '', side: 'all', coll: 'all', type: 'all', year: 'all', sort: 'desc', selectedId: null, rows: [] };
+  var state = { q: '', side: 'all', coll: 'all', cat: 'all', type: 'all', year: 'all', sort: 'desc', selectedId: null, rows: [] };
   var validSides = { all: 1, EU: 1, CN: 1, INTL: 1 };
-  var validColls = { all: 1, '01': 1, '02': 1, '03': 1 };
+  var validColls = { all: 1, '01': 1, '02': 1, '03': 1, '04': 1 };
   var validSorts = { desc: 1, asc: 1, title: 1 };
 
   /* ---------- DOM ---------- */
   var elQ = document.getElementById('f-q');
   var elSide = document.getElementById('f-side');
   var elColl = document.getElementById('f-coll');
+  var elCat = document.getElementById('f-cat');
   var elType = document.getElementById('f-type');
   var elYear = document.getElementById('f-year');
   var elSort = document.getElementById('f-sort');
@@ -60,12 +67,22 @@
     }).join('');
   }
 
+  function fillCats() {
+    var s = {};
+    LIB_ALL.forEach(function (d) {
+      if (d.cat && (state.coll === 'all' || d.coll === state.coll)) s[d.cat] = 1;
+    });
+    var cats = Object.keys(s).sort(function (a, b) { return a.localeCompare(b, 'zh-CN'); });
+    fillSelect(elCat, [{ v: 'all', t: '全部分类' }].concat(cats.map(function (c) { return { v: c, t: c }; })), state.cat);
+  }
+
   fillSelect(elColl, [{ v: 'all', t: '全部专题' }].concat(
     COLL_ORDER.filter(function (c) { return COLL_DEFS[c]; }).map(function (c) {
       return { v: c, t: c + ' ' + COLL_DEFS[c].name + '（' + COLL_DEFS[c].count + '）' };
     })
   ), 'all');
   fillSelect(elType, [{ v: 'all', t: '全部类型' }].concat(TYPES.map(function (t) { return { v: t, t: t }; })), 'all');
+  fillCats();
   fillSelect(elYear, [{ v: 'all', t: '全部年份' }].concat(YEARS.map(function (y) { return { v: y, t: y + ' 年' }; })), 'all');
   fillSelect(elSort, [
     { v: 'desc', t: '日期 ↓ 新→旧' },
@@ -85,6 +102,7 @@
     if (p.has('q')) state.q = p.get('q').slice(0, 200);
     if (p.has('side') && validSides[p.get('side')]) state.side = p.get('side');
     if (p.has('coll') && validColls[p.get('coll')]) state.coll = p.get('coll');
+    if (p.has('cat') && (p.get('cat') === 'all' || CATS.indexOf(p.get('cat')) !== -1)) state.cat = p.get('cat');
     if (p.has('type') && (p.get('type') === 'all' || TYPES.indexOf(p.get('type')) !== -1)) state.type = p.get('type');
     if (p.has('year')) {
       var y = p.get('year');
@@ -102,6 +120,7 @@
     if (state.q) p.set('q', state.q);
     if (state.side !== 'all') p.set('side', state.side);
     if (state.coll !== 'all') p.set('coll', state.coll);
+    if (state.cat !== 'all') p.set('cat', state.cat);
     if (state.type !== 'all') p.set('type', state.type);
     if (state.year !== 'all') p.set('year', state.year);
     if (state.sort !== 'desc') p.set('sort', state.sort);
@@ -124,6 +143,7 @@
     var rows = LIB_ALL.filter(function (d) {
       if (state.side !== 'all' && d.side !== state.side) return false;
       if (state.coll !== 'all' && d.coll !== state.coll) return false;
+      if (state.cat !== 'all' && d.cat !== state.cat) return false;
       if (state.type !== 'all' && d.type !== state.type) return false;
       if (state.year !== 'all' && String(d.year) !== state.year) return false;
       if (q && HAY[d.id].indexOf(q) === -1) return false;
@@ -157,6 +177,7 @@
     { key: 'q', label: function () { return '检索：“' + state.q + '”'; } },
     { key: 'side', label: function () { return '侧别：' + state.side; } },
     { key: 'coll', label: function () { return '专题：' + state.coll + ' ' + (COLL_DEFS[state.coll] ? COLL_DEFS[state.coll].name : ''); } },
+    { key: 'cat', label: function () { return '分类：' + state.cat; } },
     { key: 'type', label: function () { return '类型：' + state.type; } },
     { key: 'year', label: function () { return '年份：' + state.year; } }
   ];
@@ -211,6 +232,7 @@
       b.setAttribute('aria-pressed', b.dataset.val === state.side ? 'true' : 'false');
     });
     elColl.value = state.coll;
+    elCat.value = state.cat;
     elType.value = state.type;
     elYear.value = state.year;
     elSort.value = state.sort;
@@ -223,7 +245,7 @@
   }
 
   function detailHTML(d) {
-    var fileUrl = Site.fileUrl(d.file);
+    var fileUrl = d.external ? d.url : Site.fileUrl(d.file);
     var tags = (d.tags || []).map(function (t) {
       return '<button type="button" class="tag-chip" data-search="' + esc(t) + '">' + esc(t) + '</button>';
     }).join('');
@@ -238,7 +260,7 @@
       '<button type="button" class="icon-btn detail-close" data-act="close" aria-label="关闭详情">' + Site.icon('close') + '</button>' +
       '<div class="detail-top">' + sideBadge(d.side) +
         '<span class="badge badge-src">' + esc(d.coll) + ' · ' + esc(d.collName) + '</span>' +
-        '<span class="badge badge-fmt">' + esc(d.fmt.toUpperCase()) + ' · ' + esc(fmtSize(d.sizeKB)) + '</span>' +
+        '<span class="badge badge-fmt">' + (d.external && !d.hosted ? '在线资源' : esc(d.fmt.toUpperCase()) + ' · ' + esc(fmtSize(d.sizeKB))) + '</span>' +
         '<span class="row-date">' + esc(Site.formatDate(d.date)) + '</span>' +
         '<span class="row-date">№ ' + NUM[d.id] + '</span>' +
       '</div>' +
@@ -255,7 +277,7 @@
           '<div class="detail-meta-cell"><dt>侧别</dt><dd>' + esc(d.side) + '</dd></div>' +
           '<div class="detail-meta-cell"><dt>日期</dt><dd>' + esc(Site.formatDate(d.date)) + '</dd></div>' +
           '<div class="detail-meta-cell"><dt>类型</dt><dd>' + esc(d.type || '—') + '</dd></div>' +
-          '<div class="detail-meta-cell"><dt>格式 / 大小</dt><dd>' + esc(d.fmt.toUpperCase()) + ' · ' + esc(fmtSize(d.sizeKB)) + '</dd></div>' +
+          '<div class="detail-meta-cell"><dt>格式 / 大小</dt><dd>' + (d.external && !d.hosted ? '在线资源' : esc(d.fmt.toUpperCase()) + ' · ' + esc(fmtSize(d.sizeKB))) + '</dd></div>' +
           (d.authors ? '<div class="detail-meta-cell"><dt>作者</dt><dd>' + esc(d.authors) + '</dd></div>' : '') +
           (d.inst ? '<div class="detail-meta-cell"><dt>机构 / 来源</dt><dd>' + esc(d.inst) + '</dd></div>' : '') +
           (d.cat ? '<div class="detail-meta-cell"><dt>类目</dt><dd>' + esc(d.cat) + '</dd></div>' : '') +
@@ -295,11 +317,20 @@
     if (!isSummary && !originalLoaded && tabRefs.d.file) {
       var mount = elDetailInner.querySelector('#original-mount');
       if (mount) {
-        var f = document.createElement('iframe');
-        f.loading = 'lazy';
-        f.src = Site.fileUrl(tabRefs.d.file);
-        f.title = '原始文献：' + displayTitle(tabRefs.d.title);
-        mount.appendChild(f);
+        if (tabRefs.d.external) {
+          var online = document.createElement('div');
+          online.className = 'original-missing';
+          var link = tabRefs.d.hosted ? tabRefs.d.file : tabRefs.d.url;
+          var message = tabRefs.d.hosted ? '档案附件已收录，可打开或下载。' : '该资源由 ERA 在线提供。';
+          online.innerHTML = '<p>' + message + '</p><a class="btn" href="' + esc(link) + '" target="_blank" rel="noopener">打开资源</a>';
+          mount.appendChild(online);
+        } else {
+          var f = document.createElement('iframe');
+          f.loading = 'lazy';
+          f.src = Site.fileUrl(tabRefs.d.file);
+          f.title = '原始文献：' + displayTitle(tabRefs.d.title);
+          mount.appendChild(f);
+        }
         originalLoaded = true;
       }
     }
@@ -410,7 +441,13 @@
     state.side = b.dataset.val;
     applyFilters();
   });
-  elColl.addEventListener('change', function () { state.coll = elColl.value; applyFilters(); });
+  elColl.addEventListener('change', function () {
+    state.coll = elColl.value;
+    state.cat = 'all';
+    fillCats();
+    applyFilters();
+  });
+  elCat.addEventListener('change', function () { state.cat = elCat.value; applyFilters(); });
   elType.addEventListener('change', function () { state.type = elType.value; applyFilters(); });
   elYear.addEventListener('change', function () { state.year = elYear.value; applyFilters(); });
   elSort.addEventListener('change', function () { state.sort = elSort.value; applyFilters(); });
@@ -425,7 +462,7 @@
   });
 
   function resetFilters() {
-    state.q = ''; state.side = 'all'; state.coll = 'all'; state.type = 'all'; state.year = 'all'; state.sort = 'desc';
+    state.q = ''; state.side = 'all'; state.coll = 'all'; state.cat = 'all'; state.type = 'all'; state.year = 'all'; state.sort = 'desc';
     applyFilters();
   }
   btnReset.addEventListener('click', resetFilters);
@@ -487,6 +524,7 @@
   });
 
   fromURL();
+  fillCats();
   syncControls();
   elDetailInner.innerHTML = placeholderHTML();
   applyFilters();

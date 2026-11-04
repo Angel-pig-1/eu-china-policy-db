@@ -7,6 +7,7 @@
 
   var esc = Site.escapeHTML;
   var DATA_ALL = (typeof DATA !== 'undefined') ? DATA : [];
+  if (typeof LEGAL !== 'undefined') DATA_ALL = DATA_ALL.concat(LEGAL);
 
   /* ---------- 派生数据（全部运行时计算） ---------- */
   var NUM = {}; // id -> 三位档案序号
