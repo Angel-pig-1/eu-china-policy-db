@@ -1566,15 +1566,32 @@ html.dark {
 :root {
   --stats-eu: #16834b;
   --stats-cn: #c43c35;
+  --stats-eu-rgb: 22 131 75;
+  --stats-cn-rgb: 196 60 53;
 }
 html.dark {
   --stats-eu: #30d158;
   --stats-cn: #ff453a;
+  --stats-eu-rgb: 48 209 88;
+  --stats-cn-rgb: 255 69 58;
 }
-.legend-swatch.eu, .yearly-bar:not(.cn), .dv-bar:not(.cn), .donut-legend .dot.eu { background: var(--stats-eu); }
-.legend-swatch.cn, .yearly-bar.cn, .dv-bar.cn, .donut-legend .dot.cn { background: var(--stats-cn); }
-.rank-row.neutral .rank-bar { background: var(--stats-eu); }
-.rank-row.cn .rank-bar { background: var(--stats-cn); }
+.legend-swatch.eu, .yearly-bar:not(.cn), .dv-bar:not(.cn), .donut-legend .dot.eu,
+.rank-row.neutral .rank-bar {
+  background: linear-gradient(135deg, rgb(var(--stats-eu-rgb) / 0.82), rgb(var(--stats-eu-rgb) / 0.50));
+  border: 1px solid rgb(var(--stats-eu-rgb) / 0.28);
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 0.42), 0 2px 7px rgb(var(--stats-eu-rgb) / 0.18);
+  -webkit-backdrop-filter: blur(6px) saturate(150%);
+  backdrop-filter: blur(6px) saturate(150%);
+}
+.legend-swatch.cn, .yearly-bar.cn, .dv-bar.cn, .donut-legend .dot.cn,
+.rank-row.cn .rank-bar {
+  background: linear-gradient(135deg, rgb(var(--stats-cn-rgb) / 0.80), rgb(var(--stats-cn-rgb) / 0.48));
+  border: 1px solid rgb(var(--stats-cn-rgb) / 0.28);
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 0.40), 0 2px 7px rgb(var(--stats-cn-rgb) / 0.18);
+  -webkit-backdrop-filter: blur(6px) saturate(150%);
+  backdrop-filter: blur(6px) saturate(150%);
+}
+.legend-swatch { height: 8px; border-radius: 999px; }
 @media (max-width: 900px) {
   .filter-bar {
     transition: transform 220ms var(--ease), opacity 180ms var(--ease);
