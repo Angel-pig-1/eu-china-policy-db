@@ -14,8 +14,11 @@
     { keys: ['知识产权', '版权', '商业秘密', '外观设计', 'intellectual property', 'copyright', 'trade secret', 'design'], terms: ['知识产权', '版权', '商业秘密', '外观设计', 'intellectual property', 'copyright', 'trade secret', 'design protection', 'designs'] },
     { keys: ['国家安全', '投资审查', '外商投资', 'national security', 'investment screening', 'foreign investment'], terms: ['国家安全', '投资审查', '外商投资', 'national security', 'investment screening', 'foreign investment', 'foreign direct investment'] },
     { keys: ['数字平台', '数字服务', '数字市场', '平台监管', 'online platform', 'digital service', 'digital market', 'digital platform'], terms: ['数字平台', '数字服务', '数字市场', '平台监管', 'online platform', 'digital service', 'digital market', 'digital platform', 'gatekeeper', 'platform governance'] },
-    { keys: ['供应链尽责', '可持续发展尽职', '尽职调查', '尽责', 'csddd', 'csrd', 'corporate sustainability', 'due diligence'], terms: ['供应链', '尽职调查', '尽责', '可持续发展', '人权', '环境', 'csddd', 'csrd', 'corporate sustainability', 'due diligence', 'supply chain', 'human rights'] },
+    { keys: ['供应链尽责', '可持续发展尽职', '尽职调查', '尽责', 'csddd', 'csrd', 'corporate sustainability', 'due diligence'], terms: ['供应链', '价值链', '尽职调查', '尽责', '可持续发展', 'csddd', 'csrd', 'corporate sustainability', 'due diligence', 'supply chain', 'value chain'] },
     { keys: ['国家援助', '竞争法', '反垄断', 'state aid', 'competition law', 'antitrust'], terms: ['国家援助', '竞争法', '反垄断', '竞争', 'state aid', 'competition', 'antitrust', 'digital markets'] },
+    { keys: ['欧美', '美欧', '跨大西洋', 'transatlantic', 'eu-us', 'us-eu'], terms: ['欧美', '美欧', '跨大西洋', 'transatlantic', 'eu-us', 'us-eu', 'u.s.-eu'] },
+    { keys: ['安全防务', '防务', '北约', '国防', 'defense', 'defence', 'nato'], terms: ['安全防务', '防务', '北约', '国防', 'defense', 'defence', 'nato', 'deterrence'] },
+    { keys: ['安全', 'security'], terms: ['安全', 'security', 'defense', 'defence', 'deterrence'] },
     { keys: ['中国', '中方', '对华', '涉华', 'china', 'chinese', 'prc'], terms: ['中国', '中方', '对华', '涉华', 'china', 'chinese', 'prc', 'people’s republic of china', 'people\'s republic of china'] },
     { keys: ['欧盟委员会', '欧洲议会', '欧盟理事会', '欧洲联盟', '欧洲', '欧盟', 'european commission', 'european parliament', 'european union', 'council of the eu'], terms: ['欧洲', '欧盟', '欧洲联盟', '欧盟委员会', '欧洲议会', '欧盟理事会', 'eu', 'european commission', 'european parliament', 'european union', 'council of the eu', 'european'], broad: true }
   ];

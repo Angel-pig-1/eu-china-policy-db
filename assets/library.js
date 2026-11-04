@@ -1,6 +1,6 @@
 /* ==========================================================================
    文献库 — 复用政策库主从工作台，替换检索语义
-   状态：{ q, side:all|EU|CN|INTL, coll:all|01|02|03, year, sort, selectedId, rows }
+   状态：{ q, side:all|EU|CN|INTL, coll:all|01–06, year, sort, selectedId, rows }
    ========================================================================== */
 (function () {
   'use strict';
@@ -8,12 +8,13 @@
   var esc = Site.escapeHTML;
   var LIB_ALL = (typeof LIB !== 'undefined') ? LIB : [];
   if (typeof ERA !== 'undefined') LIB_ALL = LIB_ALL.concat(ERA);
+  if (typeof LONGTERM !== 'undefined') LIB_ALL = LIB_ALL.concat(LONGTERM);
 
   /* ---------- 派生数据（全部运行时计算） ---------- */
   var NUM = {};
   LIB_ALL.forEach(function (d, i) { NUM[d.id] = String(i + 1).padStart(3, '0'); });
 
-  var COLL_ORDER = ['01', '02', '03', '04', '05'];
+  var COLL_ORDER = ['01', '02', '03', '04', '05', '06'];
   var COLL_DEFS = {};
   LIB_ALL.forEach(function (d) {
     if (!COLL_DEFS[d.coll]) COLL_DEFS[d.coll] = { no: d.coll, name: d.collName, count: 0 };
@@ -72,7 +73,7 @@
   /* ---------- 状态 ---------- */
   var state = { q: '', side: 'all', coll: 'all', cat: 'all', type: 'all', year: 'all', sort: 'topic', selectedId: null, rows: [] };
   var validSides = { all: 1, EU: 1, CN: 1, INTL: 1 };
-  var validColls = { all: 1, '01': 1, '02': 1, '03': 1, '04': 1, '05': 1 };
+  var validColls = { all: 1, '01': 1, '02': 1, '03': 1, '04': 1, '05': 1, '06': 1 };
   var validSorts = { topic: 1, desc: 1, asc: 1, title: 1 };
 
   /* ---------- DOM ---------- */
@@ -162,7 +163,7 @@
 
   /* ---------- 检索 ---------- */
   function haystack(d) {
-    var parts = [d.title, d.authors, d.inst, d.side, d.cat, d.type, d.collName];
+    var parts = [d.title, d.originalTitle, d.authors, d.inst, d.side, d.cat, d.type, d.collName];
     if (d.tags) parts = parts.concat(d.tags);
     return Site.norm(parts.filter(Boolean).join(' '));
   }
@@ -295,7 +296,7 @@
   }
 
   function detailHTML(d) {
-    var fileUrl = d.external ? d.url : Site.fileUrl(d.file);
+    var fileUrl = d.external ? (d.hosted ? d.file : d.url) : Site.fileUrl(d.file);
     var tags = (d.tags || []).map(function (t) {
       return '<button type="button" class="tag-chip" data-search="' + esc(t) + '">' + esc(t) + '</button>';
     }).join('');

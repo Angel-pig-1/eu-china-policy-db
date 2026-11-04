@@ -9,6 +9,7 @@
   if (typeof LEGAL !== 'undefined') DATA_ALL = DATA_ALL.concat(LEGAL);
   var LIB_ALL = (typeof LIB !== 'undefined') ? LIB : [];
   if (typeof ERA !== 'undefined') LIB_ALL = LIB_ALL.concat(ERA);
+  if (typeof LONGTERM !== 'undefined') LIB_ALL = LIB_ALL.concat(LONGTERM);
 
   /* ---------- 派生统计 ---------- */
   function sideCount(side) { return DATA_ALL.filter(function (d) { return d.side === side; }).length; }
@@ -29,7 +30,7 @@
     return DATA_ALL.filter(function (d) { return d.date.slice(0, 4) === y && d.side === side; }).length;
   }
 
-  var COLL_ORDER = ['01', '02', '03', '04', '05'];
+  var COLL_ORDER = ['01', '02', '03', '04', '05', '06'];
   var COLL_DEFS = {};
   LIB_ALL.forEach(function (d) {
     if (!COLL_DEFS[d.coll]) COLL_DEFS[d.coll] = { no: d.coll, name: d.collName, count: 0 };
