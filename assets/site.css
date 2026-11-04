@@ -1515,9 +1515,64 @@ html.dark .hero-index { box-shadow: 0 16px 48px rgb(0 0 0 / 0.20); }
   .advanced-filters > :last-child:nth-child(odd) { grid-column: auto; }
 }
 
+:root {
+  --control-glass: rgb(255 255 255 / 0.56);
+  --card-glass: rgb(255 255 255 / 0.62);
+}
+html.dark {
+  --control-glass: rgb(58 58 60 / 0.52);
+  --card-glass: rgb(28 28 30 / 0.68);
+}
+.btn, .icon-btn, .tag-chip, .filter-chip, .index-actions a, .section-head .more,
+.search-control input, .select-control select, .segmented, .tablist,
+.hero-index, .yearly-chart, .latest-list, .coll-cell, .stats-grid > *, .panel,
+.results-pane, .detail-pane, .detail-meta-cell, .original-frame-wrap {
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  backdrop-filter: blur(18px) saturate(150%);
+}
+.btn {
+  min-height: 44px;
+  background: var(--control-glass);
+  border-color: var(--line);
+  font-size: 14.5px;
+}
+.btn-primary, html.dark .btn-primary { background: var(--control-glass); color: var(--ink); }
+.icon-btn { background: var(--control-glass); border-color: var(--line); }
+.tag-chip, .filter-chip { background: var(--control-glass); font-size: 13px; }
+.index-actions { gap: 9px; }
+.index-actions a, .section-head .more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 9px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--control-glass);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.index-actions a { flex: 1 1 auto; }
+.search-control input, .select-control select, .segmented, .tablist { background: var(--control-glass); }
+.hero-index, .yearly-chart, .latest-list, .coll-cell, .stats-grid > *, .panel { background: var(--card-glass); }
+.results-pane { background: rgb(var(--paper-rgb) / 0.46); }
+.detail-pane { background: var(--card-glass); }
+.detail-meta-cell, .original-frame-wrap, .original-frame-bar { background: var(--control-glass); }
+.detail-actions .btn { font-size: 14px; }
+.hero-cta .btn { font-size: 15px; }
+
 @media (prefers-reduced-transparency: reduce) {
-  .site-header, .mobile-menu, .filter-bar, .toast, .detail-backdrop { -webkit-backdrop-filter: none; backdrop-filter: none; }
-  .site-header, .mobile-menu, .filter-bar { background: var(--paper); }
+  .site-header, .mobile-menu, .filter-bar, .toast, .detail-backdrop,
+  .btn, .icon-btn, .tag-chip, .filter-chip, .index-actions a, .section-head .more,
+  .search-control input, .select-control select, .segmented, .tablist,
+  .hero-index, .yearly-chart, .latest-list, .coll-cell, .stats-grid > *, .panel,
+  .results-pane, .detail-pane, .detail-meta-cell, .original-frame-wrap { -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .site-header, .mobile-menu, .filter-bar, .hero-index, .yearly-chart, .latest-list,
+  .coll-cell, .stats-grid > *, .panel, .results-pane, .detail-pane, .detail-meta-cell,
+  .original-frame-wrap, .btn, .icon-btn, .tag-chip, .filter-chip, .index-actions a,
+  .section-head .more, .search-control input, .select-control select, .segmented, .tablist { background: var(--surface); }
 }
 
 @media (prefers-reduced-motion: reduce) {
