@@ -108,7 +108,8 @@ def entry_for(prefix, root, coll, coll_name, side, tag, row):
     status = first(row, '状态', '下载状态', 'status', 'Status')
     relative = first(row, '本地文件', '本地文件名', '文件路径', 'file', 'path', 'local_file')
     if not successful(status):
-        return None, status or '清单未标记为下载成功'
+        detail = first(row, '校验与备注', '验证说明', '核验说明', '失败原因', '原因', 'error', '备注')
+        return None, detail or status or '清单未标记为下载成功'
     if not relative:
         return None, '清单缺少本地文件路径'
     path = root / relative
