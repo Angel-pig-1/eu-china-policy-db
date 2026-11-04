@@ -139,7 +139,7 @@ def entry_for(prefix, root, coll, coll_name, side, tag, row):
     kind = {'CNKI': '学术论文', 'LAW': '法律法规', 'TT': '智库报告', 'EUUS': '专题文献'}[prefix]
     if prefix == 'LAW' and re.search(r'战略|政策|规划|strategy|policy', title + ' ' + original, re.I):
         kind = '政策文件'
-    landing = first(row, '落地页', '知网详情URL', '来源URL', '详情URL', 'landing', 'url', 'src')
+    landing = first(row, '落地页', '官方落地页', '知网详情URL', '来源URL', '详情URL', 'landing', 'url', 'src')
     pdf_url = first(row, 'PDF URL', 'PDF地址', 'pdf_url', 'download_url')
     keywords = first(row, '关键词', '检索词', 'keywords', 'tags')
     digest = hashlib.sha1((prefix + ':' + relative).encode()).hexdigest()[:10].upper()
