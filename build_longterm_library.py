@@ -129,6 +129,20 @@ def entry_for(prefix, root, coll, coll_name, side, tag, row):
         title = '美国与欧洲：跨大西洋合作应对中国挑战的具体议程'
     date, year = valid_date(first(row, '日期', '年份', 'year', 'date', '发表日期', '出版日期'))
     category = first(row, '主题', '分类', '类目', 'category', 'topic', 'cat') or path.parent.name
+    if prefix == 'LAW':
+        category = {
+            '01_AI数字数据': '人工智能、数字与数据',
+            '02_人权劳动与供应链': '人权、劳动与供应链', '03_人权劳动与基本权利': '人权、劳动与供应链',
+            '02_关键矿产与矿业': '关键矿产与矿业',
+            '03_知识产权': '知识产权', '04_知识产权': '知识产权',
+            '04_贸易投资与竞争': '贸易、投资与竞争', '05_贸易投资与竞争': '贸易、投资与竞争',
+            '05_环境气候与能源': '环境、气候与能源', '06_环境气候与能源': '环境、气候与能源',
+            '06_农业': '农业与食品', '07_农业': '农业与食品',
+            '07_金融税收': '金融与税收', '08_金融税收': '金融与税收',
+            '08_教育科研': '教育与科研', '09_教育科研': '教育与科研',
+            '09_移民安全与国防': '移民、安全与国防', '10_移民安全与国防': '移民、安全与国防',
+            '10_公共卫生与消费者': '公共卫生与消费者', '11_公共卫生与消费者': '公共卫生与消费者',
+        }.get(category, re.sub(r'^\d+_', '', category))
     if prefix == 'TT':
         coll, coll_name = thinktank_collection(category, title + ' ' + original)
     institution = first(row, '机构/作者', '机构', '来源机构', 'institution', 'org', 'publisher')
