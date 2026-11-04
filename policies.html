@@ -28,7 +28,7 @@
   <div class="filter-bar" role="group" aria-label="筛选条件">
     <div class="search-control">
       <span aria-hidden="true" id="search-icon"></span>
-      <input type="search" id="f-q" name="q" placeholder="搜索标题、背景、影响、监管框架、行业代码…" aria-label="搜索政策" autocomplete="off">
+      <input type="search" id="f-q" name="q" placeholder="搜索标题、背景、影响、监管框架、行业代码…" aria-label="搜索政策" autocomplete="off" enterkeyhint="search">
       <kbd aria-hidden="true">/</kbd>
     </div>
     <div class="segmented" id="f-side" role="group" aria-label="按侧别筛选">
@@ -36,14 +36,17 @@
       <button type="button" data-val="EU" aria-pressed="false">EU</button>
       <button type="button" data-val="CN" aria-pressed="false">CN</button>
     </div>
-    <div class="select-control">
-      <select id="f-year" aria-label="按年份筛选"></select>
-    </div>
-    <div class="select-control">
-      <select id="f-source" aria-label="按来源筛选"></select>
-    </div>
-    <div class="select-control">
-      <select id="f-sort" aria-label="排序方式"></select>
+    <button type="button" class="btn filter-toggle" data-filter-toggle aria-expanded="false" aria-controls="policy-advanced-filters">筛选</button>
+    <div class="advanced-filters" id="policy-advanced-filters">
+      <div class="select-control">
+        <select id="f-year" aria-label="按年份筛选"></select>
+      </div>
+      <div class="select-control">
+        <select id="f-source" aria-label="按来源筛选"></select>
+      </div>
+      <div class="select-control">
+        <select id="f-sort" aria-label="排序方式"></select>
+      </div>
     </div>
   </div>
 

@@ -28,7 +28,7 @@
   <div class="filter-bar filter-bar-library" role="group" aria-label="检索条件">
     <div class="search-control">
       <span aria-hidden="true" id="search-icon"></span>
-      <input type="search" id="f-q" name="q" placeholder="搜索标题、机构、类目、类型、标签…" aria-label="搜索文献" autocomplete="off">
+      <input type="search" id="f-q" name="q" placeholder="搜索标题、机构、类目、类型、标签…" aria-label="搜索文献" autocomplete="off" enterkeyhint="search">
       <kbd aria-hidden="true">/</kbd>
     </div>
     <div class="segmented seg-4" id="f-side" role="group" aria-label="按侧别筛选">
@@ -37,17 +37,20 @@
       <button type="button" data-val="CN" aria-pressed="false">CN</button>
       <button type="button" data-val="INTL" aria-pressed="false">INTL</button>
     </div>
-    <div class="select-control">
-      <select id="f-coll" aria-label="按专题筛选"></select>
-    </div>
-    <div class="select-control">
-      <select id="f-type" aria-label="按资料类型筛选"></select>
-    </div>
-    <div class="select-control">
-      <select id="f-year" aria-label="按年份筛选"></select>
-    </div>
-    <div class="select-control">
-      <select id="f-sort" aria-label="排序方式"></select>
+    <button type="button" class="btn filter-toggle" data-filter-toggle aria-expanded="false" aria-controls="library-advanced-filters">筛选</button>
+    <div class="advanced-filters" id="library-advanced-filters">
+      <div class="select-control">
+        <select id="f-coll" aria-label="按专题筛选"></select>
+      </div>
+      <div class="select-control">
+        <select id="f-type" aria-label="按资料类型筛选"></select>
+      </div>
+      <div class="select-control">
+        <select id="f-year" aria-label="按年份筛选"></select>
+      </div>
+      <div class="select-control">
+        <select id="f-sort" aria-label="排序方式"></select>
+      </div>
     </div>
   </div>
 

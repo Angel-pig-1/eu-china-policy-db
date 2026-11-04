@@ -175,7 +175,7 @@
       themeMeta.setAttribute('data-current-theme', '');
       document.head.appendChild(themeMeta);
     }
-    themeMeta.setAttribute('content', mode === 'dark' ? '#2a2b2f' : '#ffffff');
+    themeMeta.setAttribute('content', mode === 'dark' ? '#0b0b0d' : '#f5f5f7');
   }
   function toggleTheme() {
     applyTheme(currentTheme() === 'dark' ? 'light' : 'dark', true);
@@ -191,7 +191,7 @@
   ];
 
   function brandMark() {
-    return '<img class="brand-mark" src="assets/brand-color.png" alt="" width="52" height="52" loading="eager" decoding="async">';
+    return '<img class="brand-mark" src="assets/brand-gold.png" alt="" width="60" height="60" loading="eager" decoding="async">';
   }
 
   function initHeader(activeKey) {
@@ -222,15 +222,12 @@
         '<p class="mobile-menu-foot">CEA · 中欧档案</p>' +
       '</div>';
 
-    // 主题按钮初始状态
     applyTheme(currentTheme(), false);
-
-    // 主题切换
     mount.querySelector('[data-theme-toggle]').addEventListener('click', toggleTheme);
 
-    // 移动菜单
     var menuBtn = mount.querySelector('[data-menu-toggle]');
     var menu = mount.querySelector('#mobile-menu');
+    mount.insertAdjacentElement('afterend', menu);
     var menuOpen = false;
     function setMenu(open) {
       menuOpen = open;
@@ -241,7 +238,6 @@
       menuBtn.innerHTML = icon(open ? 'close' : 'menu');
       document.body.classList.toggle('menu-open', open);
       if (open) {
-        if (menu.removeAttribute) menu.removeAttribute('inert');
         menu.removeAttribute('inert');
         var first = menu.querySelector('a');
         if (first) first.focus();
@@ -254,10 +250,20 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && menuOpen) setMenu(false);
     });
-    // 点击菜单内链接后关闭
     menu.addEventListener('click', function (e) {
       if (e.target.closest('a')) setMenu(false);
     });
+
+    var filterToggle = document.querySelector('[data-filter-toggle]');
+    if (filterToggle) {
+      var filters = document.getElementById(filterToggle.getAttribute('aria-controls'));
+      filterToggle.addEventListener('click', function () {
+        var open = filterToggle.getAttribute('aria-expanded') !== 'true';
+        filterToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        filterToggle.textContent = open ? '收起筛选' : '筛选';
+        filters.classList.toggle('is-open', open);
+      });
+    }
   }
 
   /* ---------------- 页脚 ---------------- */
