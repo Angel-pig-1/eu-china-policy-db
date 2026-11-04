@@ -97,7 +97,7 @@
 
   /* ---------- 搜索匹配 ---------- */
   function haystack(d) {
-    var parts = [d.name, d.nameZh, d.cnLabel, d.background, d.backgroundZh, d.implication, d.implicationZh, d.status, d.statusZh];
+    var parts = [d.name, d.nameZh, d.cnLabel, d.side, d.background, d.backgroundZh, d.implication, d.implicationZh, d.status, d.statusZh];
     if (d.framings) parts = parts.concat(d.framings);
     if (d.industries) parts = parts.concat(d.industries);
     return Site.norm(parts.filter(Boolean).join(' '));
@@ -108,14 +108,19 @@
   /* ---------- 筛选 + 排序 ---------- */
   function applyFilters() {
     var q = Site.norm(state.q.trim());
+    var scores = {};
     var rows = DATA_ALL.filter(function (d) {
       if (state.side !== 'all' && d.side !== state.side) return false;
       if (state.year !== 'all' && d.date.slice(0, 4) !== state.year) return false;
       if (state.source !== 'all' && d.source !== state.source) return false;
-      if (q && HAY[d.id].indexOf(q) === -1) return false;
+      if (q) {
+        scores[d.id] = SemanticSearch.score(HAY[d.id], (d.nameZh || '') + ' ' + d.name, q);
+        if (scores[d.id] < 0) return false;
+      }
       return true;
     });
-    if (state.sort === 'desc') rows.sort(function (a, b) { return b.date.localeCompare(a.date); });
+    if (q) rows.sort(function (a, b) { return scores[b.id] - scores[a.id]; });
+    else if (state.sort === 'desc') rows.sort(function (a, b) { return b.date.localeCompare(a.date); });
     else if (state.sort === 'asc') rows.sort(function (a, b) { return a.date.localeCompare(b.date); });
     else rows.sort(function (a, b) {
       var ta = a.nameZh || a.name, tb = b.nameZh || b.name;

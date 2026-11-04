@@ -40,10 +40,10 @@
   function fmtSize(kb) { return kb >= 1024 ? (kb / 1024).toFixed(1) + ' MB' : kb + ' KB'; }
 
   /* ---------- 状态 ---------- */
-  var state = { q: '', side: 'all', coll: 'all', cat: 'all', type: 'all', year: 'all', sort: 'desc', selectedId: null, rows: [] };
+  var state = { q: '', side: 'all', coll: 'all', cat: 'all', type: 'all', year: 'all', sort: 'topic', selectedId: null, rows: [] };
   var validSides = { all: 1, EU: 1, CN: 1, INTL: 1 };
   var validColls = { all: 1, '01': 1, '02': 1, '03': 1, '04': 1 };
-  var validSorts = { desc: 1, asc: 1, title: 1 };
+  var validSorts = { topic: 1, desc: 1, asc: 1, title: 1 };
 
   /* ---------- DOM ---------- */
   var elQ = document.getElementById('f-q');
@@ -85,10 +85,11 @@
   fillCats();
   fillSelect(elYear, [{ v: 'all', t: '全部年份' }].concat(YEARS.map(function (y) { return { v: y, t: y + ' 年' }; })), 'all');
   fillSelect(elSort, [
+    { v: 'topic', t: '主题分类' },
     { v: 'desc', t: '日期 ↓ 新→旧' },
     { v: 'asc', t: '日期 ↑ 旧→新' },
-    { v: 'title', t: '按标题排序' }
-  ], 'desc');
+    { v: 'title', t: '标题字母' }
+  ], 'topic');
 
   document.getElementById('search-icon').innerHTML = Site.icon('search');
   var btnReset = document.getElementById('btn-reset');
@@ -123,7 +124,7 @@
     if (state.cat !== 'all') p.set('cat', state.cat);
     if (state.type !== 'all') p.set('type', state.type);
     if (state.year !== 'all') p.set('year', state.year);
-    if (state.sort !== 'desc') p.set('sort', state.sort);
+    if (state.sort !== 'topic') p.set('sort', state.sort);
     if (state.selectedId) p.set('id', state.selectedId);
     var qs = p.toString();
     history.replaceState(null, '', location.pathname + (qs ? '?' + qs : ''));
@@ -131,7 +132,7 @@
 
   /* ---------- 检索 ---------- */
   function haystack(d) {
-    var parts = [d.title, d.authors, d.inst, d.cat, d.type, d.collName];
+    var parts = [d.title, d.authors, d.inst, d.side, d.cat, d.type, d.collName];
     if (d.tags) parts = parts.concat(d.tags);
     return Site.norm(parts.filter(Boolean).join(' '));
   }
@@ -140,16 +141,24 @@
 
   function applyFilters() {
     var q = Site.norm(state.q.trim());
+    var scores = {};
     var rows = LIB_ALL.filter(function (d) {
       if (state.side !== 'all' && d.side !== state.side) return false;
       if (state.coll !== 'all' && d.coll !== state.coll) return false;
       if (state.cat !== 'all' && d.cat !== state.cat) return false;
       if (state.type !== 'all' && d.type !== state.type) return false;
       if (state.year !== 'all' && String(d.year) !== state.year) return false;
-      if (q && HAY[d.id].indexOf(q) === -1) return false;
+      if (q) {
+        scores[d.id] = SemanticSearch.score(HAY[d.id], d.title, q);
+        if (scores[d.id] < 0) return false;
+      }
       return true;
     });
-    if (state.sort === 'desc') rows.sort(function (a, b) { return String(b.date).localeCompare(String(a.date)); });
+    if (q) rows.sort(function (a, b) { return scores[b.id] - scores[a.id]; });
+    else if (state.sort === 'topic') rows.sort(function (a, b) {
+      return String(a.coll).localeCompare(String(b.coll)) || String(a.cat || '').localeCompare(String(b.cat || ''), 'zh-CN') || String(a.title).localeCompare(String(b.title));
+    });
+    else if (state.sort === 'desc') rows.sort(function (a, b) { return String(b.date).localeCompare(String(a.date)); });
     else if (state.sort === 'asc') rows.sort(function (a, b) { return String(a.date).localeCompare(String(b.date)); });
     else rows.sort(function (a, b) { return String(a.title).localeCompare(String(b.title)); });
     state.rows = rows;
@@ -462,7 +471,7 @@
   });
 
   function resetFilters() {
-    state.q = ''; state.side = 'all'; state.coll = 'all'; state.cat = 'all'; state.type = 'all'; state.year = 'all'; state.sort = 'desc';
+    state.q = ''; state.side = 'all'; state.coll = 'all'; state.cat = 'all'; state.type = 'all'; state.year = 'all'; state.sort = 'topic';
     applyFilters();
   }
   btnReset.addEventListener('click', resetFilters);
