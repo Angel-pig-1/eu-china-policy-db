@@ -79,14 +79,14 @@
   /* ---------- 最新政策（前 5） ---------- */
   var latest5 = DATA_ALL.slice().sort(function (a, b) { return b.date.localeCompare(a.date); }).slice(0, 5);
   document.getElementById('latest-list').innerHTML = latest5.map(function (d) {
-    return '<a class="latest-item" href="policies.html?id=' + encodeURIComponent(d.id) + '">' +
+    return '<li><a class="latest-item" href="policies.html?id=' + encodeURIComponent(d.id) + '">' +
       '<span class="li-date">' + esc(Site.formatDate(d.date)) + '</span>' +
       '<span class="row-badge-slot">' +
         '<span class="badge badge-' + d.side.toLowerCase() + '">' + d.side + '</span>' +
       '</span>' +
       '<span><span class="li-title">' + esc(d.nameZh || d.name) + '</span>' +
       '<span class="li-sub">' + esc(d.name) + '</span></span>' +
-    '</a>';
+    '</a></li>';
   }).join('');
 
   /* ---------- 文献专题 ---------- */

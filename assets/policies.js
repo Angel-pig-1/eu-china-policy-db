@@ -40,7 +40,7 @@
   var elList = document.getElementById('result-list');
   var elDetail = document.getElementById('detail-pane');
   var elDetailInner = document.getElementById('detail-inner');
-  var elBackdrop = document.getElementById('detail-backdrop');
+  var mobileQuery = window.matchMedia('(max-width: 900px)');
 
   /* ---------- 初始化控件选项 ---------- */
   function fillSelect(sel, options, current) {
@@ -84,7 +84,7 @@
     }
   }
 
-  function toURL() {
+  function toURL(push) {
     var p = new URLSearchParams();
     if (state.q) p.set('q', state.q);
     if (state.side !== 'all') p.set('side', state.side);
@@ -93,7 +93,9 @@
     if (state.sort !== 'desc') p.set('sort', state.sort);
     if (state.selectedId) p.set('id', state.selectedId);
     var qs = p.toString();
-    history.replaceState(null, '', location.pathname + (qs ? '?' + qs : ''));
+    var url = location.pathname + (qs ? '?' + qs : '');
+    if (push) history.pushState({ icesDetail: true }, '', url);
+    else history.replaceState(history.state, '', url);
   }
 
   /* ---------- 搜索匹配 ---------- */
@@ -185,18 +187,18 @@
   function renderList() {
     if (!state.rows.length) {
       elList.innerHTML =
-        '<div class="empty-state"><p>没有符合条件的政策记录。</p>' +
-        '<button type="button" class="btn" id="btn-clear-all">清除全部筛选</button></div>';
+        '<li class="empty-state"><p>没有符合条件的政策记录。</p>' +
+        '<button type="button" class="btn" id="btn-clear-all">清除全部筛选</button></li>';
       var c = document.getElementById('btn-clear-all');
       if (c) c.addEventListener('click', resetFilters);
       return;
     }
-    elList.innerHTML = state.rows.map(function (d, i) {
+    elList.innerHTML = state.rows.map(function (d) {
       var sel = d.id === state.selectedId;
       var tags = (d.framings || []).slice(0, 2).map(function (f) {
         return '<span class="tag-chip">' + esc(f) + '</span>';
       }).join('');
-      return '<div class="result-row" role="option" id="opt-' + esc(d.id) + '" data-id="' + esc(d.id) + '" aria-selected="' + sel + '" tabindex="' + (sel ? 0 : -1) + '">' +
+      return '<li><a class="result-row' + (sel ? ' selected' : '') + '" id="opt-' + esc(d.id) + '" data-id="' + esc(d.id) + '" href="?id=' + encodeURIComponent(d.id) + '"' + (sel ? ' aria-current="true"' : '') + '>' +
         '<span class="row-num">' + NUM[d.id] + '</span>' +
         '<span class="row-main">' +
           '<span class="row-meta">' + sideBadge(d.side) +
@@ -207,7 +209,7 @@
           '<span class="row-title-en">' + esc(d.name) + '</span>' +
           (tags ? '<span class="row-tags">' + tags + '</span>' : '') +
         '</span>' +
-      '</div>';
+      '</a></li>';
     }).join('');
   }
 
@@ -270,7 +272,7 @@
         '<span class="row-date">' + esc(Site.formatDate(d.date)) + '</span>' +
         '<span class="row-date">№ ' + NUM[d.id] + '</span>' +
       '</div>' +
-      '<h2 class="detail-title-zh">' + esc(d.nameZh || d.name) + '</h2>' +
+      '<h2 class="detail-title-zh" id="detail-title">' + esc(d.nameZh || d.name) + '</h2>' +
       '<p class="detail-title-en">' + esc(d.name) + '</p>' +
       (d.cnLabel && d.cnLabel !== d.nameZh ? '<p class="detail-cn-label">' + esc(d.cnLabel) + '</p>' : '') +
       '<div class="detail-actions">' + actions + '</div>' +
@@ -307,40 +309,39 @@
   var originalLoaded = false;
   var currentItem = null;
 
-  var backdropHideTimer = null;
+  function syncDetailMode() {
+    var mobile = mobileQuery.matches;
+    if (mobile && state.selectedId) {
+      if (elDetail.open && !elDetail.classList.contains('open')) elDetail.close();
+      if (!elDetail.open) elDetail.showModal();
+      elDetail.classList.add('open');
+      document.body.classList.add('detail-open');
+    } else {
+      if (elDetail.open && (!mobile || elDetail.classList.contains('open'))) elDetail.close();
+      elDetail.classList.remove('open');
+      document.body.classList.remove('detail-open');
+      if (!mobile && !elDetail.open) elDetail.show();
+    }
+  }
 
-  function selectItem(id, focusRow) {
+  function selectItem(id, focusRow, userInitiated) {
     var d = findItem(id);
     if (!d) return;
-    clearTimeout(backdropHideTimer);
-    backdropHideTimer = null;
+    var push = !!(userInitiated && mobileQuery.matches && !elDetail.classList.contains('open'));
     state.selectedId = id;
     currentItem = d;
     originalLoaded = false;
     elDetailInner.innerHTML = detailHTML(d);
     initTabs(d);
-    renderList(); // 更新 aria-selected
-    toURL();
+    renderList();
+    syncDetailMode();
+    toURL(push);
     elDetail.scrollTop = 0;
 
-    // 移动详情滑入
-    var mobile = window.matchMedia('(max-width: 900px)').matches;
-    if (mobile) {
-      elDetail.setAttribute('role', 'dialog');
-      elDetail.setAttribute('aria-modal', 'true');
-      elDetail.classList.add('open');
-      elBackdrop.hidden = false;
-      requestAnimationFrame(function () {
-        if (state.selectedId && elDetail.classList.contains('open')) elBackdrop.classList.add('show');
-      });
-      document.body.classList.add('detail-open');
+    if (mobileQuery.matches) {
       var c = elDetail.querySelector('.detail-close');
       if (c) c.focus();
-    } else {
-      elDetail.removeAttribute('role');
-      elDetail.removeAttribute('aria-modal');
-    }
-    if (focusRow && !mobile) {
+    } else if (focusRow) {
       var row = elList.querySelector('[data-id="' + CSS.escape(id) + '"]');
       if (row) row.focus();
     }
@@ -355,20 +356,13 @@
   function closeDetail(skipURL) {
     var returnId = state.selectedId;
     var mobile = elDetail.classList.contains('open');
-    clearTimeout(backdropHideTimer);
-    backdropHideTimer = null;
     state.selectedId = null;
     currentItem = null;
+    if (elDetail.open) elDetail.close();
     elDetail.classList.remove('open');
-    elDetail.removeAttribute('role');
-    elDetail.removeAttribute('aria-modal');
-    elBackdrop.classList.remove('show');
     document.body.classList.remove('detail-open');
-    backdropHideTimer = setTimeout(function () {
-      backdropHideTimer = null;
-      if (!state.selectedId && !elDetail.classList.contains('open')) elBackdrop.hidden = true;
-    }, 240);
-    if (!mobile || window.matchMedia('(prefers-reduced-transparency: reduce)').matches) clearClosedDetail();
+    clearClosedDetail();
+    syncDetailMode();
     if (!skipURL) {
       renderList();
       toURL();
@@ -378,41 +372,32 @@
     }
   }
 
-  elDetail.addEventListener('transitionend', function (ev) {
-    if (ev.target !== elDetail) return;
-    if (ev.propertyName === 'transform' ||
-        (ev.propertyName === 'opacity' && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
-      clearClosedDetail();
-    }
-  });
-
-  document.addEventListener('keydown', function (ev) {
-    if (ev.key !== 'Tab' || !state.selectedId || !elDetail.classList.contains('open') ||
-        !window.matchMedia('(max-width: 900px)').matches) return;
-    var nodes = elDetail.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])');
-    var first = null;
-    var last = null;
-    for (var i = 0; i < nodes.length; i++) {
-      if (nodes[i].closest('[hidden]') || !nodes[i].getClientRects().length) continue;
-      if (!first) first = nodes[i];
-      last = nodes[i];
-    }
-    if (!first) {
-      ev.preventDefault();
+  function requestCloseDetail() {
+    if (mobileQuery.matches && elDetail.classList.contains('open') && history.state && history.state.icesDetail) {
+      history.back();
       return;
     }
-    var active = document.activeElement;
-    if (ev.shiftKey && (active === first || !elDetail.contains(active))) {
-      ev.preventDefault();
-      last.focus();
-    } else if (!ev.shiftKey && (active === last || !elDetail.contains(active))) {
-      ev.preventDefault();
-      first.focus();
+    closeDetail();
+  }
+
+  elDetail.addEventListener('cancel', function (ev) {
+    ev.preventDefault();
+    if (state.selectedId) requestCloseDetail();
+  });
+
+  elDetail.addEventListener('click', function (ev) {
+    if (ev.target !== elDetail || !mobileQuery.matches) return;
+    var rect = elDetail.getBoundingClientRect();
+    if (ev.clientX < rect.left || ev.clientX > rect.right || ev.clientY < rect.top || ev.clientY > rect.bottom) {
+      requestCloseDetail();
     }
   });
 
+  mobileQuery.addEventListener('change', syncDetailMode);
+  Site.enableSwipeDismiss(elDetail, { axis: 'y', onDismiss: requestCloseDetail });
+
   function placeholderHTML() {
-    return '<div class="empty-state" style="padding-top:96px"><p style="font-family:var(--serif);font-size:19px;font-weight:700;color:var(--muted)">选择左侧记录开始阅读</p>' +
+    return '<div class="empty-state" style="padding-top:96px"><p id="detail-title" style="font-family:var(--serif);font-size:19px;font-weight:700;color:var(--muted)">选择左侧记录开始阅读</p>' +
       '<p style="font-size:13px">点击列表中的任意政策，查看中英双语摘要与原始文件。</p></div>';
   }
 
@@ -430,7 +415,7 @@
         var cite = (d.nameZh || d.name) + '（' + d.name + '）. ' + d.date + '. CEA 中欧档案. ' + (d.url || (location.origin === 'null' ? '' : location.origin) + location.pathname + '?id=' + d.id);
         Site.copyText(cite, '引文信息已复制');
       } else if (a === 'print') window.print();
-      else if (a === 'close') closeDetail();
+      else if (a === 'close') requestCloseDetail();
       return;
     }
     var chip = ev.target.closest('[data-search]');
@@ -534,8 +519,10 @@
 
   /* ---------- 列表交互 ---------- */
   elList.addEventListener('click', function (ev) {
-    var row = ev.target.closest('[data-id]');
-    if (row) selectItem(row.dataset.id, true);
+    var row = ev.target.closest('a[data-id]');
+    if (!row || ev.defaultPrevented || ev.button !== 0 || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey) return;
+    ev.preventDefault();
+    selectItem(row.dataset.id, true, true);
   });
 
   elList.addEventListener('keydown', function (ev) {
@@ -546,7 +533,7 @@
     var idx = state.selectedId ? ids.indexOf(state.selectedId) : -1;
     if (ev.key === 'ArrowDown') idx = Math.min(ids.length - 1, idx + 1);
     else idx = Math.max(0, idx === -1 ? 0 : idx - 1);
-    selectItem(ids[idx], true);
+    selectItem(ids[idx], true, true);
     var row = elList.querySelector('[data-id="' + CSS.escape(ids[idx]) + '"]');
     if (row) row.scrollIntoView({ block: 'nearest' });
   });
@@ -559,12 +546,20 @@
       ev.preventDefault();
       elQ.focus();
       elQ.select();
-    } else if (ev.key === 'Escape' && state.selectedId) {
-      closeDetail();
+    } else if (ev.key === 'Escape' && state.selectedId && !elDetail.classList.contains('open')) {
+      requestCloseDetail();
     }
   });
 
-  elBackdrop.addEventListener('click', function () { if (state.selectedId) closeDetail(); });
+  window.addEventListener('popstate', function () {
+    closeDetail(true);
+    state.q = ''; state.side = 'all'; state.year = 'all'; state.source = 'all'; state.sort = 'desc';
+    state.selectedId = null; state.rows = [];
+    fromURL();
+    syncControls();
+    applyFilters();
+    if (state.selectedId) selectItem(state.selectedId, false);
+  });
 
   /* ---------- 启动 ---------- */
   Site.initHeader('policies');
@@ -579,4 +574,5 @@
   elDetailInner.innerHTML = placeholderHTML();
   applyFilters();
   if (state.selectedId) selectItem(state.selectedId, false);
+  else syncDetailMode();
 })();
