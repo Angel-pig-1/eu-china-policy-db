@@ -254,7 +254,68 @@
     return '<span class="badge ' + cls + '">' + esc(side) + '</span>';
   }
 
+  var PAGE_SIZE = 120;
+  var renderedCount = 0;
+  var listSentinel = null;
+  var listObserver = null;
+  var observerRoot = null;
+
+  function rowHTML(d) {
+    var sel = d.id === state.selectedId;
+    var inst = d.inst || d.cat || '';
+    return '<li><a class="result-row' + (sel ? ' selected' : '') + '" id="opt-' + esc(d.id) + '" data-id="' + esc(d.id) + '" href="?id=' + encodeURIComponent(d.id) + '"' + (sel ? ' aria-current="true"' : '') + '>' +
+      '<span class="row-num">' + NUM[d.id] + '</span>' +
+      '<span class="row-main">' +
+        '<span class="row-meta">' + sideBadge(d.side) +
+          '<span class="badge badge-src">' + esc(d.coll) + ' ' + esc(d.collName) + '</span>' +
+          '<span class="badge badge-fmt">' + esc(d.fmt.toUpperCase()) + '</span>' +
+          '<span class="row-date">' + esc(Site.formatDate(d.date)) + '</span>' +
+        '</span>' +
+        '<span class="row-title-zh">' + esc(displayTitle(d.title, d)) + '</span>' +
+        (inst ? '<span class="row-title-en">' + esc(inst) + (d.type ? ' · ' + esc(d.type) : '') + '</span>' : '') +
+      '</span>' +
+    '</a></li>';
+  }
+
+  function initialRenderCount() {
+    var count = Math.min(PAGE_SIZE, state.rows.length);
+    if (state.selectedId) {
+      for (var i = 0; i < state.rows.length; i++) {
+        if (state.rows[i].id === state.selectedId) {
+          count = Math.max(count, Math.min(state.rows.length, Math.ceil((i + 1) / PAGE_SIZE) * PAGE_SIZE));
+          break;
+        }
+      }
+    }
+    return count;
+  }
+
+  function observeListSentinel() {
+    if (!('IntersectionObserver' in window)) return;
+    var root = mobileQuery.matches ? null : elList.parentElement;
+    if (listObserver && observerRoot !== root) {
+      listObserver.disconnect();
+      listObserver = null;
+    }
+    if (!listObserver) {
+      observerRoot = root;
+      listObserver = new IntersectionObserver(function (entries) {
+        for (var i = 0; i < entries.length; i++) {
+          if (entries[i].isIntersecting && entries[i].target === listSentinel) {
+            loadMore();
+            break;
+          }
+        }
+      }, { root: root, rootMargin: '600px 0px' });
+    }
+    listObserver.disconnect();
+    if (listSentinel) listObserver.observe(listSentinel);
+  }
+
   function renderList() {
+    if (listObserver) listObserver.disconnect();
+    listSentinel = null;
+    renderedCount = initialRenderCount();
     if (!state.rows.length) {
       elList.innerHTML =
         '<li class="empty-state"><p>没有符合条件的文献记录。</p>' +
@@ -263,22 +324,53 @@
       if (c) c.addEventListener('click', resetFilters);
       return;
     }
-    elList.innerHTML = state.rows.map(function (d) {
-      var sel = d.id === state.selectedId;
-      var inst = d.inst || d.cat || '';
-      return '<li><a class="result-row' + (sel ? ' selected' : '') + '" id="opt-' + esc(d.id) + '" data-id="' + esc(d.id) + '" href="?id=' + encodeURIComponent(d.id) + '"' + (sel ? ' aria-current="true"' : '') + '>' +
-        '<span class="row-num">' + NUM[d.id] + '</span>' +
-        '<span class="row-main">' +
-          '<span class="row-meta">' + sideBadge(d.side) +
-            '<span class="badge badge-src">' + esc(d.coll) + ' ' + esc(d.collName) + '</span>' +
-            '<span class="badge badge-fmt">' + esc(d.fmt.toUpperCase()) + '</span>' +
-            '<span class="row-date">' + esc(Site.formatDate(d.date)) + '</span>' +
-          '</span>' +
-          '<span class="row-title-zh">' + esc(displayTitle(d.title, d)) + '</span>' +
-          (inst ? '<span class="row-title-en">' + esc(inst) + (d.type ? ' · ' + esc(d.type) : '') + '</span>' : '') +
-        '</span>' +
-      '</a></li>';
-    }).join('');
+    var html = state.rows.slice(0, renderedCount).map(rowHTML).join('');
+    if (renderedCount < state.rows.length) html += '<li class="list-sentinel" aria-hidden="true" style="height:1px"></li>';
+    elList.innerHTML = html;
+    listSentinel = elList.querySelector('.list-sentinel');
+    observeListSentinel();
+  }
+
+  function appendRows(start, end) {
+    var template = document.createElement('template');
+    template.innerHTML = state.rows.slice(start, end).map(rowHTML).join('');
+    elList.insertBefore(template.content, listSentinel);
+    if (end >= state.rows.length) {
+      if (listObserver && listSentinel) listObserver.unobserve(listSentinel);
+      if (listSentinel) listSentinel.remove();
+      listSentinel = null;
+    }
+  }
+
+  function loadMore() {
+    if (renderedCount >= state.rows.length) return;
+    var start = renderedCount;
+    renderedCount = Math.min(state.rows.length, renderedCount + PAGE_SIZE);
+    appendRows(start, renderedCount);
+  }
+
+  function ensureItemRendered(id) {
+    for (var i = renderedCount; i < state.rows.length; i++) {
+      if (state.rows[i].id === id) {
+        var start = renderedCount;
+        renderedCount = Math.min(state.rows.length, Math.max(i + 1, renderedCount + PAGE_SIZE));
+        appendRows(start, renderedCount);
+        return;
+      }
+    }
+  }
+
+  function syncSelectedRows() {
+    Array.prototype.forEach.call(elList.querySelectorAll('.result-row.selected, .result-row[aria-current="true"]'), function (row) {
+      row.classList.remove('selected');
+      row.removeAttribute('aria-current');
+    });
+    if (!state.selectedId) return;
+    var row = elList.querySelector('[data-id="' + CSS.escape(state.selectedId) + '"]');
+    if (row) {
+      row.classList.add('selected');
+      row.setAttribute('aria-current', 'true');
+    }
   }
 
   function syncControls() {
@@ -442,11 +534,12 @@
     if (!d) return;
     var push = !!(userInitiated && mobileQuery.matches && !elDetail.classList.contains('open'));
     state.selectedId = id;
+    ensureItemRendered(id);
+    syncSelectedRows();
     currentItem = d;
     originalLoaded = false;
     elDetailInner.innerHTML = detailHTML(d);
     initTabs(d);
-    renderList();
     syncDetailMode();
     toURL(push);
     elDetail.scrollTop = 0;
@@ -476,8 +569,8 @@
     document.body.classList.remove('detail-open');
     clearClosedDetail();
     syncDetailMode();
+    syncSelectedRows();
     if (!skipURL) {
-      renderList();
       toURL();
       var row = returnId ? elList.querySelector('[data-id="' + CSS.escape(returnId) + '"]') : null;
       if (mobile && row) row.focus();
@@ -506,7 +599,10 @@
     }
   });
 
-  mobileQuery.addEventListener('change', syncDetailMode);
+  mobileQuery.addEventListener('change', function () {
+    syncDetailMode();
+    observeListSentinel();
+  });
   Site.enableSwipeDismiss(elDetail, { axis: 'y', onDismiss: requestCloseDetail });
 
   function placeholderHTML() {

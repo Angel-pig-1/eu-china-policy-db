@@ -533,7 +533,7 @@ html.dark .filter-chip { color: var(--accent); }
   position: relative;
   text-align: left;
   width: 100%;
-  transition: background 160ms var(--ease);
+  transition: none;
 }
 .result-row:hover { background: var(--paper); }
 .result-row[aria-current="true"] {
@@ -1771,9 +1771,15 @@ body.filter-sheet-open { overflow: hidden; }
 }
 
 .visually-hidden { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
+.hero-title-lockup { column-gap: clamp(22px, 2.6vw, 36px); row-gap: 0; }
+.hero-title-lockup h1 { margin-bottom: 0; }
+.hero-lede { margin-top: 14px; margin-bottom: 20px; }
 .hero-motto { flex: 0 0 104px; display: flex; align-items: center; justify-content: flex-end; }
-.hero-motto img { display: block; width: auto; height: clamp(158px, 15vw, 202px); object-fit: contain; }
+.hero-motto img { display: block; width: auto; height: clamp(142px, 12vw, 170px); object-fit: contain; }
 html.dark .hero-motto img { filter: invert(1); }
+@media (min-width: 901px) {
+  .hero { padding-top: clamp(38px, 5vh, 60px); padding-bottom: 36px; }
+}
 .page-app .footer-inner { padding-top: 18px; padding-bottom: calc(18px + env(safe-area-inset-bottom, 0px)); grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 20px; }
 .page-app .footer-brand .brand { margin-bottom: 0; }
 .page-app .footer-brand .brand-mark { width: 42px; height: 42px; }
@@ -1781,8 +1787,9 @@ html.dark .hero-motto img { filter: invert(1); }
 .page-app .footer-meta { margin-top: 6px; line-height: 1.55; }
 .page-app .footer-nav { flex-direction: row; gap: 18px; }
 @media (max-width: 640px) {
-  .hero-motto { flex: 1 0 100%; justify-content: flex-end; }
-  .hero-motto img { height: 132px; }
+  .hero-title-lockup { position: relative; }
+  .hero-motto { position: absolute; top: 8px; right: 0; flex: none; }
+  .hero-motto img { height: 120px; }
   .page-app .footer-inner { grid-template-columns: 1fr; gap: 12px; }
   .page-app .footer-nav { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; }
   .page-app .footer-nav .nav-link { justify-content: center; text-align: center; }
