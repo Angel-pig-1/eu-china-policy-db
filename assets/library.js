@@ -387,7 +387,7 @@
         } else if (item.external && String(item.fmt).toLowerCase() === 'pdf') {
           var fallback = document.createElement('div');
           fallback.className = 'original-missing';
-          fallback.innerHTML = '<p>档案附件已收录，可打开或下载。</p><a class="btn" href="' + esc(item.file) + '" target="_blank" rel="noopener">打开附件</a>';
+          fallback.innerHTML = '<p>原文 PDF 已收录。若站内预览尚未启用，可直接打开或下载完整附件。</p><a class="btn" href="' + esc(item.file) + '" target="_blank" rel="noopener">打开 / 下载 PDF</a>';
           mount.appendChild(fallback);
           var releasePrefix = 'https://github.com/Angel-pig-1/eu-china-policy-db/releases/download/';
           if (item.file.indexOf(releasePrefix) === 0) {
