@@ -740,6 +740,9 @@ html.dark .kicker { color: var(--accent); }
 }
 .hero h1 em { font-style: normal; color: var(--accent-strong); }
 html.dark .hero h1 em { color: var(--accent); }
+.hero-title-lockup { display: flex; align-items: center; gap: clamp(16px, 2.2vw, 30px); }
+.hero-title-lockup h1 { flex: 0 1 auto; min-width: 0; }
+.hero-title-mark { width: clamp(112px, 12vw, 156px); height: auto; flex: none; object-fit: contain; transform: translateY(3px); }
 .hero-lede {
   font-size: 15.5px;
   color: var(--muted);
@@ -1432,6 +1435,8 @@ html.dark .hero-index { box-shadow: 0 16px 48px rgb(0 0 0 / 0.20); }
   .brand-sub { font-size: 12px; margin-top: 4px; }
   .hero { padding: 36px 20px 26px; gap: 28px; }
   .hero h1 { font-size: clamp(42px, 13vw, 56px); margin-bottom: 18px; }
+  .hero-title-lockup { gap: 12px; }
+  .hero-title-mark { width: clamp(84px, 25vw, 104px); transform: none; }
   .kicker { font-size: 10px; letter-spacing: 0.15em; margin-bottom: 14px; }
   .hero-lede { font-size: 15px; margin-bottom: 22px; }
   .hero-search { margin-bottom: 14px; }
