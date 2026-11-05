@@ -79,7 +79,17 @@ def main():
             })
     speeches.sort(key=lambda x: x['date'], reverse=True)
     policies.sort(key=lambda x: x['date'], reverse=True)
+    payload = json.dumps(speeches, ensure_ascii=False) + '\n' + json.dumps(policies, ensure_ascii=False)
     OUT.write_text('const LEAD=' + json.dumps(speeches, ensure_ascii=False) + ';\nconst LEAD_POLICY=' + json.dumps(policies, ensure_ascii=False) + ';\n', encoding='utf-8')
+    import hashlib
+    import re
+    version = hashlib.sha256(payload.encode()).hexdigest()[:10]
+    for html_name in ['index.html', 'policies.html', 'library.html', 'stats.html']:
+        html_path = REPO / html_name
+        html = html_path.read_text(encoding='utf-8')
+        updated = re.sub(r'leadership_data\.js\?v=[^"\']+', 'leadership_data.js?v=' + version, html)
+        if updated != html:
+            html_path.write_text(updated, encoding='utf-8')
     print('领导讲话', len(speeches), '最新政策', len(policies), '合计', len(rows))
 
 
