@@ -409,7 +409,7 @@
           var fileUrl = Site.fileUrl(item.file);
           if (String(item.fmt).toLowerCase() === 'pdf') {
             var viewer = new URL('assets/pdfjs/web/viewer.html', location.href);
-            viewer.searchParams.set('file', fileUrl);
+            viewer.searchParams.set('file', new URL(fileUrl, location.href).href);
             f.src = viewer.href;
           } else {
             f.src = fileUrl;
