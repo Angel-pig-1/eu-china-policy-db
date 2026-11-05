@@ -152,6 +152,8 @@ def entry_for(prefix, root, coll, coll_name, side, tag, row):
     if not institution:
         institution = source
     kind = {'CNKI': '学术论文', 'LAW': '法律法规', 'TT': '智库报告', 'EUUS': '专题文献'}[prefix]
+    if prefix == 'TT' and relative.startswith('05_开放学术论文/'):
+        kind = '学术论文'
     if prefix == 'LAW' and re.search(r'战略|政策|规划|strategy|policy', title + ' ' + original, re.I):
         kind = '政策文件'
     landing = first(row, '落地页', '官方落地页', '知网详情URL', '来源URL', '详情URL', 'landing', 'url', 'src')
