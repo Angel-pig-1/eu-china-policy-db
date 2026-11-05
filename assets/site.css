@@ -463,9 +463,11 @@ html.dark a.tag-chip:hover, html.dark button.tag-chip:hover { color: var(--accen
 .filter-actions {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
   padding: 8px var(--pad-page) 0;
 }
+.filter-actions .filter-chip { flex: none; max-width: 100%; }
 .filter-actions-inner {
   max-width: var(--content-max);
   margin: 0 auto;
@@ -740,9 +742,10 @@ html.dark .kicker { color: var(--accent); }
 }
 .hero h1 em { font-style: normal; color: var(--accent-strong); }
 html.dark .hero h1 em { color: var(--accent); }
-.hero-title-lockup { display: flex; align-items: center; gap: clamp(16px, 2.2vw, 30px); }
+.hero-title-lockup { display: flex; align-items: center; flex-wrap: wrap; column-gap: clamp(24px, 3.2vw, 44px); row-gap: 12px; }
 .hero-title-lockup h1 { flex: 0 1 auto; min-width: 0; }
 .hero-title-mark { width: clamp(112px, 12vw, 156px); height: auto; flex: none; object-fit: contain; transform: translateY(3px); }
+.hero-motto { flex: 0 1 176px; margin: 0; font-size: 12.5px; line-height: 1.75; letter-spacing: 0.02em; color: var(--faint); }
 .hero-lede {
   font-size: 15.5px;
   color: var(--muted);
@@ -1426,6 +1429,22 @@ html.dark .hero-index { box-shadow: 0 16px 48px rgb(0 0 0 / 0.20); }
   .detail-pane.open { opacity: 1; visibility: visible; pointer-events: auto; transition-delay: 0s; }
 }
 
+.filter-bar-library { grid-template-columns: minmax(200px, 1.4fr) auto; }
+.filter-bar-library .advanced-filters { display: grid; grid-column: 1 / -1; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+.filter-bar-library .advanced-filters select { width: 100%; }
+.filter-chip-label { min-width: 0; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.filter-chip:has(.filter-chip-label) { cursor: pointer; }
+
+@media (max-width: 900px) {
+  .filter-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .search-control, .segmented { grid-column: 1 / -1; }
+  .filter-toggle { display: inline-flex; grid-column: 1 / -1; justify-content: center; min-height: 44px; background: var(--surface); }
+  .filter-bar-library .advanced-filters { display: none; grid-column: 1 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .filter-bar-library .advanced-filters.is-open { display: grid; }
+  .advanced-filters .select-control select { width: 100%; }
+  .advanced-filters > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+
 @media (max-width: 640px) {
   body { font-size: 15px; }
   .header-inner { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(12px, env(safe-area-inset-right, 0px)); }
@@ -1435,8 +1454,11 @@ html.dark .hero-index { box-shadow: 0 16px 48px rgb(0 0 0 / 0.20); }
   .brand-sub { font-size: 12px; margin-top: 4px; }
   .hero { padding: 36px 20px 26px; gap: 28px; }
   .hero h1 { font-size: clamp(42px, 13vw, 56px); margin-bottom: 18px; }
-  .hero-title-lockup { gap: 12px; }
+  .hero-title-lockup { column-gap: 16px; row-gap: 10px; }
   .hero-title-mark { width: clamp(84px, 25vw, 104px); transform: none; }
+  .hero-motto { flex: 1 0 100%; font-size: 12px; }
+  .filter-actions .chip-row { order: 3; flex: 1 0 100%; }
+  .filter-actions .action-spacer { display: none; }
   .kicker { font-size: 10px; letter-spacing: 0.15em; margin-bottom: 14px; }
   .hero-lede { font-size: 15px; margin-bottom: 22px; }
   .hero-search { margin-bottom: 14px; }
@@ -1621,6 +1643,23 @@ html.dark {
     top: calc(12px + env(safe-area-inset-top, 0px));
     right: calc(12px + env(safe-area-inset-right, 0px));
   }
+}
+
+:root { --muted: #606065; --faint: #68686d; }
+html.dark { --faint: #98989e; }
+.hero-index, .yearly-chart, .latest-list, .coll-cell, .stats-grid > *, .panel,
+.results-pane, .detail-pane, .detail-meta-cell, .original-frame-wrap {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  background: var(--surface);
+}
+@media (pointer: coarse) {
+  .segmented button, .tablist [role="tab"], .detail-actions .btn, .filter-chip,
+  .footer-nav .nav-link, .rank-row, .donut-legend a { min-height: 44px; }
+  .yearly-bar-link, .dv-track { min-height: 44px; height: 44px; display: flex; align-items: center; }
+  .detail-zh { font-size: 17px; }
+  .detail-en { font-size: 15px; }
+  .row-date, .row-meta { font-size: 12px; }
 }
 
 @media (prefers-reduced-transparency: reduce) {

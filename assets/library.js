@@ -1,6 +1,6 @@
 /* ==========================================================================
    文献库 — 复用政策库主从工作台，替换检索语义
-   状态：{ q, side:all|EU|CN|INTL, coll:all|01–06, year, sort, selectedId, rows }
+   状态：{ q, side:all|EU|CN|INTL, coll:all|01–07, year, sort, selectedId, rows }
    ========================================================================== */
 (function () {
   'use strict';
@@ -9,12 +9,13 @@
   var LIB_ALL = (typeof LIB !== 'undefined') ? LIB : [];
   if (typeof ERA !== 'undefined') LIB_ALL = LIB_ALL.concat(ERA);
   if (typeof LONGTERM !== 'undefined') LIB_ALL = LIB_ALL.concat(LONGTERM);
+  if (typeof LEAD !== 'undefined') LIB_ALL = LIB_ALL.concat(LEAD);
 
   /* ---------- 派生数据（全部运行时计算） ---------- */
   var NUM = {};
   LIB_ALL.forEach(function (d, i) { NUM[d.id] = String(i + 1).padStart(3, '0'); });
 
-  var COLL_ORDER = ['01', '02', '03', '04', '05', '06'];
+  var COLL_ORDER = ['01', '02', '03', '04', '05', '06', '07'];
   var COLL_DEFS = {};
   LIB_ALL.forEach(function (d) {
     if (!COLL_DEFS[d.coll]) COLL_DEFS[d.coll] = { no: d.coll, name: d.collName, count: 0 };
@@ -73,7 +74,7 @@
   /* ---------- 状态 ---------- */
   var state = { q: '', side: 'all', coll: 'all', cat: 'all', type: 'all', year: 'all', sort: 'topic', selectedId: null, rows: [] };
   var validSides = { all: 1, EU: 1, CN: 1, INTL: 1 };
-  var validColls = { all: 1, '01': 1, '02': 1, '03': 1, '04': 1, '05': 1, '06': 1 };
+  var validColls = { all: 1, '01': 1, '02': 1, '03': 1, '04': 1, '05': 1, '06': 1, '07': 1 };
   var validSorts = { topic: 1, desc: 1, asc: 1, title: 1 };
 
   /* ---------- DOM ---------- */
@@ -238,8 +239,9 @@
     CHIP_DEFS.forEach(function (c) {
       var active = state[c.key] !== 'all' && state[c.key] !== '';
       if (active) {
-        html += '<span class="filter-chip">' + esc(c.label()) +
-          '<button type="button" data-chip="' + esc(c.key) + '" aria-label="清除' + esc(c.key) + '筛选">×</button></span>';
+        var label = c.label();
+        html += '<button type="button" class="filter-chip" data-chip="' + esc(c.key) + '" aria-label="清除筛选：' + esc(label) + '">' +
+          '<span class="filter-chip-label">' + esc(label) + '</span></button>';
       }
     });
     elChips.innerHTML = html;
@@ -296,7 +298,7 @@
   }
 
   function detailHTML(d) {
-    var fileUrl = d.external ? (d.hosted ? d.file : d.url) : Site.fileUrl(d.file);
+    var fileUrl = d.external ? (d.hosted ? d.file : (d.url || d.file || d.src)) : Site.fileUrl(d.file);
     var tags = (d.tags || []).map(function (t) {
       return '<button type="button" class="tag-chip" data-search="' + esc(t) + '">' + esc(t) + '</button>';
     }).join('');
@@ -368,18 +370,49 @@
     if (!isSummary && !originalLoaded && tabRefs.d.file) {
       var mount = elDetailInner.querySelector('#original-mount');
       if (mount) {
-        if (tabRefs.d.external) {
+        var item = tabRefs.d;
+        if (item.external && !item.hosted) {
           var online = document.createElement('div');
           online.className = 'original-missing';
-          var link = tabRefs.d.hosted ? tabRefs.d.file : tabRefs.d.url;
-          var message = tabRefs.d.hosted ? '档案附件已收录，可打开或下载。' : '该资源由 ERA 在线提供。';
-          online.innerHTML = '<p>' + message + '</p><a class="btn" href="' + esc(link) + '" target="_blank" rel="noopener">打开资源</a>';
+          var onlineLink = item.url || item.file || item.src;
+          online.innerHTML = '<p>该资源由原网站在线提供，本站未托管。</p><a class="btn" href="' + esc(onlineLink) + '" target="_blank" rel="noopener">打开原网站</a>';
           mount.appendChild(online);
+        } else if (item.hosted && String(item.fmt).toLowerCase() !== 'pdf') {
+          var attachment = document.createElement('div');
+          attachment.className = 'original-missing';
+          attachment.innerHTML = '<p>已托管附件，需下载后打开。</p><a class="btn" href="' + esc(item.file) + '" target="_blank" rel="noopener">下载附件</a>';
+          mount.appendChild(attachment);
+        } else if (item.external && String(item.fmt).toLowerCase() === 'pdf') {
+          var fallback = document.createElement('div');
+          fallback.className = 'original-missing';
+          fallback.innerHTML = '<p>档案附件已收录，可打开或下载。</p><a class="btn" href="' + esc(item.file) + '" target="_blank" rel="noopener">打开附件</a>';
+          mount.appendChild(fallback);
+          var releasePrefix = 'https://github.com/Angel-pig-1/eu-china-policy-db/releases/download/';
+          if (item.file.indexOf(releasePrefix) === 0) {
+            var proxyUrl = new URL('/pdf-proxy/' + item.file.slice(releasePrefix.length), location.href).href;
+            fetch(proxyUrl, { method: 'HEAD' }).then(function (response) {
+              if (!response.ok || !response.headers.get('Content-Type').includes('application/pdf')) return;
+              var viewer = new URL('assets/pdfjs/web/viewer.html', location.href);
+              viewer.searchParams.set('file', proxyUrl);
+              var hostedFrame = document.createElement('iframe');
+              hostedFrame.loading = 'lazy';
+              hostedFrame.src = viewer.href;
+              hostedFrame.title = '原始文献：' + displayTitle(item.title, item);
+              fallback.replaceWith(hostedFrame);
+            }).catch(function () {});
+          }
         } else {
           var f = document.createElement('iframe');
           f.loading = 'lazy';
-          f.src = Site.fileUrl(tabRefs.d.file);
-          f.title = '原始文献：' + displayTitle(tabRefs.d.title, tabRefs.d);
+          var fileUrl = Site.fileUrl(item.file);
+          if (String(item.fmt).toLowerCase() === 'pdf') {
+            var viewer = new URL('assets/pdfjs/web/viewer.html', location.href);
+            viewer.searchParams.set('file', fileUrl);
+            f.src = viewer.href;
+          } else {
+            f.src = fileUrl;
+          }
+          f.title = '原始文献：' + displayTitle(item.title, item);
           mount.appendChild(f);
         }
         originalLoaded = true;
@@ -387,9 +420,13 @@
     }
   }
 
+  var backdropHideTimer = null;
+
   function selectItem(id, focusRow) {
     var d = findItem(id);
     if (!d) return;
+    clearTimeout(backdropHideTimer);
+    backdropHideTimer = null;
     state.selectedId = id;
     currentItem = d;
     originalLoaded = false;
@@ -401,33 +438,90 @@
 
     var mobile = window.matchMedia('(max-width: 900px)').matches;
     if (mobile) {
+      elDetail.setAttribute('role', 'dialog');
+      elDetail.setAttribute('aria-modal', 'true');
       elDetail.classList.add('open');
       elBackdrop.hidden = false;
-      requestAnimationFrame(function () { elBackdrop.classList.add('show'); });
+      requestAnimationFrame(function () {
+        if (state.selectedId && elDetail.classList.contains('open')) elBackdrop.classList.add('show');
+      });
       document.body.classList.add('detail-open');
       var c = elDetail.querySelector('.detail-close');
       if (c) c.focus();
+    } else {
+      elDetail.removeAttribute('role');
+      elDetail.removeAttribute('aria-modal');
     }
-    if (focusRow) {
+    if (focusRow && !mobile) {
       var row = elList.querySelector('[data-id="' + CSS.escape(id) + '"]');
       if (row) row.focus();
     }
   }
 
+  function clearClosedDetail() {
+    if (state.selectedId || elDetail.classList.contains('open')) return;
+    elDetailInner.innerHTML = placeholderHTML();
+    tabRefs = null;
+  }
+
   function closeDetail(skipURL) {
+    var returnId = state.selectedId;
+    var mobile = elDetail.classList.contains('open');
+    clearTimeout(backdropHideTimer);
+    backdropHideTimer = null;
     state.selectedId = null;
     currentItem = null;
     elDetail.classList.remove('open');
+    elDetail.removeAttribute('role');
+    elDetail.removeAttribute('aria-modal');
     elBackdrop.classList.remove('show');
     document.body.classList.remove('detail-open');
-    setTimeout(function () { elBackdrop.hidden = true; }, 240);
-    elDetailInner.innerHTML = placeholderHTML();
+    backdropHideTimer = setTimeout(function () {
+      backdropHideTimer = null;
+      if (!state.selectedId && !elDetail.classList.contains('open')) elBackdrop.hidden = true;
+    }, 240);
+    if (!mobile || window.matchMedia('(prefers-reduced-transparency: reduce)').matches) clearClosedDetail();
     if (!skipURL) {
       renderList();
       toURL();
-      elList.focus();
+      var row = returnId ? elList.querySelector('[data-id="' + CSS.escape(returnId) + '"]') : null;
+      if (mobile && row) row.focus();
+      else elList.focus();
     }
   }
+
+  elDetail.addEventListener('transitionend', function (ev) {
+    if (ev.target !== elDetail) return;
+    if (ev.propertyName === 'transform' ||
+        (ev.propertyName === 'opacity' && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+      clearClosedDetail();
+    }
+  });
+
+  document.addEventListener('keydown', function (ev) {
+    if (ev.key !== 'Tab' || !state.selectedId || !elDetail.classList.contains('open') ||
+        !window.matchMedia('(max-width: 900px)').matches) return;
+    var nodes = elDetail.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])');
+    var first = null;
+    var last = null;
+    for (var i = 0; i < nodes.length; i++) {
+      if (nodes[i].closest('[hidden]') || !nodes[i].getClientRects().length) continue;
+      if (!first) first = nodes[i];
+      last = nodes[i];
+    }
+    if (!first) {
+      ev.preventDefault();
+      return;
+    }
+    var active = document.activeElement;
+    if (ev.shiftKey && (active === first || !elDetail.contains(active))) {
+      ev.preventDefault();
+      last.focus();
+    } else if (!ev.shiftKey && (active === last || !elDetail.contains(active))) {
+      ev.preventDefault();
+      first.focus();
+    }
+  });
 
   function placeholderHTML() {
     return '<div class="empty-state" style="padding-top:96px"><p style="font-family:var(--serif);font-size:19px;font-weight:700;color:var(--muted)">选择左侧文献开始阅读</p>' +

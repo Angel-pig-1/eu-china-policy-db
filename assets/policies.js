@@ -8,6 +8,7 @@
   var esc = Site.escapeHTML;
   var DATA_ALL = (typeof DATA !== 'undefined') ? DATA : [];
   if (typeof LEGAL !== 'undefined') DATA_ALL = DATA_ALL.concat(LEGAL);
+  if (typeof LEAD_POLICY !== 'undefined') DATA_ALL = DATA_ALL.concat(LEAD_POLICY);
 
   /* ---------- 派生数据（全部运行时计算） ---------- */
   var NUM = {}; // id -> 三位档案序号
@@ -169,8 +170,9 @@
     CHIP_DEFS.forEach(function (c) {
       var active = state[c.key] !== 'all' && state[c.key] !== '';
       if (active) {
-        html += '<span class="filter-chip">' + esc(c.label()) +
-          '<button type="button" data-chip="' + c.key + '" aria-label="清除' + esc(c.key) + '筛选">×</button></span>';
+        var label = c.label();
+        html += '<button type="button" class="filter-chip" data-chip="' + c.key + '" aria-label="清除筛选：' + esc(label) + '">' +
+          '<span class="filter-chip-label">' + esc(label) + '</span></button>';
       }
     });
     elChips.innerHTML = html;
@@ -305,9 +307,13 @@
   var originalLoaded = false;
   var currentItem = null;
 
+  var backdropHideTimer = null;
+
   function selectItem(id, focusRow) {
     var d = findItem(id);
     if (!d) return;
+    clearTimeout(backdropHideTimer);
+    backdropHideTimer = null;
     state.selectedId = id;
     currentItem = d;
     originalLoaded = false;
@@ -320,33 +326,90 @@
     // 移动详情滑入
     var mobile = window.matchMedia('(max-width: 900px)').matches;
     if (mobile) {
+      elDetail.setAttribute('role', 'dialog');
+      elDetail.setAttribute('aria-modal', 'true');
       elDetail.classList.add('open');
       elBackdrop.hidden = false;
-      requestAnimationFrame(function () { elBackdrop.classList.add('show'); });
+      requestAnimationFrame(function () {
+        if (state.selectedId && elDetail.classList.contains('open')) elBackdrop.classList.add('show');
+      });
       document.body.classList.add('detail-open');
       var c = elDetail.querySelector('.detail-close');
       if (c) c.focus();
+    } else {
+      elDetail.removeAttribute('role');
+      elDetail.removeAttribute('aria-modal');
     }
-    if (focusRow) {
+    if (focusRow && !mobile) {
       var row = elList.querySelector('[data-id="' + CSS.escape(id) + '"]');
       if (row) row.focus();
     }
   }
 
+  function clearClosedDetail() {
+    if (state.selectedId || elDetail.classList.contains('open')) return;
+    elDetailInner.innerHTML = placeholderHTML();
+    tabRefs = null;
+  }
+
   function closeDetail(skipURL) {
+    var returnId = state.selectedId;
+    var mobile = elDetail.classList.contains('open');
+    clearTimeout(backdropHideTimer);
+    backdropHideTimer = null;
     state.selectedId = null;
     currentItem = null;
     elDetail.classList.remove('open');
+    elDetail.removeAttribute('role');
+    elDetail.removeAttribute('aria-modal');
     elBackdrop.classList.remove('show');
     document.body.classList.remove('detail-open');
-    setTimeout(function () { elBackdrop.hidden = true; }, 240);
-    elDetailInner.innerHTML = placeholderHTML();
+    backdropHideTimer = setTimeout(function () {
+      backdropHideTimer = null;
+      if (!state.selectedId && !elDetail.classList.contains('open')) elBackdrop.hidden = true;
+    }, 240);
+    if (!mobile || window.matchMedia('(prefers-reduced-transparency: reduce)').matches) clearClosedDetail();
     if (!skipURL) {
       renderList();
       toURL();
-      elList.focus();
+      var row = returnId ? elList.querySelector('[data-id="' + CSS.escape(returnId) + '"]') : null;
+      if (mobile && row) row.focus();
+      else elList.focus();
     }
   }
+
+  elDetail.addEventListener('transitionend', function (ev) {
+    if (ev.target !== elDetail) return;
+    if (ev.propertyName === 'transform' ||
+        (ev.propertyName === 'opacity' && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+      clearClosedDetail();
+    }
+  });
+
+  document.addEventListener('keydown', function (ev) {
+    if (ev.key !== 'Tab' || !state.selectedId || !elDetail.classList.contains('open') ||
+        !window.matchMedia('(max-width: 900px)').matches) return;
+    var nodes = elDetail.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])');
+    var first = null;
+    var last = null;
+    for (var i = 0; i < nodes.length; i++) {
+      if (nodes[i].closest('[hidden]') || !nodes[i].getClientRects().length) continue;
+      if (!first) first = nodes[i];
+      last = nodes[i];
+    }
+    if (!first) {
+      ev.preventDefault();
+      return;
+    }
+    var active = document.activeElement;
+    if (ev.shiftKey && (active === first || !elDetail.contains(active))) {
+      ev.preventDefault();
+      last.focus();
+    } else if (!ev.shiftKey && (active === last || !elDetail.contains(active))) {
+      ev.preventDefault();
+      first.focus();
+    }
+  });
 
   function placeholderHTML() {
     return '<div class="empty-state" style="padding-top:96px"><p style="font-family:var(--serif);font-size:19px;font-weight:700;color:var(--muted)">选择左侧记录开始阅读</p>' +

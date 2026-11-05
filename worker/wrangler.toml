@@ -1,0 +1,3 @@
+name = "cea-pdf-proxy"
+main = "pdf-proxy.js"
+compatibility_date = "2026-11-06"
