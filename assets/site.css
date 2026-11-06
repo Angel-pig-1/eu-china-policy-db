@@ -1798,7 +1798,27 @@ html.dark .hero-motto img { filter: invert(1); }
   .page-app .footer-nav .nav-link { justify-content: center; text-align: center; }
 }
 
+.hero { position: relative; isolation: isolate; }
+.hero-map {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: #a8843e;
+  stroke: currentColor;
+  stroke-width: 1.15;
+  opacity: 0.23;
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-left, .hero-right { position: relative; z-index: 1; }
+html.dark .hero-map { color: #e0bd72; opacity: 0.25; }
+@media (max-width: 900px) {
+  .hero-map { opacity: 0.16; stroke-width: 1.3; }
+}
+
 @media print {
+  .hero-map { display: none; }
   .site-header, .site-footer, .app-head, .filter-bar, .filter-actions,
   .results-pane, .detail-backdrop, .toast-region, .mobile-menu,
   .detail-actions, .tablist, .detail-close, .skip-link { display: none !important; }
