@@ -1805,14 +1805,18 @@ html.dark .hero-motto img { filter: invert(1); }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.23;
+  opacity: 0.30;
   pointer-events: none;
   z-index: 0;
 }
 .hero-left, .hero-right { position: relative; z-index: 1; }
-html.dark .hero-map { opacity: 0.25; }
+html.dark .hero-map { opacity: 0.34; }
 @media (max-width: 900px) {
-  .hero-map { opacity: 0.16; }
+  .hero-map {
+    object-fit: contain;
+    object-position: center 14%;
+    opacity: 0.20;
+  }
 }
 
 @media print {
