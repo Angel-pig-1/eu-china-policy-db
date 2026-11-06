@@ -60,7 +60,7 @@ def successful(status):
 
 def valid_date(value):
     value = (value or '').strip()
-    match = re.search(r'\b((?:19|20)\d{2})(?:[-./年](\d{1,2}))?(?:[-./月](\d{1,2}))?', value)
+    match = re.search(r'\b((?:18|19|20)\d{2})(?:[-./年](\d{1,2}))?(?:[-./月](\d{1,2}))?', value)
     if not match:
         return '', ''
     year, month, day = match.groups()
