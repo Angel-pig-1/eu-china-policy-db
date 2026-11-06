@@ -82,14 +82,15 @@
     var e = yearCount(y, 'EU'), c = yearCount(y, 'CN');
     return '<div class="diverging-row">' +
       '<span class="y-label">' + esc(y) + '</span>' +
+      '<span class="dv-count cn">' + c + '</span>' +
       '<span class="dv-track cn"><a class="dv-link" href="policies.html?year=' + esc(y) + '&side=CN" aria-label="' + esc(y) + ' 年 CN 政策 ' + c + ' 条">' +
-        '<span class="dv-bar cn" style="width:' + (c / maxV * 100).toFixed(1) + '%"></span></a></span>' +
+        '<span class="dv-bar cn' + (c ? '' : ' is-zero') + '" style="width:' + (c / maxV * 100).toFixed(1) + '%"></span></a></span>' +
       '<span class="dv-track"><a class="dv-link" href="policies.html?year=' + esc(y) + '&side=EU" aria-label="' + esc(y) + ' 年 EU 政策 ' + e + ' 条">' +
-        '<span class="dv-bar" style="width:' + (e / maxV * 100).toFixed(1) + '%"></span></a></span>' +
-      '<span class="dv-count">' + e + '/' + c + '</span>' +
+        '<span class="dv-bar' + (e ? '' : ' is-zero') + '" style="width:' + (e / maxV * 100).toFixed(1) + '%"></span></a></span>' +
+      '<span class="dv-count eu">' + e + '</span>' +
     '</div>';
   }).join('') +
-  '<div class="diverging-axis"><span></span><span class="axis-mid">EU / CN</span><span></span></div>';
+  '<div class="diverging-axis"><span></span><span class="axis-mid">CN / EU</span><span></span></div>';
 
   /* ---------- 环图 ---------- */
   (function donut() {
