@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import csv
 import hashlib
+import http.client
 import json
 import re
 import time
@@ -29,9 +30,18 @@ FOLDERS = {
 
 
 def request(url, accept):
-    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0', 'Accept': accept})
-    with urllib.request.urlopen(req, timeout=90) as response:
-        return response.read()
+    for attempt in range(4):
+        try:
+            req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0', 'Accept': accept})
+            with urllib.request.urlopen(req, timeout=90) as response:
+                return response.read()
+        except urllib.error.HTTPError as exc:
+            if exc.code not in {429, 500, 502, 503, 504} or attempt == 3:
+                raise
+        except (urllib.error.URLError, TimeoutError, http.client.IncompleteRead, ConnectionError):
+            if attempt == 3:
+                raise
+        time.sleep(2 ** attempt)
 
 
 def celex_of(row):
