@@ -3,6 +3,7 @@ import csv
 import hashlib
 import json
 import re
+import subprocess
 import unicodedata
 from pathlib import Path
 from urllib.parse import quote
@@ -94,8 +95,12 @@ def validate_file(path):
     if suffix == '.pdf':
         if not header.startswith(b'%PDF-'):
             raise ValueError('文件头不是 PDF')
-        reader = PdfReader(str(path), strict=False)
-        pages = len(reader.pages)
+        try:
+            result = subprocess.run(['pdfinfo', str(path)], check=True, capture_output=True, text=True, timeout=20)
+            match = re.search(r'^Pages:\s+(\d+)\s*$', result.stdout, re.M)
+            pages = int(match.group(1)) if match else 0
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired, FileNotFoundError):
+            pages = len(PdfReader(str(path), strict=False).pages)
         if pages < 1:
             raise ValueError('PDF 页数为零')
         return 'pdf', pages
