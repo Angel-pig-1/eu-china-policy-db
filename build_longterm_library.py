@@ -8,7 +8,6 @@ import unicodedata
 from pathlib import Path
 from urllib.parse import quote
 
-from pypdf import PdfReader
 
 ROOT = Path('/Users/angel/Desktop/中欧长程资料')
 REPO = Path(__file__).resolve().parent
@@ -84,25 +83,31 @@ def thinktank_collection(category, title):
     return '01', '中欧关系'
 
 
-def validate_file(path):
+def validate_file(path, expected_pages=0, expected_size=0):
     if not path.is_file() or path.stat().st_size < 100:
         raise ValueError('文件不存在或内容为空')
     suffix = path.suffix.lower()
     if suffix not in {'.pdf', '.caj'}:
         raise ValueError('仅收录 PDF 或 CAJ，当前格式：' + suffix)
+    if suffix == '.pdf' and expected_pages > 0 and expected_size == path.stat().st_size:
+        return 'pdf', expected_pages
     with path.open('rb') as f:
         header = f.read(16)
     if suffix == '.pdf':
         if not header.startswith(b'%PDF-'):
             raise ValueError('文件头不是 PDF')
-        try:
-            result = subprocess.run(['pdfinfo', str(path)], check=True, capture_output=True, text=True, timeout=20)
-            match = re.search(r'^Pages:\s+(\d+)\s*$', result.stdout, re.M)
-            pages = int(match.group(1)) if match else 0
-        except (subprocess.CalledProcessError, subprocess.TimeoutExpired, FileNotFoundError):
-            pages = len(PdfReader(str(path), strict=False).pages)
+        pages = 0
+        for _ in range(2):
+            try:
+                result = subprocess.run(['pdfinfo', str(path)], check=True, capture_output=True, text=True, timeout=20)
+                match = re.search(r'^Pages:\s+(\d+)\s*$', result.stdout, re.M)
+                pages = int(match.group(1)) if match else 0
+                if pages > 0:
+                    break
+            except (subprocess.CalledProcessError, subprocess.TimeoutExpired, FileNotFoundError):
+                continue
         if pages < 1:
-            raise ValueError('PDF 页数为零')
+            raise ValueError('pdfinfo 两次限时解析均未取得有效页数')
         return 'pdf', pages
     if not (header.startswith(b'%CAJ') or header.startswith(b'CAJ') or header.startswith(b'{\\rtf')):
         raise ValueError('CAJ 文件头未通过校验')
@@ -119,7 +124,9 @@ def entry_for(prefix, root, coll, coll_name, side, tag, row):
         return None, '清单缺少本地文件路径'
     path = root / relative
     try:
-        fmt, pages = validate_file(path)
+        expected_pages = int(first(row, '页数') or 0)
+        expected_size = int(first(row, '文件大小（字节）', '文件大小字节') or 0)
+        fmt, pages = validate_file(path, expected_pages, expected_size)
     except Exception as exc:
         return None, str(exc)
 
