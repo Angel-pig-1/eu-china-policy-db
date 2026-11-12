@@ -4,7 +4,7 @@ import json
 import shutil
 from pathlib import Path
 
-from pypdf import PdfReader
+import subprocess
 
 ROOT = Path('/Users/angel/Desktop/中欧长程资料/领导讲话与最新政策')
 REPO = Path(__file__).resolve().parent
@@ -28,7 +28,9 @@ def main():
                 with source.open('rb') as f:
                     if f.read(5) != b'%PDF-':
                         raise RuntimeError('PDF 文件头错误：' + str(source))
-                if len(PdfReader(str(source), strict=False).pages) < 1:
+                result = subprocess.run(['pdfinfo', str(source)], check=True, capture_output=True, text=True, timeout=20)
+                pages_line = next((line for line in result.stdout.splitlines() if line.startswith('Pages:')), '')
+                if not pages_line or int(pages_line.split()[-1]) < 1:
                     raise RuntimeError('PDF 页数为零：' + str(source))
             elif source.stat().st_size != expected_size:
                 raise RuntimeError('PDF 字节数与已核验清单不一致：' + str(source))
