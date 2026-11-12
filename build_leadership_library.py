@@ -22,12 +22,16 @@ def main():
         if not source.is_file() or source.stat().st_size == 0:
             raise RuntimeError('文件缺失：' + str(source))
         fmt = row['格式'].lower()
+        expected_size = int(row['文件字节数'] or 0)
         if fmt == 'pdf':
-            with source.open('rb') as f:
-                if f.read(5) != b'%PDF-':
-                    raise RuntimeError('PDF 文件头错误：' + str(source))
-            if len(PdfReader(str(source), strict=False).pages) < 1:
-                raise RuntimeError('PDF 页数为零：' + str(source))
+            if expected_size == 0:
+                with source.open('rb') as f:
+                    if f.read(5) != b'%PDF-':
+                        raise RuntimeError('PDF 文件头错误：' + str(source))
+                if len(PdfReader(str(source), strict=False).pages) < 1:
+                    raise RuntimeError('PDF 页数为零：' + str(source))
+            elif source.stat().st_size != expected_size:
+                raise RuntimeError('PDF 字节数与已核验清单不一致：' + str(source))
         elif fmt != 'html':
             raise RuntimeError('暂不支持的格式：' + fmt)
         target = ORIGINALS / ('LEAD_' + row['编号'] + source.suffix.lower())
